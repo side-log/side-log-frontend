@@ -1,10 +1,8 @@
 {
   "name": "yeaaaah",
   "version": "1.0.0",
-  "workspaces": [
-    "app/*",
-    "shared/*"
-  ],
+  "type": "module",
+  "main": "index.js",
   "scripts": {
     "jari": "pnpm --filter jari build",
     "scaffold": "pnpm --filter scaffold",
