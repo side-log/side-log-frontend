@@ -1,12 +1,14 @@
 {
   "name": "yeaaaah",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "workspaces": [
+    "app/*",
+    "shared/*"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "jari": "pnpm --filter jari build",
+    "scaffold": "pnpm --filter scaffold",
+    "lint": "pnpm --filter ./app/* lint"
   },
-  "keywords": [],
-  "author": "",
   "license": "ISC"
 }
