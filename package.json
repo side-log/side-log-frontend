@@ -8,5 +8,6 @@
     "scaffold": "pnpm --filter scaffold",
     "lint": "pnpm --filter ./apps/* lint"
   },
+  "workspaces": ["apps/*", "shared/*"],
   "license": "ISC"
 }
