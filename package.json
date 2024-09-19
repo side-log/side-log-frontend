@@ -4,9 +4,9 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "jari": "pnpm --filter jari build",
+    "jari": "pnpm --filter jari",
     "scaffold": "pnpm --filter scaffold",
-    "lint": "pnpm --filter ./app/* lint"
+    "lint": "pnpm --filter ./apps/* lint"
   },
   "license": "ISC"
 }
