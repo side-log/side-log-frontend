@@ -6,8 +6,11 @@
   "scripts": {
     "jari": "pnpm --filter jari",
     "scaffold": "pnpm --filter scaffold",
+    "shared": "pnpm --filter shared",
     "lint": "pnpm --filter ./apps/* lint"
   },
-  "workspaces": ["apps/*", "shared/*"],
+  "workspaces": [
+    "packages/*"
+  ],
   "license": "ISC"
 }
