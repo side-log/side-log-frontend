@@ -13,7 +13,6 @@ export default defineConfig({
       name: "index",
       formats: ["es"],
     },
-
     rollupOptions: {
       external: ["react", "react-dom"],
       output: {

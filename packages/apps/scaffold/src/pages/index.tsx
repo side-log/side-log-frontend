@@ -1,5 +1,5 @@
-import { colors } from "@yeaaaah/shared";
+import { LoggingScreen } from "@yeaaaah/shared";
 
 export default function Home() {
-  return <>{colors.black}</>;
+  return <LoggingScreen id={1234}></LoggingScreen>;
 }
