@@ -7,3 +7,4 @@ dist
 .idea/
 *.map
 .env
+pnpm-lock.yaml
