@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@yeaaaah/shared": "workspace:^",
-    "next": "14.2.7",
+    "next": "12",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
@@ -19,7 +19,8 @@
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "eslint": "^9.9.0",
-    "eslint-config-next": "14.2.7",
+    "eslint-config-next": "12",
+    "next-transpile-modules": "^10.0.1",
     "typescript": "^5.5.3"
   }
 }
