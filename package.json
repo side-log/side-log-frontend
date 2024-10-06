@@ -9,6 +9,14 @@
     "shared": "pnpm --filter shared",
     "lint": "pnpm --filter ./apps/* lint"
   },
+  "engines": {
+    "node": ">=16.14.2",
+    "pnpm": ">=7.9.0"
+  },
+  "packageManager": "pnpm@7.9.0",
+  "devDependencies": {
+      "pnpm": "^7.9.0"
+  },
   "workspaces": [
     "packages/*"
   ],
