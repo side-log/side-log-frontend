@@ -104,7 +104,6 @@ const Landing = () => {
           bottom: 42px;
           padding: 0 16px;
           width: 100%;
-          display: flex;
           left: 50%;
           transform: translateX(-50%);
         `}
