@@ -17,7 +17,7 @@ const Landing = () => {
             height={36.4}
             color="#28292C"
           >
-            예비사장님! 우리가게의
+            예비 사장님! 우리 가게의
           </Txt>
           <Row justifyContent="center" alignItems="center" gap={8}>
             <div
