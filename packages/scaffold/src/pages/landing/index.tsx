@@ -99,12 +99,14 @@ const Landing = () => {
       </Col>
       <div
         css={css`
-          position: fixed;
+          display: flex;
+          position: absolute;
           bottom: 42px;
           padding: 0 16px;
           width: 100%;
           display: flex;
-          justify-content: center;
+          left: 50%;
+          transform: translateX(-50%);
         `}
       >
         <PrimaryButton title="빈칸채우고 의견 듣기" />

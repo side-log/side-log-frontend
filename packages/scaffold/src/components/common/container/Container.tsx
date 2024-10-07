@@ -11,6 +11,7 @@ export const Container = (props: ContainerProps) => {
   return (
     <div
       css={css`
+        position: relative;
         width: 100%;
         height: 100vh;
         max-width: 840px;
