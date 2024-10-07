@@ -31,7 +31,7 @@ export const LabelTag = (props: LabelTagProps) => {
       `}
     >
       <Row gap={8}>
-        <Txt font="tossface" align="center" size="2rem" height={24}>
+        <Txt font="tossface" align="center" size="2.2rem" height={24}>
           {emoji}
         </Txt>
         <Txt
