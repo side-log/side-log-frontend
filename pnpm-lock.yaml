@@ -69,6 +69,9 @@ importers:
       '@emotion/styled':
         specifier: ^11.13.0
         version: 11.13.0(@emotion/react@11.13.3)(@types/react@18.3.11)(react@18.3.1)
+      '@fingerprintjs/fingerprintjs':
+        specifier: ^4.5.0
+        version: 4.5.0
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -751,6 +754,12 @@ packages:
     dependencies:
       levn: 0.4.1
     dev: true
+
+  /@fingerprintjs/fingerprintjs@4.5.0:
+    resolution: {integrity: sha512-mFSQoxyt8SGGRp1QUlhcnVtquW2HzCKfHKxAoIurR6soIJpuK3VvZuH0sg8eNaHH2dJhI3mZOEUx4k+P4GqXzw==}
+    dependencies:
+      tslib: 2.7.0
+    dev: false
 
   /@humanfs/core@0.19.0:
     resolution: {integrity: sha512-2cbWIHbZVEweE853g8jymffCA+NCMiuqeECeBBLm8dg2oFdjuGJhgN4UAbI+6v0CKbbhvtXA4qV8YR5Ji86nmw==}
