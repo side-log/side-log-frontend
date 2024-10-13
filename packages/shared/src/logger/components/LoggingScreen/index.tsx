@@ -4,13 +4,14 @@ import useLogger from "../../hooks/useLogger";
 
 interface Props {
   id: number;
+  params: Record<string, unknown>;
 }
 
-const LoggingScreen = ({ id, children }: PropsWithChildren<Props>) => {
+const LoggingScreen = ({ id, params, children }: PropsWithChildren<Props>) => {
   const { logger } = useLogger({ id });
 
   useEffectOnce(() => {
-    logger.screen();
+    logger.screen(params);
   }, []);
 
   return <>{children}</>;

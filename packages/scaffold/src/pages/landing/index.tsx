@@ -9,7 +9,12 @@ import { LoggingScreen } from "@yeaaaah/shared";
 
 const Landing = () => {
   return (
-    <LoggingScreen id={123456}>
+    <LoggingScreen
+      id={123456}
+      params={{
+        screen_type: "landing_intro",
+      }}
+    >
       <Container>
         <Col gap={24}>
           <Col padding={"72px 13px 24px"} gap={8}>

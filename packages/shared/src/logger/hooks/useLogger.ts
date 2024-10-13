@@ -12,7 +12,16 @@ export default function useLogger({ id }: Props) {
   const referrer = useReferrer();
 
   const log = useCallback(
-    async (id: number, logType: LoggingParams["log_type"]) => {
+    async (
+      id: number,
+      {
+        logType,
+        params,
+      }: {
+        logType: LoggingParams["log_type"];
+        params?: Record<string, unknown>;
+      }
+    ) => {
       try {
         const deviceInfo = await fetchDeviceInfo();
         const { deviceId, locale, os, userAgent } = deviceInfo;
@@ -24,6 +33,7 @@ export default function useLogger({ id }: Props) {
           referrer,
           os,
           locale,
+          params,
         });
       } catch (error) {
         console.error("Error logging device information:", error);
@@ -33,9 +43,19 @@ export default function useLogger({ id }: Props) {
   );
 
   const logger = {
-    screen: () => log(id, "screen"),
-    impression: () => log(id, "screen"),
-    click: () => log(id, "click"),
+    screen: (params: Record<string, unknown>) =>
+      log(id, {
+        logType: "screen",
+        params,
+      }),
+    impression: () =>
+      log(id, {
+        logType: "impression",
+      }),
+    click: () =>
+      log(id, {
+        logType: "click",
+      }),
   };
 
   return { logger };

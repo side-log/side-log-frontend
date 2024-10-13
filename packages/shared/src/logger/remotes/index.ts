@@ -26,4 +26,8 @@ export type LoggingParams =
 
 export function fetchLog(id: number, params: LoggingParams) {
   console.log(id, params);
+  fetch(`/api/v1/log/${id}`, {
+    method: "POST",
+    body: JSON.stringify(params),
+  });
 }
