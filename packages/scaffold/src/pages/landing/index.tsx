@@ -1,3 +1,4 @@
+import { BottomFixedArea } from "@/components/common/area/BottomFixedArea";
 import PrimaryButton from "@/components/common/button/PrimaryButton";
 import { Container } from "@/components/common/container/Container";
 import { Col, Row } from "@/components/common/flex/Flex";
@@ -97,19 +98,9 @@ const Landing = () => {
           전달해 드릴게요.
         </Txt>
       </Col>
-      <div
-        css={css`
-          display: flex;
-          position: absolute;
-          bottom: 42px;
-          padding: 0 16px;
-          width: 100%;
-          left: 50%;
-          transform: translateX(-50%);
-        `}
-      >
+      <BottomFixedArea css={{ padding: "8px 16px" }}>
         <PrimaryButton title="빈칸채우고 의견 듣기" />
-      </div>
+      </BottomFixedArea>
     </Container>
   );
 };
