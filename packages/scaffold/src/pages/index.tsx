@@ -1,5 +1,16 @@
-import { LoggingScreen } from "@yeaaaah/shared";
+import { GetServerSideProps } from "next";
 
-export default function Home() {
-  return <LoggingScreen id={1234}></LoggingScreen>;
-}
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  return {
+    redirect: {
+      destination: "/landing",
+      permanent: false,
+    },
+  };
+};
+
+const Page = () => {
+  return null;
+};
+
+export default Page;
