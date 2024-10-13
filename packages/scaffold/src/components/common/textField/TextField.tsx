@@ -1,4 +1,4 @@
-import React, { useState } from "react"; // React import fo
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import styled from "@emotion/styled";
 import { RegisterOptions, useFormContext, useWatch } from "react-hook-form";
 
@@ -13,12 +13,11 @@ interface TextFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
-const TextField = (props: TextFieldProps) => {
+const TextField: React.FC<TextFieldProps> = (props: TextFieldProps) => {
   const {
     id,
     placeholder,
     onKeyDown,
-    content,
     options,
     type = "text",
     minWidth,
@@ -27,8 +26,9 @@ const TextField = (props: TextFieldProps) => {
   } = props;
 
   const { register, watch, setValue, control } = useFormContext();
-  const [isFocused, setIsFocused] = useState(false);
+  const [inputWidth, setInputWidth] = useState<string>(minWidth);
 
+  const inputRef = useRef<HTMLInputElement>(null);
   const value = useWatch({
     control: control,
     name: id,
@@ -39,31 +39,58 @@ const TextField = (props: TextFieldProps) => {
     setValue(id, newValue);
   };
 
+  const adjustInputWidth = useCallback(
+    (element: HTMLInputElement | null, value: string | undefined) => {
+      if (element) {
+        const span = document.createElement("span");
+
+        span.style.visibility = "hidden";
+        span.style.position = "absolute";
+        span.style.whiteSpace = "nowrap";
+        span.style.font = window.getComputedStyle(element).font;
+        span.textContent = value || placeholder || "";
+
+        document.body.appendChild(span);
+
+        const width = Math.min(
+          Math.max(span.offsetWidth + 10, parseInt(minWidth)),
+          parseInt(maxWidth)
+        );
+        setInputWidth(`${width}px`);
+
+        document.body.removeChild(span);
+      }
+    },
+    [maxWidth, minWidth, placeholder]
+  );
+
+  useEffect(() => {
+    adjustInputWidth(inputRef.current, value);
+  }, [value, placeholder, minWidth, maxWidth, adjustInputWidth]);
+
   return (
-    <InputContainer isFocused={isFocused}>
+    <InputContainer>
       <StyledInput
         type={type}
         autoComplete="off"
         placeholder={placeholder}
         {...register(id, options)}
+        ref={(e) => {
+          register(id).ref(e);
+          adjustInputWidth(e, value);
+        }}
         onKeyDown={onKeyDown}
         onChange={handleChange}
         value={value || ""}
-        minWidth={minWidth}
-        maxWidth={maxWidth}
+        style={{ width: inputWidth }}
+        {...rest}
       />
     </InputContainer>
   );
 };
 
-const StyledInput = styled.input<{ minWidth: string; maxWidth: string }>`
-  display: inline-block;
+const StyledInput = styled.input`
   padding: 0;
-  align-items: center;
-  justify-content: center;
-  flex-grow: 1;
-  min-width: ${({ minWidth }) => minWidth};
-  max-width: ${({ maxWidth }) => maxWidth};
   color: #28292c;
   font-size: 1.6rem;
   font-weight: 400;
@@ -85,14 +112,13 @@ const StyledInput = styled.input<{ minWidth: string; maxWidth: string }>`
   }
 `;
 
-const InputContainer = styled.div<{ isFocused: Boolean }>`
-  width: fit-content;
+const InputContainer = styled.div`
   display: inline-block;
   align-items: center;
   justify-content: center;
   padding: 12px 16px;
   border-radius: 8px;
-  border: 1px solid ${({ isFocused }) => (isFocused ? "#ed801d" : "#CCCCCC")};
+  border: 1px solid #cccccc;
   background-color: #fff;
 `;
 
