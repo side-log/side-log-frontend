@@ -27,7 +27,7 @@ importers:
         specifier: workspace:^
         version: link:../shared
       next:
-        specifier: '12'
+        specifier: 12.3.4
         version: 12.3.4(@babel/core@7.25.7)(react-dom@18.3.1)(react@18.3.1)
       react:
         specifier: ^18.3.1
@@ -73,7 +73,7 @@ importers:
         specifier: ^4.5.0
         version: 4.5.0
       next:
-        specifier: '12'
+        specifier: 12.3.4
         version: 12.3.4(@babel/core@7.25.7)(react-dom@18.3.1)(react@18.3.1)
       react:
         specifier: ^18.3.1
