@@ -1,6 +1,4 @@
-import styled from "@emotion/styled";
 import { css } from "@emotion/react";
-import { use } from "react";
 import useWindowInnerWidth from "@/hooks/useInnerWidthHook";
 
 interface BottomFixedAreaProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -17,7 +15,6 @@ export const BottomFixedArea = (props: BottomFixedAreaProps) => {
   return (
     <div
       css={css`
-        display: flex;
         position: fixed;
         bottom: ${bottomSpace};
         width: ${windowInnerWidth}px;
