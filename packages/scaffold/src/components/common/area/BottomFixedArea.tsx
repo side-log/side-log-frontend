@@ -1,7 +1,6 @@
 import { css } from "@emotion/react";
 import useWindowInnerWidth from "@/hooks/useInnerWidthHook";
 import { useEffect, useState } from "react";
-import { createPortal } from "react-dom";
 
 interface BottomFixedAreaProps extends React.HTMLAttributes<HTMLDivElement> {
   hasBottomSpace?: boolean;
@@ -10,32 +9,63 @@ interface BottomFixedAreaProps extends React.HTMLAttributes<HTMLDivElement> {
 
 export const BottomFixedArea = (props: BottomFixedAreaProps) => {
   const { hasBottomSpace = true, children } = props;
-
-  const [mounted, setMounted] = useState(false);
+  const [bottomSpace, setBottomSpace] = useState<string>(
+    "env(safe-area-inset-bottom, 0)"
+  );
 
   const windowInnerWidth = useWindowInnerWidth();
-  const bottomSpace = hasBottomSpace ? "env(safe-area-inset-bottom, 0)" : "0";
 
   useEffect(() => {
-    setMounted(true); // 컴포넌트가 클라이언트에 마운트된 후에만 실행
-    return () => setMounted(false); // 컴포넌트가 언마운트되면 해제
-  }, []);
+    const handleFocus = () => {
+      if (window.visualViewport) {
+        const initialHeight = window.visualViewport.height; // 현재 뷰포트 높이
+        const handleResize = () => {
+          const newHeight = window.visualViewport?.height ?? 280; // 키보드가 올라온 후 높이
+          const heightDiff = initialHeight - newHeight; // 키보드가 차지하는 높이 계산
 
-  return mounted
-    ? createPortal(
-        <div
-          css={css`
-            position: fixed;
-            bottom: ${bottomSpace};
-            width: ${windowInnerWidth}px;
-            left: 50%;
-            transform: translateX(-50%);
-          `}
-          {...props}
-        >
-          {children}
-        </div>,
-        document.body
-      )
-    : null;
+          if (heightDiff > 0) {
+            setBottomSpace(`${heightDiff}px`); // 키보드 높이만큼 bottom 설정
+          }
+        };
+
+        window.visualViewport.addEventListener("resize", handleResize);
+      }
+    };
+
+    const handleBlur = () => {
+      // 키보드가 내려가면 복구
+      setBottomSpace(hasBottomSpace ? "env(safe-area-inset-bottom, 0)" : "0");
+    };
+
+    // 모든 input 및 textarea 요소에 대해 focus와 blur 이벤트를 감지
+    const inputs = document.querySelectorAll("input, textarea");
+
+    inputs.forEach((element) => {
+      element.addEventListener("focus", handleFocus);
+      element.addEventListener("blur", handleBlur);
+    });
+
+    return () => {
+      inputs.forEach((element) => {
+        element.removeEventListener("focus", handleFocus);
+        element.removeEventListener("blur", handleBlur);
+      });
+    };
+  }, [hasBottomSpace]);
+
+  return (
+    <div
+      css={css`
+        position: fixed;
+        bottom: ${bottomSpace};
+        width: ${windowInnerWidth}px;
+        left: 50%;
+        transform: translateX(-50%);
+        transition: bottom 0.3s ease-out;
+      `}
+      {...props}
+    >
+      {children}
+    </div>
+  );
 };

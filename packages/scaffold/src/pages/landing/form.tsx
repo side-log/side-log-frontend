@@ -1,5 +1,7 @@
+import { BottomFixedArea } from "@/components/common/area/BottomFixedArea";
+import PrimaryButton from "@/components/common/button/PrimaryButton";
 import { Container } from "@/components/common/container/Container";
-import TextField from "@/components/common/textField/TextField";
+import { Col } from "@/components/common/flex/Flex";
 import { TextFieldContainer } from "@/components/landing/TextFieldContainer";
 import { FormProvider, RegisterOptions, useForm } from "react-hook-form";
 
@@ -31,12 +33,17 @@ const LandingFormPage = () => {
   return (
     <FormProvider {...methods}>
       <Container>
-        <TextFieldContainer
-          id={StoreFieldType.STORENAME}
-          placeholder="우리가게 이름"
-          rightContent="(은)는,"
-          options={StoreConfigOption}
-        />
+        <Col gap={20}>
+          <TextFieldContainer
+            id={StoreFieldType.STORENAME}
+            placeholder="우리가게 이름"
+            rightContent="(은)는,"
+            options={StoreConfigOption}
+          />
+        </Col>
+        <BottomFixedArea css={{ padding: "8px 16px" }}>
+          <PrimaryButton title="다음" />
+        </BottomFixedArea>
       </Container>
     </FormProvider>
   );

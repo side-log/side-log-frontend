@@ -38,7 +38,7 @@ const TextFieldWidth = (id: string): { minWidth: string; maxWidth: string } => {
 export const TextFieldContainer = (props: TextFieldContainerProps) => {
   const { id, placeholder, onKeyDown, content, options, type, ...rest } = props;
   return (
-    <Row gap={12}>
+    <Row gap={12} alignItems="center">
       <div
         css={css`
           display: flex;
@@ -59,6 +59,7 @@ export const TextFieldContainer = (props: TextFieldContainerProps) => {
         css={css`
           width: fit-content;
         `}
+        alignItems="center"
       >
         <TextField
           id={id}
@@ -74,7 +75,7 @@ export const TextFieldContainer = (props: TextFieldContainerProps) => {
           font="Pretendard"
           size="1.6rem"
           height={24}
-          weight="400"
+          weight="500"
           color="#28292C"
         >
           {props.rightContent}

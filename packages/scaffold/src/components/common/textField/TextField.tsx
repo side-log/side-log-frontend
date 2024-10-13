@@ -25,7 +25,7 @@ const TextField: React.FC<TextFieldProps> = (props: TextFieldProps) => {
     ...rest
   } = props;
 
-  const { register, watch, setValue, control } = useFormContext();
+  const { register, setValue, control } = useFormContext();
   const [inputWidth, setInputWidth] = useState<string>(minWidth);
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -69,7 +69,7 @@ const TextField: React.FC<TextFieldProps> = (props: TextFieldProps) => {
   }, [value, placeholder, minWidth, maxWidth, adjustInputWidth]);
 
   return (
-    <InputContainer>
+    <InputContainer isFocused={value}>
       <StyledInput
         type={type}
         autoComplete="off"
@@ -93,7 +93,7 @@ const StyledInput = styled.input`
   padding: 0;
   color: #28292c;
   font-size: 1.6rem;
-  font-weight: 400;
+  font-weight: 500;
   line-height: 24px;
   font-family: "Pretendard";
   appearance: none;
@@ -107,18 +107,18 @@ const StyledInput = styled.input`
   &::placeholder {
     font-family: "Pretendard";
     font-size: 1.6rem;
-    font-weight: 400;
+    font-weight: 500;
     color: #cccccc;
   }
 `;
 
-const InputContainer = styled.div`
+const InputContainer = styled.div<{ isFocused: Boolean }>`
   display: inline-block;
   align-items: center;
   justify-content: center;
   padding: 12px 16px;
   border-radius: 8px;
-  border: 1px solid #cccccc;
+  border: 1px solid ${({ isFocused }) => (isFocused ? "#ED801D" : "#cccccc")};
   background-color: #fff;
 `;
 
