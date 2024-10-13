@@ -35,7 +35,6 @@ const Button = styled.button<{
   justify-content: center;
   width: 100%;
   padding: 12px;
-  max-width: 808px;
   color: #fff;
   cursor: ${({ disabled }) => (disabled ? "default" : "pointer")};
   background-color: ${({ disabled }) => (disabled ? "#FBE5D0" : "#ED801D")};
