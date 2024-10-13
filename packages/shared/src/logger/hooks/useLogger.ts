@@ -1,14 +1,18 @@
 import { useCallback } from "react";
 import { fetchLog, LoggingParams } from "../remotes";
-import { useDeviceInformation } from "./useDeviceInformation";
+import { useDeviceInfo } from "./useDeviceInfo";
 import useReferrer from "../../hooks/useReferrer";
 
-interface Props {
-  id: number;
+export interface ScreenParams extends Record<string, unknown> {
+  screen_name: string;
 }
 
-export default function useLogger({ id }: Props) {
-  const { fetchDeviceInfo } = useDeviceInformation();
+export interface ClickParams extends Record<string, unknown> {
+  button_text: string;
+}
+
+export default function useLogger() {
+  const { fetchDeviceInfo } = useDeviceInfo();
   const referrer = useReferrer();
 
   const log = useCallback(
@@ -43,19 +47,12 @@ export default function useLogger({ id }: Props) {
   );
 
   const logger = {
-    screen: (params: Record<string, unknown>) =>
-      log(id, {
-        logType: "screen",
-        params,
-      }),
-    impression: () =>
-      log(id, {
-        logType: "impression",
-      }),
-    click: () =>
-      log(id, {
-        logType: "click",
-      }),
+    screen: (id: number, params: ScreenParams) =>
+      log(id, { logType: "screen", params }),
+    impression: (id: number, params: Record<string, unknown>) =>
+      log(id, { logType: "impression", params }),
+    click: (id: number, params: ClickParams) =>
+      log(id, { logType: "click", params }),
   };
 
   return { logger };
