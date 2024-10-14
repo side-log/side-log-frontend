@@ -51,7 +51,7 @@ export const TextFieldContainer = (props: TextFieldContainerProps) => {
         `}
       >
         <Txt font="tossface" size="2rem" height={20}>
-          🏠
+          {props.leftImoji}
         </Txt>
       </div>
       <Row

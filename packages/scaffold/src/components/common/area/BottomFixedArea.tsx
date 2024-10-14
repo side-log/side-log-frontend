@@ -1,6 +1,7 @@
 import { css } from "@emotion/react";
 import useWindowInnerWidth from "@/hooks/useInnerWidthHook";
 import { useEffect, useState } from "react";
+import { set } from "react-hook-form";
 
 interface BottomFixedAreaProps extends React.HTMLAttributes<HTMLDivElement> {
   hasBottomSpace?: boolean;
@@ -17,27 +18,15 @@ export const BottomFixedArea = (props: BottomFixedAreaProps) => {
 
   useEffect(() => {
     const handleFocus = () => {
-      if (window.visualViewport) {
-        const initialHeight = window.visualViewport.height; // 현재 뷰포트 높이
-        const handleResize = () => {
-          const newHeight = window.visualViewport?.height ?? 280; // 키보드가 올라온 후 높이
-          const heightDiff = initialHeight - newHeight; // 키보드가 차지하는 높이 계산
-
-          if (heightDiff > 0) {
-            setBottomSpace(`${heightDiff}px`); // 키보드 높이만큼 bottom 설정
-          }
-        };
-
-        window.visualViewport.addEventListener("resize", handleResize);
-      }
+      setBottomSpace("290px"); // 키보드가 올라왔을 때 실행
+      console.log("keyboard up dd");
     };
 
     const handleBlur = () => {
-      // 키보드가 내려가면 복구
-      setBottomSpace(hasBottomSpace ? "env(safe-area-inset-bottom, 0)" : "0");
+      setBottomSpace(hasBottomSpace ? "env(safe-area-inset-bottom, 0)" : "0"); // 키보드가 내려가면 실행
     };
 
-    // 모든 input 및 textarea 요소에 대해 focus와 blur 이벤트를 감지
+    // 입력 필드가 동적으로 추가될 수 있으므로, DOM 업데이트 시마다 리스너를 재설정
     const inputs = document.querySelectorAll("input, textarea");
 
     inputs.forEach((element) => {

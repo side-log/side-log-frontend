@@ -7,6 +7,10 @@ export const useFormFieldVisibility = <T extends string>(fields: T[]) => {
     setVisibleFields((prev) => [...prev, field]);
   }, []);
 
+  const getNextField = useCallback(() => {
+    return fields.find((field) => !visibleFields.includes(field)) || null;
+  }, [fields, visibleFields]);
+
   const showNextField = useCallback(() => {
     const nextField = fields.find((field) => !visibleFields.includes(field));
     if (nextField != null) {
@@ -27,5 +31,6 @@ export const useFormFieldVisibility = <T extends string>(fields: T[]) => {
     showNextField,
     isFieldVisible,
     isAllFieldsVisible,
+    getNextField,
   };
 };
