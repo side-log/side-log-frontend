@@ -5,7 +5,7 @@ import { Col } from "@/components/common/flex/Flex";
 import { TextFieldContainer } from "@/components/landing/TextFieldContainer";
 import { useFormFieldVisibility } from "@/hooks/useFormFieldVisibility";
 import { get } from "http";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { FormProvider, RegisterOptions, useForm } from "react-hook-form";
 
 export const StoreFieldType = {
@@ -48,13 +48,13 @@ const LandingFormPage = () => {
   const { showNextField, isFieldVisible, showField, getNextField } =
     useFormFieldVisibility(fields);
 
-  let isKeyDown = false; // 플래그 변수 추가
+  const [isKeyDown, setIsKeyDown] = useState(false); // 플래그 변수 추가
 
   const handleKeyDown = async (
     event: React.KeyboardEvent<HTMLInputElement>
   ) => {
     if (event.key === "Enter" && !isKeyDown) {
-      isKeyDown = true; // Enter 키가 눌린 상태로 설정
+      setIsKeyDown(true); // Enter 키가 눌린 상태로 설정
       event.preventDefault(); // 기본 Enter 동작 방지
 
       console.log("Enter key down");
@@ -69,11 +69,10 @@ const LandingFormPage = () => {
       }
 
       // Enter 처리 완료 후 다시 키 입력 가능하게 설정
-      isKeyDown = false;
+      setIsKeyDown(false);
     }
   };
 
-  // 폼 필드 미리 등록
   useEffect(() => {
     showField(StoreFieldType.STORENAME);
   }, []);
