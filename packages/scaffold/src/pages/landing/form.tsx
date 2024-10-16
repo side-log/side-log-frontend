@@ -36,7 +36,6 @@ const LandingFormPage = () => {
   const methods = useForm<StoreDTO>({ mode: "onChange" });
 
   const fields = [
-    StoreFieldType.STORENAME,
     StoreFieldType.STORETYPE,
     StoreFieldType.STORELOCATION,
     StoreFieldType.STOREBESTMENU,
@@ -72,10 +71,6 @@ const LandingFormPage = () => {
       setIsKeyDown(false);
     }
   };
-
-  useEffect(() => {
-    showField(StoreFieldType.STORENAME);
-  }, []);
 
   return (
     <FormProvider {...methods}>
@@ -143,16 +138,14 @@ const LandingFormPage = () => {
               onKeyDown={handleKeyDown}
             />
           )}
-          {isFieldVisible(StoreFieldType.STORENAME) && (
-            <TextFieldContainer
-              id={StoreFieldType.STORENAME}
-              placeholder="우리가게 이름"
-              rightContent="(은)는,"
-              leftImoji="🏠"
-              options={StoreConfigOption}
-              onKeyDown={handleKeyDown}
-            />
-          )}
+          <TextFieldContainer
+            id={StoreFieldType.STORENAME}
+            placeholder="우리가게 이름"
+            rightContent="(은)는,"
+            leftImoji="🏠"
+            options={StoreConfigOption}
+            onKeyDown={handleKeyDown}
+          />
         </Col>
         <BottomFixedArea css={{ padding: "8px 16px" }}>
           <PrimaryButton title="다음" />
