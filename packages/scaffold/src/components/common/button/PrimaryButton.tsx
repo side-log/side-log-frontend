@@ -24,7 +24,7 @@ const PrimaryButton = (props: PrimaryButtonProps) => {
         height={24}
         align="center"
         color="#fff"
-        weight="600"
+        weight="500"
       >
         {title}
       </Txt>
