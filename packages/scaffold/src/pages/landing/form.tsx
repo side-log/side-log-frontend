@@ -81,7 +81,7 @@ const LandingFormPage = () => {
               id={StoreFieldType.STOREMOOD}
               placeholder="가게의 분위기"
               rightContent="한 분위기를 즐겨보세요."
-              leftImoji="🍻"
+              leftEmoji="🍻"
               options={StoreConfigOption}
               onKeyDown={handleKeyDown}
             />
@@ -91,7 +91,7 @@ const LandingFormPage = () => {
               id={StoreFieldType.STORETARGET}
               placeholder="함께 방문할 사람들"
               rightContent="(과)와 함께,"
-              leftImoji="👭"
+              leftEmoji="👭"
               options={StoreConfigOption}
               onKeyDown={handleKeyDown}
             />
@@ -101,7 +101,7 @@ const LandingFormPage = () => {
               id={StoreFieldType.STOREPRICE}
               placeholder="가격"
               rightContent="원 정도의 가격대에요."
-              leftImoji="💴"
+              leftEmoji="💴"
               options={StoreConfigOption}
               onKeyDown={handleKeyDown}
             />
@@ -112,7 +112,7 @@ const LandingFormPage = () => {
               id={StoreFieldType.STOREBESTMENU}
               placeholder="대표메뉴명"
               rightContent="(이)가 정말 맛있어요."
-              leftImoji="🥞"
+              leftEmoji="🥞"
               options={StoreConfigOption}
               onKeyDown={handleKeyDown}
             />
@@ -122,7 +122,7 @@ const LandingFormPage = () => {
               id={StoreFieldType.STORELOCATION}
               placeholder="가게의 위치"
               rightContent="에 위치하고 있어요."
-              leftImoji="📍"
+              leftEmoji="📍"
               options={StoreConfigOption}
               onKeyDown={handleKeyDown}
             />
@@ -133,7 +133,7 @@ const LandingFormPage = () => {
               id={StoreFieldType.STORETYPE}
               placeholder="카페, 일식집 등 가게의 업종"
               rightContent="입니다."
-              leftImoji="🍴"
+              leftEmoji="🍴"
               options={StoreConfigOption}
               onKeyDown={handleKeyDown}
             />
@@ -142,7 +142,7 @@ const LandingFormPage = () => {
             id={StoreFieldType.STORENAME}
             placeholder="우리가게 이름"
             rightContent="(은)는,"
-            leftImoji="🏠"
+            leftEmoji="🏠"
             options={StoreConfigOption}
             onKeyDown={handleKeyDown}
           />

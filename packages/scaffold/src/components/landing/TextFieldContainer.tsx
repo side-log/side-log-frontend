@@ -9,7 +9,7 @@ interface TextFieldContainerProps {
   options?: any;
   placeholder?: string;
   content?: string;
-  leftImoji?: string;
+  leftEmoji?: string;
   rightContent?: string;
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 }
@@ -51,7 +51,7 @@ export const TextFieldContainer = (props: TextFieldContainerProps) => {
         `}
       >
         <Txt font="tossface" size="2rem" height={20}>
-          {props.leftImoji}
+          {props.leftEmoji}
         </Txt>
       </div>
       <Row
