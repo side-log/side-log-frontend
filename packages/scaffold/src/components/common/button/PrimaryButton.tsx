@@ -12,7 +12,12 @@ interface PrimaryButtonProps
 const PrimaryButton = (props: PrimaryButtonProps) => {
   const { title, onClick, disabled = false, ...rest } = props;
   return (
-    <Button onClick={onClick} disabled={disabled} {...rest}>
+    <Button
+      onClick={onClick}
+      data-key="logging-click"
+      disabled={disabled}
+      {...rest}
+    >
       <Txt
         font="Pretendard"
         size="1.6rem"

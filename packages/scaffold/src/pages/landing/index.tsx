@@ -12,7 +12,7 @@ const Landing = () => {
     <LoggingScreen
       id={123456}
       params={{
-        screen_type: "landing_intro",
+        screen_name: "landing_intro",
       }}
     >
       <Container>
