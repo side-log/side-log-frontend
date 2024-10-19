@@ -8,15 +8,15 @@ import { TextFieldContainer } from '@/components/landing/TextFieldContainer';
 import { useFormFieldVisibility } from '@/hooks/useFormFieldVisibility';
 
 const LandingFormContainer = () => {
-  const { setFocus } = useLandingFormContext();
+  const { setFocus, getValues } = useLandingFormContext();
   const { showNextField, isFieldVisible, getNextField } = useFormFieldVisibility([
-    'storeName',
-    'storeType',
-    'storeLocation',
-    'storeBestMenu',
-    'storePrice',
-    'storeTarget',
-    'storeMood',
+    'store.name',
+    'store.type',
+    'store.location',
+    'store.bestMenu',
+    'store.price',
+    'store.target',
+    'store.mood',
   ]);
   const [isKeyDown, setIsKeyDown] = useState(false); // 플래그 변수 추가
 
@@ -44,9 +44,9 @@ const LandingFormContainer = () => {
   return (
     <Container>
       <Col gap={20} padding={'57px 16px'}>
-        {isFieldVisible('storeMood') && (
+        {isFieldVisible('store.mood') && (
           <TextFieldContainer
-            name={'storeMood'}
+            name={'store.mood'}
             placeholder="가게의 분위기"
             rightContent="한 분위기를 즐겨보세요."
             leftEmoji="🍻"
@@ -56,9 +56,9 @@ const LandingFormContainer = () => {
             }}
           />
         )}
-        {isFieldVisible('storeTarget') && (
+        {isFieldVisible('store.target') && (
           <TextFieldContainer
-            name={'storeTarget'}
+            name={'store.target'}
             placeholder="함께 방문할 사람들"
             rightContent="(과)와 함께,"
             leftEmoji="👭"
@@ -68,9 +68,9 @@ const LandingFormContainer = () => {
             }}
           />
         )}
-        {isFieldVisible('storePrice') && (
+        {isFieldVisible('store.price') && (
           <TextFieldContainer
-            name={'storePrice'}
+            name={'store.price'}
             placeholder="가격"
             rightContent="원 정도의 가격대에요."
             leftEmoji="💴"
@@ -81,9 +81,9 @@ const LandingFormContainer = () => {
           />
         )}
 
-        {isFieldVisible('storeBestMenu') && (
+        {isFieldVisible('store.bestMenu') && (
           <TextFieldContainer
-            name={'storeBestMenu'}
+            name={'store.bestMenu'}
             placeholder="대표메뉴명"
             rightContent="(이)가 정말 맛있어요."
             leftEmoji="🥞"
@@ -93,9 +93,9 @@ const LandingFormContainer = () => {
             }}
           />
         )}
-        {isFieldVisible('storeLocation') && (
+        {isFieldVisible('store.location') && (
           <TextFieldContainer
-            name={'storeLocation'}
+            name={'store.location'}
             placeholder="가게의 위치"
             rightContent="에 위치하고 있어요."
             leftEmoji="📍"
@@ -106,9 +106,9 @@ const LandingFormContainer = () => {
           />
         )}
 
-        {isFieldVisible('storeType') && (
+        {isFieldVisible('store.type') && (
           <TextFieldContainer
-            name={'storeType'}
+            name={'store.type'}
             placeholder="카페, 일식집 등 가게의 업종"
             rightContent="입니다."
             leftEmoji="🍴"
@@ -119,7 +119,7 @@ const LandingFormContainer = () => {
           />
         )}
         <TextFieldContainer
-          name={'storeName'}
+          name={'store.name'}
           placeholder="우리가게 이름"
           rightContent="(은)는,"
           leftEmoji="🏠"
@@ -130,7 +130,13 @@ const LandingFormContainer = () => {
         />
       </Col>
       <BottomFixedArea css={{ padding: '8px 16px' }}>
-        <PrimaryButton title="다음" />
+        <PrimaryButton
+          title="다음"
+          onClick={() => {
+            const formValue = getValues();
+            console.log(formValue);
+          }}
+        />
       </BottomFixedArea>
     </Container>
   );

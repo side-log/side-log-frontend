@@ -42,12 +42,7 @@ export const TextFieldContainer = ({ name, placeholder, rules, leftEmoji, rightC
         `}
         alignItems="center"
       >
-        <TextField
-          placeholder={placeholder}
-          {...register(name, {
-            ...rules,
-          })}
-        />
+        <TextField placeholder={placeholder} {...register(name, rules)} />
         <Txt font="Pretendard" size="1.6rem" height={24} weight="500" color="#28292C">
           {rightContent}
         </Txt>

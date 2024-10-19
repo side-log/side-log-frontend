@@ -1,19 +1,20 @@
 import styled from '@emotion/styled';
-import React from 'react';
+import React, { forwardRef } from 'react';
 
 export type TextFieldAttributes = React.InputHTMLAttributes<HTMLInputElement>;
 
-const TextField: React.FC<TextFieldAttributes> = (props: TextFieldAttributes) => {
+const TextField = forwardRef<HTMLInputElement, TextFieldAttributes>(({ ...props }, ref) => {
   return (
     <StyledInput
       {...props}
+      ref={ref}
       autoComplete="off"
       css={{
         fieldSizing: 'content',
       }}
     />
   );
-};
+});
 
 const StyledInput = styled.input`
   color: #28292c;
