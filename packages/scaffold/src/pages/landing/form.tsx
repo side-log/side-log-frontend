@@ -42,99 +42,97 @@ const LandingFormContainer = () => {
   };
 
   return (
-    <LandingFormProvider>
-      <Container>
-        <Col gap={20} padding={'57px 16px'}>
-          {isFieldVisible('storeMood') && (
-            <TextFieldContainer
-              name={'storeMood'}
-              placeholder="가게의 분위기"
-              rightContent="한 분위기를 즐겨보세요."
-              leftEmoji="🍻"
-              onSubmit={handleKeyDown}
-              rules={{
-                required: true,
-              }}
-            />
-          )}
-          {isFieldVisible('storeTarget') && (
-            <TextFieldContainer
-              name={'storeTarget'}
-              placeholder="함께 방문할 사람들"
-              rightContent="(과)와 함께,"
-              leftEmoji="👭"
-              onSubmit={handleKeyDown}
-              rules={{
-                required: true,
-              }}
-            />
-          )}
-          {isFieldVisible('storePrice') && (
-            <TextFieldContainer
-              name={'storePrice'}
-              placeholder="가격"
-              rightContent="원 정도의 가격대에요."
-              leftEmoji="💴"
-              onSubmit={handleKeyDown}
-              rules={{
-                required: true,
-              }}
-            />
-          )}
-
-          {isFieldVisible('storeBestMenu') && (
-            <TextFieldContainer
-              name={'storeBestMenu'}
-              placeholder="대표메뉴명"
-              rightContent="(이)가 정말 맛있어요."
-              leftEmoji="🥞"
-              onSubmit={handleKeyDown}
-              rules={{
-                required: true,
-              }}
-            />
-          )}
-          {isFieldVisible('storeLocation') && (
-            <TextFieldContainer
-              name={'storeLocation'}
-              placeholder="가게의 위치"
-              rightContent="에 위치하고 있어요."
-              leftEmoji="📍"
-              onSubmit={handleKeyDown}
-              rules={{
-                required: true,
-              }}
-            />
-          )}
-
-          {isFieldVisible('storeType') && (
-            <TextFieldContainer
-              name={'storeType'}
-              placeholder="카페, 일식집 등 가게의 업종"
-              rightContent="입니다."
-              leftEmoji="🍴"
-              onSubmit={handleKeyDown}
-              rules={{
-                required: true,
-              }}
-            />
-          )}
+    <Container>
+      <Col gap={20} padding={'57px 16px'}>
+        {isFieldVisible('storeMood') && (
           <TextFieldContainer
-            name={'storeName'}
-            placeholder="우리가게 이름"
-            rightContent="(은)는,"
-            leftEmoji="🏠"
+            name={'storeMood'}
+            placeholder="가게의 분위기"
+            rightContent="한 분위기를 즐겨보세요."
+            leftEmoji="🍻"
             onSubmit={handleKeyDown}
             rules={{
               required: true,
             }}
           />
-        </Col>
-        <BottomFixedArea css={{ padding: '8px 16px' }}>
-          <PrimaryButton title="다음" />
-        </BottomFixedArea>
-      </Container>
-    </LandingFormProvider>
+        )}
+        {isFieldVisible('storeTarget') && (
+          <TextFieldContainer
+            name={'storeTarget'}
+            placeholder="함께 방문할 사람들"
+            rightContent="(과)와 함께,"
+            leftEmoji="👭"
+            onSubmit={handleKeyDown}
+            rules={{
+              required: true,
+            }}
+          />
+        )}
+        {isFieldVisible('storePrice') && (
+          <TextFieldContainer
+            name={'storePrice'}
+            placeholder="가격"
+            rightContent="원 정도의 가격대에요."
+            leftEmoji="💴"
+            onSubmit={handleKeyDown}
+            rules={{
+              required: true,
+            }}
+          />
+        )}
+
+        {isFieldVisible('storeBestMenu') && (
+          <TextFieldContainer
+            name={'storeBestMenu'}
+            placeholder="대표메뉴명"
+            rightContent="(이)가 정말 맛있어요."
+            leftEmoji="🥞"
+            onSubmit={handleKeyDown}
+            rules={{
+              required: true,
+            }}
+          />
+        )}
+        {isFieldVisible('storeLocation') && (
+          <TextFieldContainer
+            name={'storeLocation'}
+            placeholder="가게의 위치"
+            rightContent="에 위치하고 있어요."
+            leftEmoji="📍"
+            onSubmit={handleKeyDown}
+            rules={{
+              required: true,
+            }}
+          />
+        )}
+
+        {isFieldVisible('storeType') && (
+          <TextFieldContainer
+            name={'storeType'}
+            placeholder="카페, 일식집 등 가게의 업종"
+            rightContent="입니다."
+            leftEmoji="🍴"
+            onSubmit={handleKeyDown}
+            rules={{
+              required: true,
+            }}
+          />
+        )}
+        <TextFieldContainer
+          name={'storeName'}
+          placeholder="우리가게 이름"
+          rightContent="(은)는,"
+          leftEmoji="🏠"
+          onSubmit={handleKeyDown}
+          rules={{
+            required: true,
+          }}
+        />
+      </Col>
+      <BottomFixedArea css={{ padding: '8px 16px' }}>
+        <PrimaryButton title="다음" />
+      </BottomFixedArea>
+    </Container>
   );
 };
 
