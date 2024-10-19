@@ -1,20 +1,70 @@
 import styled from '@emotion/styled';
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useEffect, useRef, useState } from 'react';
 
 export type TextFieldAttributes = React.InputHTMLAttributes<HTMLInputElement>;
 
-const TextField = forwardRef<HTMLInputElement, TextFieldAttributes>(({ ...props }, ref) => {
-  return (
-    <StyledInput
-      {...props}
-      ref={ref}
-      autoComplete="off"
-      css={{
-        fieldSizing: 'content',
-      }}
-    />
-  );
-});
+const TextField = forwardRef<HTMLInputElement, TextFieldAttributes>(
+  ({ placeholder, onFocusCapture, ...props }, ref) => {
+    const inputRef = useRef<HTMLInputElement>(null);
+    const hiddenInputRef = useRef<HTMLInputElement>(null);
+    const [isFocusHandled, setIsFocusHandled] = useState(false);
+
+    const combinedRef = useCombinedRefs(ref, inputRef);
+
+    useEffect(() => {
+      if (inputRef.current && placeholder) {
+        const placeholderWidth = getTextWidth(placeholder, window.getComputedStyle(inputRef.current).font);
+        inputRef.current.style.width = `${placeholderWidth + 40}px`;
+      }
+    }, [placeholder]);
+
+    const handleFocusCapture = (event: React.FocusEvent<HTMLInputElement>) => {
+      if (isFocusHandled) {
+        return;
+      }
+
+      hiddenInputRef.current?.focus();
+
+      setTimeout(() => {
+        inputRef.current?.focus();
+        setIsFocusHandled(true);
+      }, 0);
+
+      if (onFocusCapture) {
+        onFocusCapture(event);
+      }
+    };
+
+    const handleBlur = () => {
+      setIsFocusHandled(false);
+    };
+
+    return (
+      <>
+        <input ref={hiddenInputRef} css={{ position: 'absolute', width: 0, height: 0, opacity: 0 }} />
+
+        <StyledInput
+          {...props}
+          ref={combinedRef}
+          placeholder={placeholder}
+          onFocusCapture={handleFocusCapture}
+          onBlur={handleBlur}
+          autoComplete="off"
+        />
+      </>
+    );
+  }
+);
+
+function getTextWidth(text: string, font: string) {
+  const canvas = document.createElement('canvas');
+  const context = canvas.getContext('2d');
+  if (context) {
+    context.font = font;
+    return context.measureText(text).width;
+  }
+  return 0;
+}
 
 const StyledInput = styled.input`
   color: #28292c;
@@ -42,3 +92,18 @@ const StyledInput = styled.input`
 `;
 
 export default TextField;
+
+function useCombinedRefs<T>(...refs: Array<React.Ref<T>>): React.Ref<T> {
+  return React.useCallback(
+    (element: T) => {
+      refs.forEach(ref => {
+        if (typeof ref === 'function') {
+          ref(element);
+        } else if (ref != null) {
+          (ref as React.MutableRefObject<T>).current = element;
+        }
+      });
+    },
+    [refs]
+  );
+}

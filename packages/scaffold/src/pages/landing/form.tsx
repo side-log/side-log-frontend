@@ -40,8 +40,7 @@ const LandingFormContainer = () => {
   };
 
   const handleSubmitField = async (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
-      event.preventDefault();
+    if (event.key === 'Enter' && !event.nativeEvent.isComposing) {
       await handleNextField();
     }
   };
@@ -142,6 +141,7 @@ const LandingFormContainer = () => {
           rightContent="(은)는,"
           leftEmoji="🏠"
           onKeyPress={handleSubmitField}
+          autoFocus={true}
           rules={{
             required: true,
           }}
