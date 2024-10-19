@@ -1,7 +1,7 @@
-import { css } from "@emotion/react";
-import { Row } from "../common/flex/Flex";
-import Txt from "../common/text/Txt";
-import TextField from "../common/textField/TextField";
+import { css } from '@emotion/react';
+import { Row } from '../common/flex/Flex';
+import Txt from '../common/text/Txt';
+import TextField from '../common/textField/TextField';
 
 interface TextFieldContainerProps {
   type?: string;
@@ -16,6 +16,7 @@ interface TextFieldContainerProps {
 
 export const TextFieldContainer = (props: TextFieldContainerProps) => {
   const { id, placeholder, onKeyDown, content, options, type, ...rest } = props;
+
   return (
     <Row gap={12} alignItems="center">
       <div
@@ -40,22 +41,8 @@ export const TextFieldContainer = (props: TextFieldContainerProps) => {
         `}
         alignItems="center"
       >
-        <TextField
-          id={id}
-          placeholder={placeholder}
-          onKeyDown={onKeyDown}
-          content={content}
-          options={options}
-          type={type}
-          {...rest}
-        />
-        <Txt
-          font="Pretendard"
-          size="1.6rem"
-          height={24}
-          weight="500"
-          color="#28292C"
-        >
+        <TextField placeholder={placeholder} {...rest} />
+        <Txt font="Pretendard" size="1.6rem" height={24} weight="500" color="#28292C">
           {props.rightContent}
         </Txt>
       </Row>
