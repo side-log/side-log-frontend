@@ -14,27 +14,6 @@ interface TextFieldContainerProps {
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
-const textFieldWidth = (id: string): { minWidth: string; maxWidth: string } => {
-  switch (id) {
-    case "storeName":
-      return { minWidth: "87px", maxWidth: "237px" };
-    case "storeType":
-      return { minWidth: "172px", maxWidth: "237px" };
-    case "storeLocation":
-      return { minWidth: "74px", maxWidth: "128px" };
-    case "storeBestMenu":
-      return { minWidth: "87px", maxWidth: "116px" };
-    case "storePrice":
-      return { minWidth: "53px", maxWidth: "109px" };
-    case "storeTarget":
-      return { minWidth: "119px", maxWidth: "176px" };
-    case "storeMood":
-      return { minWidth: "87px", maxWidth: "100px" };
-    default:
-      return { minWidth: "87px", maxWidth: "237px" };
-  }
-};
-
 export const TextFieldContainer = (props: TextFieldContainerProps) => {
   const { id, placeholder, onKeyDown, content, options, type, ...rest } = props;
   return (
@@ -68,7 +47,6 @@ export const TextFieldContainer = (props: TextFieldContainerProps) => {
           content={content}
           options={options}
           type={type}
-          {...textFieldWidth(id)}
           {...rest}
         />
         <Txt

@@ -8,25 +8,13 @@ interface TextFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   options?: RegisterOptions;
   placeholder?: string;
   content?: string;
-  minWidth: string;
-  maxWidth: string;
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
 const TextField: React.FC<TextFieldProps> = (props: TextFieldProps) => {
-  const {
-    id,
-    placeholder,
-    onKeyDown,
-    options,
-    type = "text",
-    minWidth,
-    maxWidth,
-    ...rest
-  } = props;
+  const { id, placeholder, onKeyDown, options, type = "text", ...rest } = props;
 
   const { register, setValue, control } = useFormContext();
-  const [inputWidth, setInputWidth] = useState<string>(minWidth);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const value = useWatch({
@@ -39,35 +27,6 @@ const TextField: React.FC<TextFieldProps> = (props: TextFieldProps) => {
     setValue(id, newValue);
   };
 
-  const adjustInputWidth = useCallback(
-    (element: HTMLInputElement | null, value: string | undefined) => {
-      if (element) {
-        const span = document.createElement("span");
-
-        span.style.visibility = "hidden";
-        span.style.position = "absolute";
-        span.style.whiteSpace = "nowrap";
-        span.style.font = window.getComputedStyle(element).font;
-        span.textContent = value || placeholder || "";
-
-        document.body.appendChild(span);
-
-        const width = Math.min(
-          Math.max(span.offsetWidth + 10, parseInt(minWidth)),
-          parseInt(maxWidth)
-        );
-        setInputWidth(`${width}px`);
-
-        document.body.removeChild(span);
-      }
-    },
-    [maxWidth, minWidth, placeholder]
-  );
-
-  useEffect(() => {
-    adjustInputWidth(inputRef.current, value);
-  }, [value, placeholder, minWidth, maxWidth, adjustInputWidth]);
-
   return (
     <InputContainer isFocused={value}>
       <StyledInput
@@ -77,13 +36,14 @@ const TextField: React.FC<TextFieldProps> = (props: TextFieldProps) => {
         {...register(id, options)}
         ref={(e) => {
           register(id).ref(e);
-          adjustInputWidth(e, value);
         }}
         onKeyDown={onKeyDown}
         onChange={handleChange}
         value={value || ""}
-        style={{ width: inputWidth }}
         {...rest}
+        css={{
+          fieldSizing: "content",
+        }}
       />
     </InputContainer>
   );
