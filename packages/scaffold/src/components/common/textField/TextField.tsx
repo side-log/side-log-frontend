@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
 import React from 'react';
 
-type TextFieldProps = React.InputHTMLAttributes<HTMLInputElement>;
+export type TextFieldAttributes = React.InputHTMLAttributes<HTMLInputElement>;
 
-const TextField: React.FC<TextFieldProps> = (props: TextFieldProps) => {
+const TextField: React.FC<TextFieldAttributes> = (props: TextFieldAttributes) => {
   return (
     <StyledInput
       {...props}

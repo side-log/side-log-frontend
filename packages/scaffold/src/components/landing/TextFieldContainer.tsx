@@ -1,21 +1,22 @@
 import { css } from '@emotion/react';
+import { RegisterOptions } from 'react-hook-form';
 import { Row } from '../common/flex/Flex';
 import Txt from '../common/text/Txt';
-import TextField from '../common/textField/TextField';
+import TextField, { TextFieldAttributes } from '../common/textField/TextField';
+import { LandingFormFieldPath, LandingFormValue, useLandingFormContext } from './LandingFormProvider';
 
-interface TextFieldContainerProps {
-  type?: string;
-  id: string;
-  options?: any;
-  placeholder?: string;
-  content?: string;
+interface TextFieldContainerProps extends TextFieldAttributes {
+  name: LandingFormFieldPath;
   leftEmoji?: string;
   rightContent?: string;
-  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  rules?: Omit<
+    RegisterOptions<LandingFormValue, LandingFormFieldPath>,
+    'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'
+  >;
 }
 
-export const TextFieldContainer = (props: TextFieldContainerProps) => {
-  const { id, placeholder, onKeyDown, content, options, type, ...rest } = props;
+export const TextFieldContainer = ({ name, placeholder, rules, leftEmoji, rightContent }: TextFieldContainerProps) => {
+  const { register } = useLandingFormContext();
 
   return (
     <Row gap={12} alignItems="center">
@@ -31,7 +32,7 @@ export const TextFieldContainer = (props: TextFieldContainerProps) => {
         `}
       >
         <Txt font="tossface" size="2rem" height={20}>
-          {props.leftEmoji}
+          {leftEmoji}
         </Txt>
       </div>
       <Row
@@ -41,9 +42,14 @@ export const TextFieldContainer = (props: TextFieldContainerProps) => {
         `}
         alignItems="center"
       >
-        <TextField placeholder={placeholder} {...rest} />
+        <TextField
+          placeholder={placeholder}
+          {...register(name, {
+            ...rules,
+          })}
+        />
         <Txt font="Pretendard" size="1.6rem" height={24} weight="500" color="#28292C">
-          {props.rightContent}
+          {rightContent}
         </Txt>
       </Row>
     </Row>
