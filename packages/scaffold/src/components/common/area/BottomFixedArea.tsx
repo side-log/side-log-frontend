@@ -1,6 +1,6 @@
 import { css } from "@emotion/react";
-import useWindowInnerWidth from "@/hooks/useInnerWidthHook";
 import { useEffect, useState } from "react";
+import useWindowInnerWidth from "@/hooks/useInnerWidthHook";
 
 interface BottomFixedAreaProps extends React.HTMLAttributes<HTMLDivElement> {
   hasBottomSpace?: boolean;

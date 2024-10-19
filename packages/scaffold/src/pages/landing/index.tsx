@@ -1,11 +1,11 @@
+import { css } from "@emotion/react";
+import { LoggingScreen } from "@yeaaaah/shared";
 import { BottomFixedArea } from "@/components/common/area/BottomFixedArea";
 import PrimaryButton from "@/components/common/button/PrimaryButton";
 import { Container } from "@/components/common/container/Container";
 import { Col, Row } from "@/components/common/flex/Flex";
 import Txt from "@/components/common/text/Txt";
 import { LabelTag } from "@/components/landing/LabelTag";
-import { css } from "@emotion/react";
-import { LoggingScreen } from "@yeaaaah/shared";
 
 const Landing = () => {
   return (

@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import styled from "@emotion/styled";
-import { RegisterOptions, useFormContext, useWatch } from "react-hook-form";
+import styled from '@emotion/styled';
+import React from 'react';
+import { RegisterOptions, useFormContext, useWatch } from 'react-hook-form';
 
 interface TextFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   type?: string;
@@ -12,11 +12,10 @@ interface TextFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
 }
 
 const TextField: React.FC<TextFieldProps> = (props: TextFieldProps) => {
-  const { id, placeholder, onKeyDown, options, type = "text", ...rest } = props;
+  const { id, placeholder, onKeyDown, options, type = 'text', ...rest } = props;
 
   const { register, setValue, control } = useFormContext();
 
-  const inputRef = useRef<HTMLInputElement>(null);
   const value = useWatch({
     control: control,
     name: id,
@@ -34,15 +33,15 @@ const TextField: React.FC<TextFieldProps> = (props: TextFieldProps) => {
         autoComplete="off"
         placeholder={placeholder}
         {...register(id, options)}
-        ref={(e) => {
+        ref={e => {
           register(id).ref(e);
         }}
         onKeyDown={onKeyDown}
         onChange={handleChange}
-        value={value || ""}
+        value={value || ''}
         {...rest}
         css={{
-          fieldSizing: "content",
+          fieldSizing: 'content',
         }}
       />
     </InputContainer>
@@ -55,7 +54,7 @@ const StyledInput = styled.input`
   font-size: 1.6rem;
   font-weight: 500;
   line-height: 24px;
-  font-family: "Pretendard";
+  font-family: 'Pretendard';
   appearance: none;
   background-color: transparent;
   border: none;
@@ -65,20 +64,20 @@ const StyledInput = styled.input`
   }
 
   &::placeholder {
-    font-family: "Pretendard";
+    font-family: 'Pretendard';
     font-size: 1.6rem;
     font-weight: 500;
     color: #cccccc;
   }
 `;
 
-const InputContainer = styled.div<{ isFocused: Boolean }>`
+const InputContainer = styled.div<{ isFocused: boolean }>`
   display: inline-block;
   align-items: center;
   justify-content: center;
   padding: 12px 16px;
   border-radius: 8px;
-  border: 1px solid ${({ isFocused }) => (isFocused ? "#ED801D" : "#cccccc")};
+  border: 1px solid ${({ isFocused }) => (isFocused ? '#ED801D' : '#cccccc')};
   background-color: #fff;
 `;
 

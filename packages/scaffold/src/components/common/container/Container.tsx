@@ -1,5 +1,4 @@
-import styled from "@emotion/styled";
-import { css } from "@emotion/react";
+import { css } from '@emotion/react';
 
 interface ContainerProps extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;

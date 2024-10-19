@@ -1,5 +1,5 @@
-import React from "react"; // React import fo
 import styled from "@emotion/styled";
+import React from "react"; // React import fo
 import Txt from "../text/Txt";
 
 interface PrimaryButtonProps
