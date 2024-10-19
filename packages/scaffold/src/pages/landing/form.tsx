@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { BottomFixedArea } from '@/components/common/area/BottomFixedArea';
 import PrimaryButton from '@/components/common/button/PrimaryButton';
 import { Container } from '@/components/common/container/Container';
@@ -8,9 +7,12 @@ import { TextFieldContainer } from '@/components/landing/TextFieldContainer';
 import { useFormFieldVisibility } from '@/hooks/useFormFieldVisibility';
 
 const LandingFormContainer = () => {
-  const { setFocus, getValues } = useLandingFormContext();
-  const { showNextField, isFieldVisible, getNextField } = useFormFieldVisibility([
-    'store.name',
+  const {
+    setFocus,
+    trigger,
+    formState: { errors, isValid },
+  } = useLandingFormContext();
+  const { showField, isFieldVisible, getNextField, isAllFieldsVisible } = useFormFieldVisibility([
     'store.type',
     'store.location',
     'store.bestMenu',
@@ -18,27 +20,37 @@ const LandingFormContainer = () => {
     'store.target',
     'store.mood',
   ]);
-  const [isKeyDown, setIsKeyDown] = useState(false); // 플래그 변수 추가
 
-  const handleKeyDown = async (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter' && !isKeyDown) {
-      setIsKeyDown(true); // Enter 키가 눌린 상태로 설정
-      event.preventDefault(); // 기본 Enter 동작 방지
+  const hasError = errors.store != null;
 
-      console.log('Enter key down');
-
-      showNextField(); // 다음 필드 표시
-
-      const nextField = getNextField(); // 다음 필드 가져오기
-      if (nextField) {
-        // 비동기적으로 setFocus 실행
-        await new Promise(resolve => setTimeout(resolve, 0)); // 비동기 처리 대기
-        setFocus(nextField); // 다음 필드에 포커스 설정
-      }
-
-      // Enter 처리 완료 후 다시 키 입력 가능하게 설정
-      setIsKeyDown(false);
+  const handleNextField = async () => {
+    if (isAllFieldsVisible) {
+      return;
     }
+
+    const nextField = getNextField();
+    if (nextField == null) {
+      return;
+    }
+
+    showField(nextField);
+    await new Promise(resolve => setTimeout(resolve, 0));
+    setFocus(nextField);
+  };
+
+  const handleSubmitField = async (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      await handleNextField();
+    }
+  };
+
+  const handleCtaClick = async () => {
+    const isValid = await trigger('store');
+    if (!isValid) {
+      return;
+    }
+    await handleNextField();
   };
 
   return (
@@ -50,7 +62,7 @@ const LandingFormContainer = () => {
             placeholder="가게의 분위기"
             rightContent="한 분위기를 즐겨보세요."
             leftEmoji="🍻"
-            onSubmit={handleKeyDown}
+            onKeyPress={handleSubmitField}
             rules={{
               required: true,
             }}
@@ -62,7 +74,7 @@ const LandingFormContainer = () => {
             placeholder="함께 방문할 사람들"
             rightContent="(과)와 함께,"
             leftEmoji="👭"
-            onSubmit={handleKeyDown}
+            onKeyPress={handleSubmitField}
             rules={{
               required: true,
             }}
@@ -74,7 +86,7 @@ const LandingFormContainer = () => {
             placeholder="가격"
             rightContent="원 정도의 가격대에요."
             leftEmoji="💴"
-            onSubmit={handleKeyDown}
+            onKeyPress={handleSubmitField}
             rules={{
               required: true,
             }}
@@ -87,7 +99,7 @@ const LandingFormContainer = () => {
             placeholder="대표메뉴명"
             rightContent="(이)가 정말 맛있어요."
             leftEmoji="🥞"
-            onSubmit={handleKeyDown}
+            onKeyPress={handleSubmitField}
             rules={{
               required: true,
             }}
@@ -99,7 +111,7 @@ const LandingFormContainer = () => {
             placeholder="가게의 위치"
             rightContent="에 위치하고 있어요."
             leftEmoji="📍"
-            onSubmit={handleKeyDown}
+            onKeyPress={handleSubmitField}
             rules={{
               required: true,
             }}
@@ -112,7 +124,7 @@ const LandingFormContainer = () => {
             placeholder="카페, 일식집 등 가게의 업종"
             rightContent="입니다."
             leftEmoji="🍴"
-            onSubmit={handleKeyDown}
+            onKeyPress={handleSubmitField}
             rules={{
               required: true,
             }}
@@ -123,20 +135,14 @@ const LandingFormContainer = () => {
           placeholder="우리가게 이름"
           rightContent="(은)는,"
           leftEmoji="🏠"
-          onSubmit={handleKeyDown}
+          onKeyPress={handleSubmitField}
           rules={{
             required: true,
           }}
         />
       </Col>
       <BottomFixedArea css={{ padding: '8px 16px' }}>
-        <PrimaryButton
-          title="다음"
-          onClick={() => {
-            const formValue = getValues();
-            console.log(formValue);
-          }}
-        />
+        <PrimaryButton title="다음" disabled={hasError || !isValid} onClick={handleCtaClick} />
       </BottomFixedArea>
     </Container>
   );

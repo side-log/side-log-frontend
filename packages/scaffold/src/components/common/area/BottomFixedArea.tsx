@@ -16,7 +16,6 @@ export const BottomFixedArea = (props: BottomFixedAreaProps) => {
   useEffect(() => {
     const handleFocus = () => {
       setBottomSpace('290px'); // 키보드가 올라왔을 때 실행
-      console.log('keyboard up dd');
     };
 
     const handleBlur = () => {

@@ -13,7 +13,7 @@ export interface LandingFormValue {
 }
 
 export function LandingFormProvider({ children }: { children: React.ReactNode }) {
-  const methods = useForm<LandingFormValue>({ mode: 'onChange' });
+  const methods = useForm<LandingFormValue>({ mode: 'onTouched' });
   return <FormProvider {...methods}>{children}</FormProvider>;
 }
 

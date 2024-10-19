@@ -15,7 +15,13 @@ interface TextFieldContainerProps extends TextFieldAttributes {
   >;
 }
 
-export const TextFieldContainer = ({ name, placeholder, rules, leftEmoji, rightContent }: TextFieldContainerProps) => {
+export const TextFieldContainer = ({
+  name,
+  rules,
+  leftEmoji,
+  rightContent,
+  ...textFieldAttributes
+}: TextFieldContainerProps) => {
   const { register } = useLandingFormContext();
 
   return (
@@ -42,7 +48,7 @@ export const TextFieldContainer = ({ name, placeholder, rules, leftEmoji, rightC
         `}
         alignItems="center"
       >
-        <TextField placeholder={placeholder} {...register(name, rules)} />
+        <TextField {...textFieldAttributes} {...register(name, rules)} />
         <Txt font="Pretendard" size="1.6rem" height={24} weight="500" color="#28292C">
           {rightContent}
         </Txt>

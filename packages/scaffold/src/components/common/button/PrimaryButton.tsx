@@ -1,9 +1,8 @@
-import styled from "@emotion/styled";
-import React from "react"; // React import fo
-import Txt from "../text/Txt";
+import styled from '@emotion/styled';
+import React from 'react';
+import Txt from '../text/Txt';
 
-interface PrimaryButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface PrimaryButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   title: string;
   onClick?: () => void;
   disabled?: boolean;
@@ -12,20 +11,8 @@ interface PrimaryButtonProps
 const PrimaryButton = (props: PrimaryButtonProps) => {
   const { title, onClick, disabled = false, ...rest } = props;
   return (
-    <Button
-      onClick={onClick}
-      data-key="logging-click"
-      disabled={disabled}
-      {...rest}
-    >
-      <Txt
-        font="Pretendard"
-        size="1.6rem"
-        height={24}
-        align="center"
-        color="#fff"
-        weight="500"
-      >
+    <Button onClick={onClick} data-key="logging-click" disabled={disabled} {...rest}>
+      <Txt font="Pretendard" size="1.6rem" height={24} align="center" color="#fff" weight="500">
         {title}
       </Txt>
     </Button>
@@ -41,8 +28,8 @@ const Button = styled.button<{
   width: 100%;
   padding: 12px;
   color: #fff;
-  cursor: ${({ disabled }) => (disabled ? "default" : "pointer")};
-  background-color: ${({ disabled }) => (disabled ? "#FBE5D0" : "#ED801D")};
+  cursor: ${({ disabled }) => (disabled ? 'default' : 'pointer')};
+  background-color: ${({ disabled }) => (disabled ? '#FBE5D0' : '#ED801D')};
   border-radius: 8px;
 `;
 
