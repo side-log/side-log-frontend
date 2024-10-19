@@ -10,6 +10,7 @@ const LandingFormContainer = () => {
   const {
     setFocus,
     trigger,
+    getValues,
     formState: { errors, isValid },
   } = useLandingFormContext();
   const { showField, isFieldVisible, getNextField, isAllFieldsVisible } = useFormFieldVisibility([
@@ -50,7 +51,12 @@ const LandingFormContainer = () => {
     if (!isValid) {
       return;
     }
-    await handleNextField();
+
+    if (isAllFieldsVisible) {
+      console.log(getValues('store'));
+    } else {
+      await handleNextField();
+    }
   };
 
   return (
