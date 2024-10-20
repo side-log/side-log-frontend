@@ -76,6 +76,7 @@ const LandingFormContainer = () => {
               rightContent="한 분위기를 즐겨보세요."
               leftEmoji="🍻"
               onKeyPress={handleSubmitField}
+              autoFocus={true}
               rules={{
                 required: true,
               }}
@@ -88,6 +89,7 @@ const LandingFormContainer = () => {
               rightContent="(과)와 함께,"
               leftEmoji="👭"
               onKeyPress={handleSubmitField}
+              autoFocus={true}
               rules={{
                 required: true,
               }}
@@ -100,6 +102,7 @@ const LandingFormContainer = () => {
               rightContent="원 정도의 가격대에요."
               leftEmoji="💴"
               onKeyPress={handleSubmitField}
+              autoFocus={true}
               rules={{
                 required: true,
               }}
@@ -113,6 +116,7 @@ const LandingFormContainer = () => {
               rightContent="(이)가 정말 맛있어요."
               leftEmoji="🥞"
               onKeyPress={handleSubmitField}
+              autoFocus={true}
               rules={{
                 required: true,
               }}
@@ -125,6 +129,7 @@ const LandingFormContainer = () => {
               rightContent="에 위치하고 있어요."
               leftEmoji="📍"
               onKeyPress={handleSubmitField}
+              autoFocus={true}
               rules={{
                 required: true,
               }}
@@ -138,6 +143,7 @@ const LandingFormContainer = () => {
               rightContent="입니다."
               leftEmoji="🍴"
               onKeyPress={handleSubmitField}
+              autoFocus={true}
               rules={{
                 required: true,
               }}

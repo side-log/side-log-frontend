@@ -19,6 +19,7 @@ const TextField = forwardRef<HTMLInputElement, TextFieldAttributes>(
     }, [placeholder]);
 
     const handleFocusCapture = (event: React.FocusEvent<HTMLInputElement>) => {
+      console.log(event, placeholder);
       if (isFocusHandled) {
         return;
       }
