@@ -1,4 +1,5 @@
 import { LoggingScreen } from '@yeaaaah/shared';
+import { isNumber } from 'es-toolkit/compat';
 import { BottomFixedArea } from '@/components/common/area/BottomFixedArea';
 import PrimaryButton from '@/components/common/button/PrimaryButton';
 import { Container } from '@/components/common/container/Container';
@@ -98,6 +99,8 @@ const LandingFormContainer = () => {
           {isFieldVisible('store.price') && (
             <TextFieldContainer
               name={'store.price'}
+              type={'number'}
+              inputMode={'numeric'}
               placeholder="가격"
               rightContent="원 정도의 가격대에요."
               leftEmoji="💴"
@@ -105,6 +108,8 @@ const LandingFormContainer = () => {
               autoFocus={true}
               rules={{
                 required: true,
+                valueAsNumber: true,
+                setValueAs: isNumber,
               }}
             />
           )}

@@ -9,10 +9,7 @@ interface TextFieldContainerProps extends TextFieldAttributes {
   name: LandingFormFieldPath;
   leftEmoji?: string;
   rightContent?: string;
-  rules?: Omit<
-    RegisterOptions<LandingFormValue, LandingFormFieldPath>,
-    'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'
-  >;
+  rules?: RegisterOptions<LandingFormValue, LandingFormFieldPath>;
 }
 
 export const TextFieldContainer = ({
