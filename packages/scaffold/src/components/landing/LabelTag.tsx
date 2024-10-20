@@ -1,7 +1,6 @@
-import styled from "@emotion/styled";
-import { css } from "@emotion/react";
-import { Row } from "../common/flex/Flex";
-import Txt from "../common/text/Txt";
+import { css } from '@emotion/react';
+import { Row } from '../common/flex/Flex';
+import Txt from '../common/text/Txt';
 
 interface LabelTagProps {
   emoji: string;
@@ -27,20 +26,14 @@ export const LabelTag = (props: LabelTagProps) => {
         box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.15);
         padding: 12px 16px;
         z-index: ${props.zIndex || 1};
-        margin: ${props.margin || "0"};
+        margin: ${props.margin || '0'};
       `}
     >
       <Row gap={8}>
         <Txt font="tossface" align="center" size="2.2rem" height={24}>
           {emoji}
         </Txt>
-        <Txt
-          font="이서윤체"
-          align="center"
-          size="2rem"
-          height={24}
-          color="#202020"
-        >
+        <Txt font="이서윤체" align="center" size="2rem" height={24} color="#202020">
           {content}
         </Txt>
       </Row>

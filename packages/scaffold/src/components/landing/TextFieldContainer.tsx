@@ -1,42 +1,29 @@
-import { css } from "@emotion/react";
-import { Row } from "../common/flex/Flex";
-import TextField from "../common/textField/TextField";
-import Txt from "../common/text/Txt";
+import { css } from '@emotion/react';
+import { RegisterOptions } from 'react-hook-form';
+import { Row } from '../common/flex/Flex';
+import Txt from '../common/text/Txt';
+import TextField, { TextFieldAttributes } from '../common/textField/TextField';
+import { LandingFormFieldPath, LandingFormValue, useLandingFormContext } from './LandingFormProvider';
 
-interface TextFieldContainerProps {
-  type?: string;
-  id: string;
-  options?: any;
-  placeholder?: string;
-  content?: string;
+interface TextFieldContainerProps extends TextFieldAttributes {
+  name: LandingFormFieldPath;
   leftEmoji?: string;
   rightContent?: string;
-  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  rules?: Omit<
+    RegisterOptions<LandingFormValue, LandingFormFieldPath>,
+    'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'
+  >;
 }
 
-const textFieldWidth = (id: string): { minWidth: string; maxWidth: string } => {
-  switch (id) {
-    case "storeName":
-      return { minWidth: "87px", maxWidth: "237px" };
-    case "storeType":
-      return { minWidth: "172px", maxWidth: "237px" };
-    case "storeLocation":
-      return { minWidth: "74px", maxWidth: "128px" };
-    case "storeBestMenu":
-      return { minWidth: "87px", maxWidth: "116px" };
-    case "storePrice":
-      return { minWidth: "53px", maxWidth: "109px" };
-    case "storeTarget":
-      return { minWidth: "119px", maxWidth: "176px" };
-    case "storeMood":
-      return { minWidth: "87px", maxWidth: "100px" };
-    default:
-      return { minWidth: "87px", maxWidth: "237px" };
-  }
-};
+export const TextFieldContainer = ({
+  name,
+  rules,
+  leftEmoji,
+  rightContent,
+  ...textFieldAttributes
+}: TextFieldContainerProps) => {
+  const { register } = useLandingFormContext();
 
-export const TextFieldContainer = (props: TextFieldContainerProps) => {
-  const { id, placeholder, onKeyDown, content, options, type, ...rest } = props;
   return (
     <Row gap={12} alignItems="center">
       <div
@@ -51,7 +38,7 @@ export const TextFieldContainer = (props: TextFieldContainerProps) => {
         `}
       >
         <Txt font="tossface" size="2rem" height={20}>
-          {props.leftEmoji}
+          {leftEmoji}
         </Txt>
       </div>
       <Row
@@ -61,24 +48,9 @@ export const TextFieldContainer = (props: TextFieldContainerProps) => {
         `}
         alignItems="center"
       >
-        <TextField
-          id={id}
-          placeholder={placeholder}
-          onKeyDown={onKeyDown}
-          content={content}
-          options={options}
-          type={type}
-          {...textFieldWidth(id)}
-          {...rest}
-        />
-        <Txt
-          font="Pretendard"
-          size="1.6rem"
-          height={24}
-          weight="500"
-          color="#28292C"
-        >
-          {props.rightContent}
+        <TextField {...textFieldAttributes} {...register(name, rules)} />
+        <Txt font="Pretendard" size="1.6rem" height={24} weight="500" color="#28292C">
+          {rightContent}
         </Txt>
       </Row>
     </Row>

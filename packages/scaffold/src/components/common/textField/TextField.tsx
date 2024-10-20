@@ -1,125 +1,110 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import styled from "@emotion/styled";
-import { RegisterOptions, useFormContext, useWatch } from "react-hook-form";
+import styled from '@emotion/styled';
+import React, { forwardRef, useEffect, useRef, useState } from 'react';
 
-interface TextFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  type?: string;
-  id: string;
-  options?: RegisterOptions;
-  placeholder?: string;
-  content?: string;
-  minWidth: string;
-  maxWidth: string;
-  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+export type TextFieldAttributes = React.InputHTMLAttributes<HTMLInputElement>;
+
+const TextField = forwardRef<HTMLInputElement, TextFieldAttributes>(
+  ({ placeholder, onFocusCapture, ...props }, ref) => {
+    const inputRef = useRef<HTMLInputElement>(null);
+    const hiddenInputRef = useRef<HTMLInputElement>(null);
+    const [isFocusHandled, setIsFocusHandled] = useState(false);
+
+    const combinedRef = useCombinedRefs(ref, inputRef);
+
+    useEffect(() => {
+      if (inputRef.current && placeholder) {
+        const placeholderWidth = getTextWidth(placeholder, window.getComputedStyle(inputRef.current).font);
+        inputRef.current.style.width = `${placeholderWidth + 40}px`;
+      }
+    }, [placeholder]);
+
+    const handleFocusCapture = (event: React.FocusEvent<HTMLInputElement>) => {
+      console.log(event, placeholder);
+      if (isFocusHandled) {
+        return;
+      }
+
+      hiddenInputRef.current?.focus();
+
+      setTimeout(() => {
+        inputRef.current?.focus();
+        setIsFocusHandled(true);
+      }, 0);
+
+      if (onFocusCapture) {
+        onFocusCapture(event);
+      }
+    };
+
+    const handleBlur = () => {
+      setIsFocusHandled(false);
+    };
+
+    return (
+      <>
+        <input ref={hiddenInputRef} css={{ position: 'absolute', width: 0, height: 0, opacity: 0 }} />
+
+        <StyledInput
+          {...props}
+          ref={combinedRef}
+          placeholder={placeholder}
+          onFocusCapture={handleFocusCapture}
+          onBlur={handleBlur}
+          autoComplete="off"
+        />
+      </>
+    );
+  }
+);
+
+function getTextWidth(text: string, font: string) {
+  const canvas = document.createElement('canvas');
+  const context = canvas.getContext('2d');
+  if (context) {
+    context.font = font;
+    return context.measureText(text).width;
+  }
+  return 0;
 }
 
-const TextField: React.FC<TextFieldProps> = (props: TextFieldProps) => {
-  const {
-    id,
-    placeholder,
-    onKeyDown,
-    options,
-    type = "text",
-    minWidth,
-    maxWidth,
-    ...rest
-  } = props;
-
-  const { register, setValue, control } = useFormContext();
-  const [inputWidth, setInputWidth] = useState<string>(minWidth);
-
-  const inputRef = useRef<HTMLInputElement>(null);
-  const value = useWatch({
-    control: control,
-    name: id,
-  });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = e.target.value;
-    setValue(id, newValue);
-  };
-
-  const adjustInputWidth = useCallback(
-    (element: HTMLInputElement | null, value: string | undefined) => {
-      if (element) {
-        const span = document.createElement("span");
-
-        span.style.visibility = "hidden";
-        span.style.position = "absolute";
-        span.style.whiteSpace = "nowrap";
-        span.style.font = window.getComputedStyle(element).font;
-        span.textContent = value || placeholder || "";
-
-        document.body.appendChild(span);
-
-        const width = Math.min(
-          Math.max(span.offsetWidth + 10, parseInt(minWidth)),
-          parseInt(maxWidth)
-        );
-        setInputWidth(`${width}px`);
-
-        document.body.removeChild(span);
-      }
-    },
-    [maxWidth, minWidth, placeholder]
-  );
-
-  useEffect(() => {
-    adjustInputWidth(inputRef.current, value);
-  }, [value, placeholder, minWidth, maxWidth, adjustInputWidth]);
-
-  return (
-    <InputContainer isFocused={value}>
-      <StyledInput
-        type={type}
-        autoComplete="off"
-        placeholder={placeholder}
-        {...register(id, options)}
-        ref={(e) => {
-          register(id).ref(e);
-          adjustInputWidth(e, value);
-        }}
-        onKeyDown={onKeyDown}
-        onChange={handleChange}
-        value={value || ""}
-        style={{ width: inputWidth }}
-        {...rest}
-      />
-    </InputContainer>
-  );
-};
-
 const StyledInput = styled.input`
-  padding: 0;
   color: #28292c;
   font-size: 1.6rem;
   font-weight: 500;
   line-height: 24px;
-  font-family: "Pretendard";
+  font-family: 'Pretendard';
   appearance: none;
-  background-color: transparent;
-  border: none;
+  border: 1px solid #cccccc;
+  padding: 12px 16px;
+  border-radius: 8px;
+  background-color: #fff;
+  outline: none;
 
   &:focus {
-    outline: none;
+    border: 1px solid #ed801d;
   }
 
   &::placeholder {
-    font-family: "Pretendard";
+    font-family: 'Pretendard';
     font-size: 1.6rem;
     font-weight: 500;
     color: #cccccc;
   }
 `;
 
-const InputContainer = styled.div<{ isFocused: Boolean }>`
-  display: inline-block;
-  align-items: center;
-  justify-content: center;
-  padding: 12px 16px;
-  border-radius: 8px;
-  border: 1px solid ${({ isFocused }) => (isFocused ? "#ED801D" : "#cccccc")};
-  background-color: #fff;
-`;
-
 export default TextField;
+
+function useCombinedRefs<T>(...refs: Array<React.Ref<T>>): React.Ref<T> {
+  return React.useCallback(
+    (element: T) => {
+      refs.forEach(ref => {
+        if (typeof ref === 'function') {
+          ref(element);
+        } else if (ref != null) {
+          (ref as React.MutableRefObject<T>).current = element;
+        }
+      });
+    },
+    [refs]
+  );
+}

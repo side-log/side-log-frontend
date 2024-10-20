@@ -1,27 +1,24 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback } from 'react';
 
 export const useFormFieldVisibility = <T extends string>(fields: T[]) => {
   const [visibleFields, setVisibleFields] = useState<T[]>([]);
 
   const showField = useCallback((field: T) => {
-    setVisibleFields((prev) => [...prev, field]);
+    setVisibleFields(prev => [...prev, field]);
   }, []);
 
   const getNextField = useCallback(() => {
-    return fields.find((field) => !visibleFields.includes(field)) || null;
+    return fields.find(field => !visibleFields.includes(field)) || null;
   }, [fields, visibleFields]);
 
   const showNextField = useCallback(() => {
-    const nextField = fields.find((field) => !visibleFields.includes(field));
+    const nextField = fields.find(field => !visibleFields.includes(field));
     if (nextField != null) {
       showField(nextField);
     }
   }, [fields, showField, visibleFields]);
 
-  const isFieldVisible = useCallback(
-    (field: T) => visibleFields.includes(field),
-    [visibleFields]
-  );
+  const isFieldVisible = useCallback((field: T) => visibleFields.includes(field), [visibleFields]);
 
   const isAllFieldsVisible = visibleFields.length === fields.length;
 
