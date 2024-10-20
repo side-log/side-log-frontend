@@ -9,14 +9,21 @@ const TextField = forwardRef<HTMLInputElement, TextFieldAttributes>(
     const inputRef = useRef<HTMLInputElement>(null);
     const hiddenInputRef = useRef<HTMLInputElement>(null);
     const [isFocusHandled, setIsFocusHandled] = useState(false);
+    const initialParentWidth = useRef<number | null>(null);
 
     const combinedRef = useCombinedRefs(ref, inputRef);
 
     useEffect(() => {
-      if (inputRef.current && placeholder) {
+      if (inputRef.current && placeholder && inputRef.current.parentElement) {
+        if (initialParentWidth.current === null) {
+          initialParentWidth.current = inputRef.current.parentElement.offsetWidth;
+        }
+
+        const parentWidth = initialParentWidth.current;
         const value = textValue !== '' && textValue != null ? textValue.toString() : placeholder;
         const textWidth = getTextWidth(value, window.getComputedStyle(inputRef.current).font);
-        inputRef.current.style.width = `${textWidth + 40}px`;
+        const adjustedWidth = Math.min(textWidth + 40, parentWidth - 20);
+        inputRef.current.style.width = `${adjustedWidth}px`;
       }
     }, [placeholder, textValue]);
 
@@ -85,9 +92,9 @@ const StyledInput = styled.input`
   border-radius: 8px;
   background-color: #fff;
   outline: none;
-  white-space: nowrap; /* Prevent the text from wrapping */
-  overflow-x: auto; /* Enable horizontal scrolling when text overflows */
-  text-overflow: ellipsis; /* Optional: Show ellipsis if needed */
+  white-space: nowrap;
+  overflow-x: auto;
+  text-overflow: ellipsis;
 
   &:focus {
     border: 1px solid #ed801d;
