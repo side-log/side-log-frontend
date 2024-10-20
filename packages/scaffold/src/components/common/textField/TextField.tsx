@@ -5,6 +5,7 @@ export type TextFieldAttributes = React.InputHTMLAttributes<HTMLInputElement>;
 
 const TextField = forwardRef<HTMLInputElement, TextFieldAttributes>(
   ({ placeholder, onFocusCapture, ...props }, ref) => {
+    const [textValue, setTextValue] = useState(props.defaultValue);
     const inputRef = useRef<HTMLInputElement>(null);
     const hiddenInputRef = useRef<HTMLInputElement>(null);
     const [isFocusHandled, setIsFocusHandled] = useState(false);
@@ -13,10 +14,11 @@ const TextField = forwardRef<HTMLInputElement, TextFieldAttributes>(
 
     useEffect(() => {
       if (inputRef.current && placeholder) {
-        const placeholderWidth = getTextWidth(placeholder, window.getComputedStyle(inputRef.current).font);
-        inputRef.current.style.width = `${placeholderWidth + 40}px`;
+        const value = textValue !== '' && textValue != null ? textValue.toString() : placeholder;
+        const textWidth = getTextWidth(value, window.getComputedStyle(inputRef.current).font);
+        inputRef.current.style.width = `${textWidth + 40}px`;
       }
-    }, [placeholder]);
+    }, [placeholder, textValue]);
 
     const handleFocusCapture = (event: React.FocusEvent<HTMLInputElement>) => {
       if (isFocusHandled || !hiddenInputRef.current || !inputRef.current) {
@@ -45,6 +47,11 @@ const TextField = forwardRef<HTMLInputElement, TextFieldAttributes>(
 
         <StyledInput
           {...props}
+          value={textValue}
+          onChange={e => {
+            setTextValue(e.target.value);
+            props.onChange?.(e);
+          }}
           ref={combinedRef}
           placeholder={placeholder}
           onFocusCapture={handleFocusCapture}
@@ -78,6 +85,9 @@ const StyledInput = styled.input`
   border-radius: 8px;
   background-color: #fff;
   outline: none;
+  white-space: nowrap; /* Prevent the text from wrapping */
+  overflow-x: auto; /* Enable horizontal scrolling when text overflows */
+  text-overflow: ellipsis; /* Optional: Show ellipsis if needed */
 
   &:focus {
     border: 1px solid #ed801d;
