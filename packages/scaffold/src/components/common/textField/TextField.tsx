@@ -19,20 +19,20 @@ const TextField = forwardRef<HTMLInputElement, TextFieldAttributes>(
     }, [placeholder]);
 
     const handleFocusCapture = (event: React.FocusEvent<HTMLInputElement>) => {
-      if (isFocusHandled) {
+      if (isFocusHandled || !hiddenInputRef.current || !inputRef.current) {
         return;
       }
 
-      hiddenInputRef.current?.focus();
+      hiddenInputRef.current.focus();
 
       setTimeout(() => {
-        inputRef.current?.focus();
-        setIsFocusHandled(true);
+        if (!isFocusHandled) {
+          inputRef.current?.focus();
+          setIsFocusHandled(true);
+        }
       }, 0);
 
-      if (onFocusCapture) {
-        onFocusCapture(event);
-      }
+      onFocusCapture?.(event);
     };
 
     const handleBlur = () => {
