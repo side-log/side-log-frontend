@@ -6,8 +6,8 @@ export type TextFieldAttributes = React.InputHTMLAttributes<HTMLInputElement> & 
 };
 
 const TextField = forwardRef<HTMLInputElement, TextFieldAttributes>(
-  ({ placeholder, onFocusCapture, fullSize = false, ...props }, ref) => {
-    const [textValue, setTextValue] = useState(props.defaultValue);
+  ({ placeholder, onFocusCapture, fullSize = false, value, ...props }, ref) => {
+    const [textValue, setTextValue] = useState(value ?? props.defaultValue);
     const inputRef = useRef<HTMLInputElement>(null);
     const hiddenInputRef = useRef<HTMLInputElement>(null);
     const [isFocusHandled, setIsFocusHandled] = useState(false);
@@ -16,14 +16,18 @@ const TextField = forwardRef<HTMLInputElement, TextFieldAttributes>(
     const combinedRef = useCombinedRefs(ref, inputRef);
 
     useEffect(() => {
+      setTextValue(value);
+    }, [value]);
+
+    useEffect(() => {
       if (!fullSize && inputRef.current && placeholder && inputRef.current.parentElement) {
         if (initialParentWidth.current === null) {
           initialParentWidth.current = inputRef.current.parentElement.offsetWidth;
         }
 
         const parentWidth = initialParentWidth.current;
-        const value = textValue !== '' && textValue != null ? textValue.toString() : placeholder;
-        const textWidth = getTextWidth(value, window.getComputedStyle(inputRef.current).font);
+        const displayValue = textValue !== '' && textValue != null ? textValue.toString() : placeholder;
+        const textWidth = getTextWidth(displayValue, window.getComputedStyle(inputRef.current).font);
         const adjustedWidth = Math.min(textWidth + 40, parentWidth - 20);
         inputRef.current.style.width = `${adjustedWidth}px`;
       }
