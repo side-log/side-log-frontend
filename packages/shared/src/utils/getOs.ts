@@ -1,20 +1,21 @@
 export default function getOS() {
+  if (typeof window === 'undefined') {
+    return 'Unknown';
+  }
+
   const userAgent = window.navigator.userAgent;
 
-  // iOS detection
   if (/iPad|iPhone|iPod/.test(userAgent)) {
-    return "iOS";
+    return 'iOS';
   }
 
-  // Android detection
   if (/android/i.test(userAgent)) {
-    return "Android";
+    return 'Android';
   }
 
-  // Windows or Mac OS detection (PC)
   if (/Windows|Macintosh|Linux/.test(userAgent)) {
-    return "Desktop";
+    return 'Desktop';
   }
 
-  return "Unknown";
+  return 'Unknown';
 }
