@@ -1,10 +1,12 @@
 import styled from '@emotion/styled';
 import React, { forwardRef, useEffect, useRef, useState } from 'react';
 
-export type TextFieldAttributes = React.InputHTMLAttributes<HTMLInputElement>;
+export type TextFieldAttributes = React.InputHTMLAttributes<HTMLInputElement> & {
+  fullSize?: boolean;
+};
 
 const TextField = forwardRef<HTMLInputElement, TextFieldAttributes>(
-  ({ placeholder, onFocusCapture, ...props }, ref) => {
+  ({ placeholder, onFocusCapture, fullSize = false, ...props }, ref) => {
     const [textValue, setTextValue] = useState(props.defaultValue);
     const inputRef = useRef<HTMLInputElement>(null);
     const hiddenInputRef = useRef<HTMLInputElement>(null);
@@ -14,7 +16,7 @@ const TextField = forwardRef<HTMLInputElement, TextFieldAttributes>(
     const combinedRef = useCombinedRefs(ref, inputRef);
 
     useEffect(() => {
-      if (inputRef.current && placeholder && inputRef.current.parentElement) {
+      if (!fullSize && inputRef.current && placeholder && inputRef.current.parentElement) {
         if (initialParentWidth.current === null) {
           initialParentWidth.current = inputRef.current.parentElement.offsetWidth;
         }
@@ -25,7 +27,7 @@ const TextField = forwardRef<HTMLInputElement, TextFieldAttributes>(
         const adjustedWidth = Math.min(textWidth + 40, parentWidth - 20);
         inputRef.current.style.width = `${adjustedWidth}px`;
       }
-    }, [placeholder, textValue]);
+    }, [placeholder, textValue, fullSize]);
 
     const handleFocusCapture = (event: React.FocusEvent<HTMLInputElement>) => {
       if (isFocusHandled || !hiddenInputRef.current || !inputRef.current) {
@@ -64,6 +66,7 @@ const TextField = forwardRef<HTMLInputElement, TextFieldAttributes>(
           onFocusCapture={handleFocusCapture}
           onBlur={handleBlur}
           autoComplete="off"
+          fullSize={fullSize}
         />
       </>
     );
@@ -80,7 +83,11 @@ function getTextWidth(text: string, font: string) {
   return 0;
 }
 
-const StyledInput = styled.input`
+interface StyledInputProps {
+  fullSize: boolean;
+}
+
+const StyledInput = styled.input<StyledInputProps>`
   color: #28292c;
   font-size: 1.6rem;
   font-weight: 500;
@@ -95,6 +102,9 @@ const StyledInput = styled.input`
   white-space: nowrap;
   overflow-x: auto;
   text-overflow: ellipsis;
+
+  width: ${({ fullSize }) => (fullSize ? '100%' : 'auto')};
+  max-width: 100%;
 
   &:focus {
     border: 1px solid #ed801d;
