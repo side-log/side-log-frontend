@@ -166,7 +166,7 @@ const LandingFormContainer = () => {
             }}
           />
         </Col>
-        <BottomFixedArea css={{ padding: '8px 16px' }}>
+        <BottomFixedArea>
           <PrimaryButton title="다음" disabled={hasError || !isValid} onClick={handleCtaClick} />
         </BottomFixedArea>
       </Container>
