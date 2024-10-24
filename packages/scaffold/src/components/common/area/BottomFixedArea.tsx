@@ -47,8 +47,7 @@ const GradientBackground = styled.div`
   bottom: 0;
   z-index: -1;
   pointer-events: none;
-  height: 34px;
-  background: linear-gradient(to top, #ffffff, rgba(255, 255, 255, 0));
+  background: linear-gradient(to top, #ffffff 0%, #ffffff 50%, rgba(255, 255, 255, 0) 100%);
 `;
 
 const StyledBottomFixedArea = styled.div`

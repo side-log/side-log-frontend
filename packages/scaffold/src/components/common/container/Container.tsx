@@ -3,10 +3,11 @@ import { css } from '@emotion/react';
 interface ContainerProps extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;
   children: React.ReactNode;
+  backgroundColor?: React.CSSProperties['backgroundColor'];
 }
 
 export const Container = (props: ContainerProps) => {
-  const { children } = props;
+  const { children, backgroundColor = '#ffffff' } = props;
   return (
     <div
       css={css`
@@ -18,7 +19,7 @@ export const Container = (props: ContainerProps) => {
         flex-direction: column;
         justify-content: flex-start;
         align-items: center;
-        background-color: #fafafa;
+        background-color: ${backgroundColor};
       `}
     >
       {children}
