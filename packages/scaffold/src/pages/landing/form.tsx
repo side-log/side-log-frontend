@@ -47,7 +47,8 @@ const LandingFormContainer = () => {
     }
   };
 
-  const handleCtaClick = async () => {
+  const handleCtaClick = async (e: any) => {
+    console.log('🚀 ~ handleCtaClick ~ e:', e);
     const isValid = await trigger('store');
     if (!isValid) {
       return;
@@ -166,7 +167,11 @@ const LandingFormContainer = () => {
             }}
           />
         </Col>
-        <BottomFixedArea>
+        <BottomFixedArea
+          containerStyle={{
+            padding: '16px',
+          }}
+        >
           <PrimaryButton title="다음" disabled={hasError || !isValid} onClick={handleCtaClick} />
         </BottomFixedArea>
       </Container>
