@@ -47,8 +47,7 @@ const LandingFormContainer = () => {
     }
   };
 
-  const handleCtaClick = async (e: any) => {
-    console.log('🚀 ~ handleCtaClick ~ e:', e);
+  const handleCtaClick = async () => {
     const isValid = await trigger('store');
     if (!isValid) {
       return;
