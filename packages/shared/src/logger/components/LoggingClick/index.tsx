@@ -1,14 +1,11 @@
-import { useEffect, useState, useRef, PropsWithChildren } from "react";
-import useLogger, { ClickParams } from "../../hooks/useLogger";
+import { useEffect, useState, useRef, PropsWithChildren } from 'react';
+import useLogger, { ClickParams } from '../../hooks/useLogger';
 
 interface LoggingClickProps {
   params: ClickParams;
 }
 
-export default function LoggingClick({
-  params,
-  children,
-}: PropsWithChildren<LoggingClickProps>) {
+export default function LoggingClick({ params, children }: PropsWithChildren<LoggingClickProps>) {
   const { logger } = useLogger();
 
   const [schemaId, setSchemaId] = useState<string | null>(null);
@@ -16,13 +13,13 @@ export default function LoggingClick({
 
   useEffect(() => {
     if (elementRef.current) {
-      const parentWithSchemaId = elementRef.current.closest("[data-schema-id]");
+      const parentWithSchemaId = elementRef.current.closest('[data-schema-id]');
 
       if (parentWithSchemaId != null) {
-        const id = parentWithSchemaId.getAttribute("data-schema-id");
+        const id = parentWithSchemaId.getAttribute('data-schema-id');
         setSchemaId(id);
       } else {
-        throw new Error("No parent element with data-schema-id found.");
+        throw new Error('No parent element with data-schema-id found.');
       }
     }
   }, []);
