@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import { LoggingScreen } from '@yeaaaah/shared';
 import useQueryParam from '@yeaaaah/shared/src/hooks/useQueryParam';
-import { useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import Spacing from '@/components/common/Spacing/Spacing';
 import { BottomFixedArea } from '@/components/common/area/BottomFixedArea';
 import PrimaryButton from '@/components/common/button/PrimaryButton';
@@ -13,6 +13,7 @@ import { isEmail } from '@/utils/isEmail';
 
 export default function LandingFormSubmit() {
   const [email, setEmail] = useState('');
+
   const emailFieldRef = useRef<HTMLInputElement>(null);
   const storeName = useQueryParam('name');
 
@@ -77,8 +78,11 @@ export default function LandingFormSubmit() {
   );
 }
 
-function EmailSuggestion({ email, onClick }: { email: string; onClick: (v: string) => void }) {
-  const domains = ['naver.com', 'gmail.com', 'hanmail.net'];
+const EmailSuggestion = ({ email, onClick }: { email: string; onClick: (v: string) => void }) => {
+  const suggestions = useMemo(() => ['naver.com', 'gmail.com', 'hanmail.net'], []);
+  const [local, domain] = email.split('@');
+
+  const suggestedDomains = suggestions.filter(v => v.includes(domain) || domain == null);
 
   return (
     <Col
@@ -93,10 +97,10 @@ function EmailSuggestion({ email, onClick }: { email: string; onClick: (v: strin
         zIndex: 1200,
       }}
     >
-      {domains.map(domain => {
-        const autoCompletedEmail = `${email}@${domain}`;
+      {suggestedDomains.map(v => {
+        const autoCompletedEmail = `${local}@${v}`;
         return (
-          <div key={domain} css={{ padding: '12px' }} onClick={() => onClick(autoCompletedEmail)}>
+          <div key={email + v} css={{ padding: '12px' }} onClick={() => onClick(autoCompletedEmail)}>
             <Txt size="1.6rem" height={24} color="#575961">
               {autoCompletedEmail}
             </Txt>
@@ -105,4 +109,4 @@ function EmailSuggestion({ email, onClick }: { email: string; onClick: (v: strin
       })}
     </Col>
   );
-}
+};
