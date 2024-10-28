@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import React, { forwardRef, useEffect, useRef, useState } from 'react';
 import { useCombinedRefs } from '@/hooks/useCombiedRefs';
+import { getTextWidth } from '@/utils/getTextWidth';
 
 export type TextFieldAttributes = React.InputHTMLAttributes<HTMLInputElement> & {
   fullSize?: boolean;
@@ -23,16 +24,23 @@ const TextField = forwardRef<HTMLInputElement, TextFieldAttributes>(
       setTextValue(value);
     }, [value]);
 
+    /**
+     * @description TextInput 렌더링 이후 placeholder의 길이만큼 TextInput의 width를 초기화합니다
+     */
     useEffect(
       function initializeInputWidth() {
         if (!fullSize && inputRef.current && placeholder && inputRef.current.parentElement) {
-          if (initialParentWidth.current === null) {
+          if (initialParentWidth.current == null) {
             initialParentWidth.current = inputRef.current.parentElement.offsetWidth;
           }
 
           const parentWidth = initialParentWidth.current;
           const displayValue = placeholder;
-          const textWidth = getTextWidth(displayValue, window.getComputedStyle(inputRef.current).font);
+          const font = window.getComputedStyle(inputRef.current).font;
+          const textWidth = getTextWidth({
+            text: displayValue,
+            options: { font },
+          });
           const adjustedWidth = Math.min(textWidth + 40, parentWidth - 20);
 
           inputRef.current.style.width = `${adjustedWidth}px`;
@@ -42,11 +50,18 @@ const TextField = forwardRef<HTMLInputElement, TextFieldAttributes>(
       [placeholder, fullSize]
     );
 
+    /**
+     * @description 유저 입력값이 placeholder의 길이를 넘어가면 그만큼 TextInput의 width가 늘어나도록 합니다
+     */
     useEffect(
       function adjustWidthOnTextChange() {
         if (initialWidth.current && inputRef.current) {
           const displayValue = textValue !== '' && textValue != null ? textValue.toString() : (placeholder ?? '');
-          const textWidth = getTextWidth(displayValue, window.getComputedStyle(inputRef.current).font);
+          const font = window.getComputedStyle(inputRef.current).font;
+          const textWidth = getTextWidth({
+            text: displayValue,
+            options: { font },
+          });
 
           if (textWidth + 40 > initialWidth.current) {
             inputRef.current.style.width = `${textWidth + 40}px`;
@@ -58,6 +73,9 @@ const TextField = forwardRef<HTMLInputElement, TextFieldAttributes>(
       [placeholder, textValue]
     );
 
+    /***
+     * @description focus 이벤트 발생 시 hiddenInputRef에 focus를 주었다가 다시 원래의 input으로 focus
+     */
     const handleFocusCapture = (event: React.FocusEvent<HTMLInputElement>) => {
       if (isFocusHandled || !hiddenInputRef.current || !inputRef.current) {
         return;
@@ -81,6 +99,7 @@ const TextField = forwardRef<HTMLInputElement, TextFieldAttributes>(
 
     return (
       <>
+        {/* iOS Safari 환경에서 입력 버퍼를 비우기 위해 focus를 임시로 옮기는 목적으로 추가 */}
         <input ref={hiddenInputRef} css={{ position: 'absolute', width: 0, height: 0, opacity: 0 }} />
 
         <StyledInput
@@ -102,21 +121,9 @@ const TextField = forwardRef<HTMLInputElement, TextFieldAttributes>(
   }
 );
 
-function getTextWidth(text: string, font: string) {
-  const canvas = document.createElement('canvas');
-  const context = canvas.getContext('2d');
-  if (context) {
-    context.font = font;
-    return context.measureText(text).width;
-  }
-  return 0;
-}
-
-interface StyledInputProps {
+const StyledInput = styled.input<{
   fullSize: boolean;
-}
-
-const StyledInput = styled.input<StyledInputProps>`
+}>`
   color: #28292c;
   font-size: 1.6rem;
   font-weight: 500;
