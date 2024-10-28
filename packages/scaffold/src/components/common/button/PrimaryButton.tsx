@@ -4,14 +4,14 @@ import Txt from '../text/Txt';
 
 interface PrimaryButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   title: string;
-  onClick?: () => void;
+  onClick?: (e: any) => void;
   disabled?: boolean;
 }
 
 const PrimaryButton = (props: PrimaryButtonProps) => {
   const { title, onClick, disabled = false, ...rest } = props;
   return (
-    <Button onClick={onClick} data-key="logging-click" disabled={disabled} {...rest}>
+    <Button onClick={onClick} data-key="logging-click" disabled={disabled} onTouchEnd={onClick} {...rest}>
       <Txt font="Pretendard" size="1.6rem" height={24} align="center" color="#fff" weight="500">
         {title}
       </Txt>

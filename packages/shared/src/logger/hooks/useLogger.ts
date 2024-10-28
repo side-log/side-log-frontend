@@ -1,7 +1,7 @@
-import { useCallback } from "react";
-import { fetchLog, LoggingParams } from "../remotes";
-import { useDeviceInfo } from "./useDeviceInfo";
-import useReferrer from "../../hooks/useReferrer";
+import { useCallback } from 'react';
+import { fetchLog, LoggingParams } from '../remotes';
+import { useDeviceInfo } from './useDeviceInfo';
+import useReferrer from '../../hooks/useReferrer';
 
 export interface ScreenParams extends Record<string, unknown> {
   screen_name: string;
@@ -10,6 +10,8 @@ export interface ScreenParams extends Record<string, unknown> {
 export interface ClickParams extends Record<string, unknown> {
   button_text: string;
 }
+
+export interface ImpressionParams extends Record<string, unknown> {}
 
 export default function useLogger() {
   const { fetchDeviceInfo } = useDeviceInfo();
@@ -22,7 +24,7 @@ export default function useLogger() {
         logType,
         params,
       }: {
-        logType: LoggingParams["log_type"];
+        logType: LoggingParams['log_type'];
         params?: Record<string, unknown>;
       }
     ) => {
@@ -40,19 +42,16 @@ export default function useLogger() {
           params,
         });
       } catch (error) {
-        console.error("Error logging device information:", error);
+        console.error('Error logging device information:', error);
       }
     },
     [fetchDeviceInfo, referrer]
   );
 
   const logger = {
-    screen: (id: number, params: ScreenParams) =>
-      log(id, { logType: "screen", params }),
-    impression: (id: number, params: Record<string, unknown>) =>
-      log(id, { logType: "impression", params }),
-    click: (id: number, params: ClickParams) =>
-      log(id, { logType: "click", params }),
+    screen: (id: number, params: ScreenParams) => log(id, { logType: 'screen', params }),
+    impression: (id: number, params: Record<string, unknown>) => log(id, { logType: 'impression', params }),
+    click: (id: number, params: ClickParams) => log(id, { logType: 'click', params }),
   };
 
   return { logger };
