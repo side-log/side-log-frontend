@@ -20,34 +20,40 @@ const TextField = forwardRef<HTMLInputElement, TextFieldAttributes>(
       setTextValue(value);
     }, [value]);
 
-    useEffect(() => {
-      if (!fullSize && inputRef.current && placeholder && inputRef.current.parentElement) {
-        if (initialParentWidth.current === null) {
-          initialParentWidth.current = inputRef.current.parentElement.offsetWidth;
+    useEffect(
+      function initializeInputWidth() {
+        if (!fullSize && inputRef.current && placeholder && inputRef.current.parentElement) {
+          if (initialParentWidth.current === null) {
+            initialParentWidth.current = inputRef.current.parentElement.offsetWidth;
+          }
+
+          const parentWidth = initialParentWidth.current;
+          const displayValue = placeholder;
+          const textWidth = getTextWidth(displayValue, window.getComputedStyle(inputRef.current).font);
+          const adjustedWidth = Math.min(textWidth + 40, parentWidth - 20);
+
+          inputRef.current.style.width = `${adjustedWidth}px`;
+          initialWidth.current = adjustedWidth;
         }
+      },
+      [placeholder, fullSize]
+    );
 
-        const parentWidth = initialParentWidth.current;
-        const displayValue = placeholder;
-        const textWidth = getTextWidth(displayValue, window.getComputedStyle(inputRef.current).font);
-        const adjustedWidth = Math.min(textWidth + 40, parentWidth - 20);
+    useEffect(
+      function adjustWidthOnTextChange() {
+        if (initialWidth.current && inputRef.current) {
+          const displayValue = textValue !== '' && textValue != null ? textValue.toString() : (placeholder ?? '');
+          const textWidth = getTextWidth(displayValue, window.getComputedStyle(inputRef.current).font);
 
-        inputRef.current.style.width = `${adjustedWidth}px`;
-        initialWidth.current = adjustedWidth;
-      }
-    }, [placeholder, fullSize]);
-
-    useEffect(() => {
-      if (initialWidth.current && inputRef.current) {
-        const displayValue = textValue !== '' && textValue != null ? textValue.toString() : (placeholder ?? '');
-        const textWidth = getTextWidth(displayValue, window.getComputedStyle(inputRef.current).font);
-
-        if (textWidth + 40 > initialWidth.current) {
-          inputRef.current.style.width = `${textWidth + 40}px`;
-        } else {
-          inputRef.current.style.width = `${initialWidth.current}px`;
+          if (textWidth + 40 > initialWidth.current) {
+            inputRef.current.style.width = `${textWidth + 40}px`;
+          } else {
+            inputRef.current.style.width = `${initialWidth.current}px`;
+          }
         }
-      }
-    }, [placeholder, textValue]);
+      },
+      [placeholder, textValue]
+    );
 
     const handleFocusCapture = (event: React.FocusEvent<HTMLInputElement>) => {
       if (isFocusHandled || !hiddenInputRef.current || !inputRef.current) {
