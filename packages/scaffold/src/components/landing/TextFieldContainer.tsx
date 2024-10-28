@@ -35,13 +35,6 @@ export const TextFieldContainer = ({
 
       const calculatedMaxWidth = containerWidth - emojiWidth - rightContentWidth - 20;
       setMaxWidth(calculatedMaxWidth);
-      console.log(
-        '🚀 ~ useEffect ~ containerWidth:',
-        containerWidth,
-        emojiWidth,
-        rightContentWidth,
-        calculatedMaxWidth
-      );
     }
   }, []);
 
