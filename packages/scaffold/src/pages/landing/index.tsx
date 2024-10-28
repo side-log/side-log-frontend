@@ -22,7 +22,7 @@ const Landing = () => {
         screen_name: 'landing_intro',
       }}
     >
-      <Container>
+      <Container backgroundColor={'#fafafa'}>
         <Col gap={24}>
           <Col padding={'72px 13px 24px'} gap={8}>
             <Txt font="이서윤체" align="center" size="2.8rem" height={36.4} color="#28292C">
