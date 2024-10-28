@@ -1,20 +1,23 @@
 import styled from '@emotion/styled';
 import React, { forwardRef, useEffect, useRef, useState } from 'react';
+import { useCombinedRefs } from '@/hooks/useCombiedRefs';
 
 export type TextFieldAttributes = React.InputHTMLAttributes<HTMLInputElement> & {
   fullSize?: boolean;
 };
 
 const TextField = forwardRef<HTMLInputElement, TextFieldAttributes>(
-  ({ placeholder, onFocusCapture, fullSize = false, value, ...props }, ref) => {
+  ({ placeholder, onFocusCapture, fullSize = false, value, ...props }, forwardedRef) => {
     const [textValue, setTextValue] = useState(value ?? props.defaultValue);
+    const [isFocusHandled, setIsFocusHandled] = useState(false);
+
     const inputRef = useRef<HTMLInputElement>(null);
     const hiddenInputRef = useRef<HTMLInputElement>(null);
-    const [isFocusHandled, setIsFocusHandled] = useState(false);
+
     const initialParentWidth = useRef<number | null>(null);
     const initialWidth = useRef<number | null>(null);
 
-    const combinedRef = useCombinedRefs(ref, inputRef);
+    const combinedRef = useCombinedRefs(forwardedRef, inputRef);
 
     useEffect(() => {
       setTextValue(value);
@@ -145,18 +148,3 @@ const StyledInput = styled.input<StyledInputProps>`
 `;
 
 export default TextField;
-
-function useCombinedRefs<T>(...refs: Array<React.Ref<T>>): React.Ref<T> {
-  return React.useCallback(
-    (element: T) => {
-      refs.forEach(ref => {
-        if (typeof ref === 'function') {
-          ref(element);
-        } else if (ref != null) {
-          (ref as React.MutableRefObject<T>).current = element;
-        }
-      });
-    },
-    [refs]
-  );
-}
