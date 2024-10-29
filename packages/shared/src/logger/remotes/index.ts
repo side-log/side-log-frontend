@@ -22,10 +22,11 @@ export interface ImpressionLoggingParams extends CommonLoggingParams {
 export type LoggingParams = ScreenLoggingParams | ClickLoggingParams | ImpressionLoggingParams;
 
 export function fetchLog(id: number, params: LoggingParams) {
-  fetch(`http://ec2-13-124-223-164.ap-northeast-2.compute.amazonaws.com:8080/api/log/v1/log/${id}`, {
+  const API_URL = import.meta.env.VITE_API_URL;
+  fetch(`${API_URL}/api/log/v1/log/${id}`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json', // Set the content type to JSON
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify(params),
   });
