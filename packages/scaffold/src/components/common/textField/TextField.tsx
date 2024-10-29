@@ -5,10 +5,11 @@ import { getTextWidth } from '@/utils/getTextWidth';
 
 export type TextFieldAttributes = React.InputHTMLAttributes<HTMLInputElement> & {
   fullSize?: boolean;
+  width?: number;
 };
 
 const TextField = forwardRef<HTMLInputElement, TextFieldAttributes>(
-  ({ placeholder, onFocusCapture, fullSize = false, value, ...props }, forwardedRef) => {
+  ({ placeholder, onFocusCapture, fullSize = false, value, width, ...props }, forwardedRef) => {
     const [textValue, setTextValue] = useState(value ?? props.defaultValue);
     const [isFocusHandled, setIsFocusHandled] = useState(false);
 
@@ -29,12 +30,29 @@ const TextField = forwardRef<HTMLInputElement, TextFieldAttributes>(
      */
     useEffect(
       function initializeInputWidth() {
-        if (!fullSize && inputRef.current && placeholder && inputRef.current.parentElement) {
+        if (!inputRef.current || !inputRef.current.parentElement) {
+          return;
+        }
+
+        const parentWidth = inputRef.current.parentElement.offsetWidth;
+
+        if (fullSize) {
+          inputRef.current.style.width = '100%';
+          initialWidth.current = parentWidth;
+          return;
+        }
+
+        if (width) {
+          inputRef.current.style.width = `${width}px`;
+          initialWidth.current = width;
+          return;
+        }
+
+        if (placeholder) {
           if (initialParentWidth.current == null) {
-            initialParentWidth.current = inputRef.current.parentElement.offsetWidth;
+            initialParentWidth.current = parentWidth;
           }
 
-          const parentWidth = initialParentWidth.current;
           const displayValue = placeholder;
           const font = window.getComputedStyle(inputRef.current).font;
           const textWidth = getTextWidth({
@@ -47,7 +65,7 @@ const TextField = forwardRef<HTMLInputElement, TextFieldAttributes>(
           initialWidth.current = adjustedWidth;
         }
       },
-      [placeholder, fullSize]
+      [placeholder, fullSize, width]
     );
 
     /**
@@ -114,16 +132,13 @@ const TextField = forwardRef<HTMLInputElement, TextFieldAttributes>(
           onFocusCapture={handleFocusCapture}
           onBlur={handleBlur}
           autoComplete="off"
-          fullSize={fullSize}
         />
       </>
     );
   }
 );
 
-const StyledInput = styled.input<{
-  fullSize: boolean;
-}>`
+const StyledInput = styled.input`
   color: #28292c;
   font-size: 1.6rem;
   font-weight: 500;
@@ -138,8 +153,6 @@ const StyledInput = styled.input<{
   white-space: nowrap;
   overflow-x: auto;
   text-overflow: ellipsis;
-
-  width: ${({ fullSize }) => (fullSize ? '100%' : 'auto')};
   max-width: 100%;
 
   &:focus {
