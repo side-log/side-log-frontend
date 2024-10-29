@@ -1,6 +1,7 @@
 import { LoggingScreen } from '@yeaaaah/shared';
 import { isNumber } from 'es-toolkit/compat';
 import { BottomFixedArea } from '@/components/common/area/BottomFixedArea';
+import { useRouter } from 'next/router';
 import PrimaryButton from '@/components/common/button/PrimaryButton';
 import { Container } from '@/components/common/container/Container';
 import { Col } from '@/components/common/flex/Flex';
@@ -23,6 +24,8 @@ const LandingFormContainer = () => {
     'store.target',
     'store.mood',
   ]);
+
+  const router = useRouter();
 
   const hasError = errors.store != null;
 
@@ -54,7 +57,11 @@ const LandingFormContainer = () => {
     }
 
     if (isAllFieldsVisible) {
-      console.log(getValues('store'));
+      const data = getValues().store;
+      router.push({
+        pathname: '/landing/result',
+        query: data,
+      });
     } else {
       await handleNextField();
     }
