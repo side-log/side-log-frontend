@@ -1,5 +1,5 @@
 interface ImportMeta {
   env: {
-    VITE_API_URL: string;
+    VITE_SHARED_API_URL: string;
   };
 }

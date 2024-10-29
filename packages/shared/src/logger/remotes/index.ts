@@ -22,7 +22,7 @@ export interface ImpressionLoggingParams extends CommonLoggingParams {
 export type LoggingParams = ScreenLoggingParams | ClickLoggingParams | ImpressionLoggingParams;
 
 export function fetchLog(id: number, params: LoggingParams) {
-  const API_URL = import.meta.env.VITE_API_URL;
+  const API_URL = import.meta.env.VITE_SHARED_API_URL;
   fetch(`${API_URL}/api/log/v1/log/${id}`, {
     method: 'POST',
     headers: {
