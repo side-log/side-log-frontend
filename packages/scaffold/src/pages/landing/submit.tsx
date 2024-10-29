@@ -1,6 +1,7 @@
 import { css } from '@emotion/react';
 import { LoggingScreen } from '@yeaaaah/shared';
 import useQueryParam from '@yeaaaah/shared/src/hooks/useQueryParam';
+import { useRouter } from 'next/router';
 import { useMemo, useRef, useState } from 'react';
 import Spacing from '@/components/common/Spacing/Spacing';
 import { BottomFixedArea } from '@/components/common/area/BottomFixedArea';
@@ -12,6 +13,7 @@ import TextField from '@/components/common/textField/TextField';
 import { isEmail } from '@/utils/isEmail';
 
 export default function LandingFormSubmit() {
+  const router = useRouter();
   const [email, setEmail] = useState('');
 
   const emailFieldRef = useRef<HTMLInputElement>(null);
@@ -19,7 +21,9 @@ export default function LandingFormSubmit() {
 
   const showEmailSuggestion = email.length > 1 && !isEmail(email);
 
-  const handleCtaClick = () => {};
+  const handleCtaClick = () => {
+    router.push('/landing/share');
+  };
 
   return (
     <LoggingScreen
