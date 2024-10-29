@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import { LoggingScreen } from '@yeaaaah/shared';
+import { LoggingScreen, useQueryParams } from '@yeaaaah/shared';
 import { useRouter } from 'next/router';
 import { StampIcon } from '@/assets/icons';
 import { BottomFixedArea } from '@/components/common/area/BottomFixedArea';
@@ -12,7 +12,7 @@ import { ResultTextContainer } from '@/components/result/ResultTextContainer';
 
 export default function LandingFormResult() {
   const router = useRouter();
-  const { name, type, location, bestMenu, price, target, mood } = router.query;
+  const { name, type, location, bestMenu, price, target, mood } = useQueryParams({ required: true });
 
   const formatPrice = (price: string) => {
     return new Intl.NumberFormat('ko-KR', {
@@ -24,7 +24,10 @@ export default function LandingFormResult() {
   const formattedPrice = typeof price === 'string' ? formatPrice(price) : '0';
 
   const handleConfirmClick = () => {
-    router.push('/landing/submit');
+    router.push({
+      pathname: '/landing/submit',
+      query: router.query,
+    });
   };
 
   return (

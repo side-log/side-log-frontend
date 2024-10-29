@@ -1,2 +1,2 @@
-export { useDeviceInfo } from "./useDeviceInfo";
-export { default } from "./useLogger";
+export { useDeviceInfo } from './useDeviceInfo';
+export { default } from './useLogger';
