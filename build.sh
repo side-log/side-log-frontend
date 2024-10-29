@@ -1,5 +1,5 @@
 #!/bin/sh
 cd ../
 mkdir output
-cp -R ./yeaaaah/* ./output
-cp -R ./output ./yeaaaah/
+cp -R ./side-log-frontend/* ./output
+cp -R ./output ./side-log-frontend/
