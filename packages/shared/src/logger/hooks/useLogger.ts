@@ -11,7 +11,9 @@ export interface ClickParams extends Record<string, unknown> {
   button_text: string;
 }
 
-export interface ImpressionParams extends Record<string, unknown> {}
+export interface ImpressionParams extends Record<string, unknown> {
+  impression_area: string;
+}
 
 export default function useLogger() {
   const { fetchDeviceInfo } = useDeviceInfo();
