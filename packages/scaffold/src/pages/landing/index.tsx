@@ -17,7 +17,7 @@ const Landing = () => {
 
   return (
     <LoggingScreen
-      id={123456}
+      id={100001}
       params={{
         screen_name: 'landing_intro',
       }}
