@@ -1,38 +1,99 @@
 import styled from '@emotion/styled';
 import React, { forwardRef, useEffect, useRef, useState } from 'react';
+import { useCombinedRefs } from '@/hooks/useCombiedRefs';
+import { getTextWidth } from '@/utils/getTextWidth';
 
 export type TextFieldAttributes = React.InputHTMLAttributes<HTMLInputElement> & {
   fullSize?: boolean;
+  width?: number;
 };
 
 const TextField = forwardRef<HTMLInputElement, TextFieldAttributes>(
-  ({ placeholder, onFocusCapture, fullSize = false, value, ...props }, ref) => {
+  ({ placeholder, onFocusCapture, fullSize = false, value, width, ...props }, forwardedRef) => {
     const [textValue, setTextValue] = useState(value ?? props.defaultValue);
+    const [isFocusHandled, setIsFocusHandled] = useState(false);
+
     const inputRef = useRef<HTMLInputElement>(null);
     const hiddenInputRef = useRef<HTMLInputElement>(null);
-    const [isFocusHandled, setIsFocusHandled] = useState(false);
-    const initialParentWidth = useRef<number | null>(null);
 
-    const combinedRef = useCombinedRefs(ref, inputRef);
+    const initialParentWidth = useRef<number | null>(null);
+    const initialWidth = useRef<number | null>(null);
+
+    const combinedRef = useCombinedRefs(forwardedRef, inputRef);
 
     useEffect(() => {
       setTextValue(value);
     }, [value]);
 
-    useEffect(() => {
-      if (!fullSize && inputRef.current && placeholder && inputRef.current.parentElement) {
-        if (initialParentWidth.current === null) {
-          initialParentWidth.current = inputRef.current.parentElement.offsetWidth;
+    /**
+     * @description TextInput 렌더링 이후 placeholder의 길이만큼 TextInput의 width를 초기화합니다
+     */
+    useEffect(
+      function initializeInputWidth() {
+        if (!inputRef.current || !inputRef.current.parentElement) {
+          return;
         }
 
-        const parentWidth = initialParentWidth.current;
-        const displayValue = textValue !== '' && textValue != null ? textValue.toString() : placeholder;
-        const textWidth = getTextWidth(displayValue, window.getComputedStyle(inputRef.current).font);
-        const adjustedWidth = Math.min(textWidth + 40, parentWidth - 20);
-        inputRef.current.style.width = `${adjustedWidth}px`;
-      }
-    }, [placeholder, textValue, fullSize]);
+        const parentWidth = inputRef.current.parentElement.offsetWidth;
 
+        if (fullSize) {
+          inputRef.current.style.width = '100%';
+          initialWidth.current = parentWidth;
+          return;
+        }
+
+        if (width) {
+          inputRef.current.style.width = `${width}px`;
+          initialWidth.current = width;
+          return;
+        }
+
+        if (placeholder) {
+          if (initialParentWidth.current == null) {
+            initialParentWidth.current = parentWidth;
+          }
+
+          const displayValue = placeholder;
+          const font = window.getComputedStyle(inputRef.current).font;
+          const textWidth = getTextWidth({
+            text: displayValue,
+            options: { font },
+          });
+          const adjustedWidth = Math.min(textWidth + 40, parentWidth - 20);
+
+          inputRef.current.style.width = `${adjustedWidth}px`;
+          initialWidth.current = adjustedWidth;
+        }
+      },
+      [placeholder, fullSize, width]
+    );
+
+    /**
+     * @description 유저 입력값이 placeholder의 길이를 넘어가면 그만큼 TextInput의 width가 늘어나도록 합니다
+     */
+    useEffect(
+      function adjustWidthOnTextChange() {
+        if (initialWidth.current && inputRef.current) {
+          const displayValue = textValue !== '' && textValue != null ? textValue.toString() : (placeholder ?? '');
+          const font = window.getComputedStyle(inputRef.current).font;
+          const textWidth = getTextWidth({
+            text: displayValue,
+            options: { font },
+          });
+
+          if (textWidth + 40 > initialWidth.current) {
+            inputRef.current.style.width = `${textWidth + 40}px`;
+          } else {
+            inputRef.current.style.width = `${initialWidth.current}px`;
+          }
+        }
+      },
+      [placeholder, textValue]
+    );
+
+    /***
+     * @description focus 이벤트 발생 시 hiddenInputRef에 focus를 주었다가 다시 원래의 input으로 focus
+     */
     const handleFocusCapture = (event: React.FocusEvent<HTMLInputElement>) => {
       if (isFocusHandled || !hiddenInputRef.current || !inputRef.current) {
         return;
@@ -56,6 +117,7 @@ const TextField = forwardRef<HTMLInputElement, TextFieldAttributes>(
 
     return (
       <>
+        {/* iOS Safari 환경에서 입력 버퍼를 비우기 위해 focus를 임시로 옮기는 목적으로 추가 */}
         <input ref={hiddenInputRef} css={{ position: 'absolute', width: 0, height: 0, opacity: 0 }} />
 
         <StyledInput
@@ -70,28 +132,13 @@ const TextField = forwardRef<HTMLInputElement, TextFieldAttributes>(
           onFocusCapture={handleFocusCapture}
           onBlur={handleBlur}
           autoComplete="off"
-          fullSize={fullSize}
         />
       </>
     );
   }
 );
 
-function getTextWidth(text: string, font: string) {
-  const canvas = document.createElement('canvas');
-  const context = canvas.getContext('2d');
-  if (context) {
-    context.font = font;
-    return context.measureText(text).width;
-  }
-  return 0;
-}
-
-interface StyledInputProps {
-  fullSize: boolean;
-}
-
-const StyledInput = styled.input<StyledInputProps>`
+const StyledInput = styled.input`
   color: #28292c;
   font-size: 1.6rem;
   font-weight: 500;
@@ -106,8 +153,6 @@ const StyledInput = styled.input<StyledInputProps>`
   white-space: nowrap;
   overflow-x: auto;
   text-overflow: ellipsis;
-
-  width: ${({ fullSize }) => (fullSize ? '100%' : 'auto')};
   max-width: 100%;
 
   &:focus {
@@ -123,18 +168,3 @@ const StyledInput = styled.input<StyledInputProps>`
 `;
 
 export default TextField;
-
-function useCombinedRefs<T>(...refs: Array<React.Ref<T>>): React.Ref<T> {
-  return React.useCallback(
-    (element: T) => {
-      refs.forEach(ref => {
-        if (typeof ref === 'function') {
-          ref(element);
-        } else if (ref != null) {
-          (ref as React.MutableRefObject<T>).current = element;
-        }
-      });
-    },
-    [refs]
-  );
-}
