@@ -1,4 +1,4 @@
-import { LoggingScreen } from '@yeaaaah/shared';
+import { LoggingImpression, LoggingScreen } from '@yeaaaah/shared';
 import { isNumber } from 'es-toolkit/compat';
 import { useRouter } from 'next/router';
 import { BottomFixedArea } from '@/components/common/area/BottomFixedArea';
@@ -78,100 +78,142 @@ const LandingFormContainer = () => {
       <Container>
         <Col gap={20} padding={'57px 16px'}>
           {isFieldVisible('store.mood') && (
-            <TextFieldContainer
-              name={'store.mood'}
-              placeholder="가게의 분위기"
-              rightContent="한 분위기를 즐겨보세요."
-              leftEmoji="🍻"
-              onKeyPress={handleSubmitField}
-              autoFocus={true}
-              rules={{
-                required: true,
+            <LoggingImpression
+              params={{
+                impression_area: 'store.mood',
               }}
-            />
+            >
+              <TextFieldContainer
+                name={'store.mood'}
+                placeholder="가게의 분위기"
+                rightContent="한 분위기를 즐겨보세요."
+                leftEmoji="🍻"
+                onKeyPress={handleSubmitField}
+                autoFocus={true}
+                rules={{
+                  required: true,
+                }}
+              />
+            </LoggingImpression>
           )}
           {isFieldVisible('store.target') && (
-            <TextFieldContainer
-              name={'store.target'}
-              placeholder="함께 방문할 사람들"
-              rightContent="(과)와 함께,"
-              leftEmoji="👭"
-              onKeyPress={handleSubmitField}
-              autoFocus={true}
-              rules={{
-                required: true,
+            <LoggingImpression
+              params={{
+                impression_area: 'sstore.target',
               }}
-            />
+            >
+              <TextFieldContainer
+                name={'store.target'}
+                placeholder="함께 방문할 사람들"
+                rightContent="(과)와 함께,"
+                leftEmoji="👭"
+                onKeyPress={handleSubmitField}
+                autoFocus={true}
+                rules={{
+                  required: true,
+                }}
+              />
+            </LoggingImpression>
           )}
           {isFieldVisible('store.price') && (
-            <TextFieldContainer
-              name={'store.price'}
-              type={'number'}
-              inputMode={'numeric'}
-              placeholder="가격"
-              rightContent="원 정도의 가격대에요."
-              leftEmoji="💴"
-              onKeyPress={handleSubmitField}
-              autoFocus={true}
-              rules={{
-                required: true,
-                valueAsNumber: true,
-                setValueAs: isNumber,
+            <LoggingImpression
+              params={{
+                impression_area: 'store.price',
               }}
-            />
+            >
+              <TextFieldContainer
+                name={'store.price'}
+                type={'number'}
+                inputMode={'numeric'}
+                placeholder="가격"
+                rightContent="원 정도의 가격대에요."
+                leftEmoji="💴"
+                onKeyPress={handleSubmitField}
+                autoFocus={true}
+                rules={{
+                  required: true,
+                  valueAsNumber: true,
+                  setValueAs: isNumber,
+                }}
+              />
+            </LoggingImpression>
           )}
 
           {isFieldVisible('store.bestMenu') && (
-            <TextFieldContainer
-              name={'store.bestMenu'}
-              placeholder="대표메뉴명"
-              rightContent="(이)가 정말 맛있어요."
-              leftEmoji="🥞"
-              onKeyPress={handleSubmitField}
-              autoFocus={true}
-              rules={{
-                required: true,
+            <LoggingImpression
+              params={{
+                impression_area: 'store.bestMenu',
               }}
-            />
+            >
+              <TextFieldContainer
+                name={'store.bestMenu'}
+                placeholder="대표메뉴명"
+                rightContent="(이)가 정말 맛있어요."
+                leftEmoji="🥞"
+                onKeyPress={handleSubmitField}
+                autoFocus={true}
+                rules={{
+                  required: true,
+                }}
+              />
+            </LoggingImpression>
           )}
           {isFieldVisible('store.location') && (
-            <TextFieldContainer
-              name={'store.location'}
-              placeholder="가게의 위치"
-              rightContent="에 위치하고 있어요."
-              leftEmoji="📍"
-              onKeyPress={handleSubmitField}
-              autoFocus={true}
-              rules={{
-                required: true,
+            <LoggingImpression
+              params={{
+                impression_area: 'store.name',
               }}
-            />
+            >
+              <TextFieldContainer
+                name={'store.location'}
+                placeholder="가게의 위치"
+                rightContent="에 위치하고 있어요."
+                leftEmoji="📍"
+                onKeyPress={handleSubmitField}
+                autoFocus={true}
+                rules={{
+                  required: true,
+                }}
+              />
+            </LoggingImpression>
           )}
 
           {isFieldVisible('store.type') && (
+            <LoggingImpression
+              params={{
+                impression_area: 'store.type',
+              }}
+            >
+              <TextFieldContainer
+                name={'store.type'}
+                placeholder="카페, 일식집 등 가게의 업종"
+                rightContent="입니다."
+                leftEmoji="🍴"
+                onKeyPress={handleSubmitField}
+                autoFocus={true}
+                rules={{
+                  required: true,
+                }}
+              />
+            </LoggingImpression>
+          )}
+          <LoggingImpression
+            params={{
+              impression_area: 'store.name',
+            }}
+          >
             <TextFieldContainer
-              name={'store.type'}
-              placeholder="카페, 일식집 등 가게의 업종"
-              rightContent="입니다."
-              leftEmoji="🍴"
+              name={'store.name'}
+              placeholder="우리가게 이름"
+              rightContent="(은)는,"
+              leftEmoji="🏠"
               onKeyPress={handleSubmitField}
               autoFocus={true}
               rules={{
                 required: true,
               }}
             />
-          )}
-          <TextFieldContainer
-            name={'store.name'}
-            placeholder="우리가게 이름"
-            rightContent="(은)는,"
-            leftEmoji="🏠"
-            onKeyPress={handleSubmitField}
-            autoFocus={true}
-            rules={{
-              required: true,
-            }}
-          />
+          </LoggingImpression>
         </Col>
         <BottomFixedArea
           containerStyle={{
