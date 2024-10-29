@@ -1,6 +1,6 @@
-import withTmInitializer from "next-transpile-modules";
+import withTmInitializer from 'next-transpile-modules';
 
-const withTM = withTmInitializer(["@yeaaaah/shared"], {
+const withTM = withTmInitializer(['@yeaaaah/shared'], {
   unstable_webpack5: true,
 });
 
@@ -9,6 +9,15 @@ const nextConfig = withTM({
   reactStrictMode: true,
   compiler: {
     emotion: true,
+  },
+  webpack(config) {
+    config.module.rules.push({
+      test: /\.svg$/,
+      issuer: /\.(js|ts)x?$/,
+      use: ['@svgr/webpack'],
+    });
+
+    return config;
   },
 });
 
