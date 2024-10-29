@@ -1,7 +1,7 @@
 import { LoggingScreen } from '@yeaaaah/shared';
 import { isNumber } from 'es-toolkit/compat';
-import { BottomFixedArea } from '@/components/common/area/BottomFixedArea';
 import { useRouter } from 'next/router';
+import { BottomFixedArea } from '@/components/common/area/BottomFixedArea';
 import PrimaryButton from '@/components/common/button/PrimaryButton';
 import { Container } from '@/components/common/container/Container';
 import { Col } from '@/components/common/flex/Flex';
@@ -57,10 +57,10 @@ const LandingFormContainer = () => {
     }
 
     if (isAllFieldsVisible) {
-      const data = getValues().store;
+      const { store } = getValues();
       router.push({
         pathname: '/landing/result',
-        query: data,
+        query: store,
       });
     } else {
       await handleNextField();
