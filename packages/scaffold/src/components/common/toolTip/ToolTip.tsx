@@ -16,6 +16,7 @@ const ToolTip = (props: ToolTipProps) => {
     <ToolTipContainer visibility={visibility} {...rest}>
       <RounedBox>
         <Row
+          alignItems="center"
           gap={6}
           css={css`
             width: max-content;
