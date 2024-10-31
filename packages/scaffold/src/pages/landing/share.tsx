@@ -5,8 +5,24 @@ import PrimaryButton from '@/components/common/button/PrimaryButton';
 import { Container } from '@/components/common/container/Container';
 import { Col } from '@/components/common/flex/Flex';
 import Txt from '@/components/common/text/Txt';
+import ToolTip from '@/components/common/toolTip/ToolTip';
 
 export default function LandingSharePage() {
+  const handleShare = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: '손님의 발견',
+          url: 'https://sonbal.vercel.app/',
+        });
+      } catch (error) {
+        console.error('공유 실패', error);
+      }
+    } else {
+      console.error('Web Share API는 이 브라우저에서 지원되지 않습니다.');
+    }
+  };
+
   return (
     <LoggingScreen
       id={100005}
@@ -29,7 +45,8 @@ export default function LandingSharePage() {
             padding: '16px',
           }}
         >
-          <PrimaryButton title="다른 사장님들에게 공유하기" onClick={() => {}} />
+          <ToolTip content={'공유하고 더 빨리 의견 받아보기'} />
+          <PrimaryButton title="다른 사장님들에게 공유하기" onClick={handleShare} />
         </BottomFixedArea>
       </Container>
     </LoggingScreen>
