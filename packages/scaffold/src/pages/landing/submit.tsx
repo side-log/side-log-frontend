@@ -7,6 +7,7 @@ import { BottomFixedArea } from '@/components/common/area/BottomFixedArea';
 import PrimaryButton from '@/components/common/button/PrimaryButton';
 import { Container } from '@/components/common/container/Container';
 import { Col, Row } from '@/components/common/flex/Flex';
+import Header from '@/components/common/header/Header';
 import Txt from '@/components/common/text/Txt';
 import TextField from '@/components/common/textField/TextField';
 import { submitForm } from '@/remotes/landing/submitForm';
@@ -41,7 +42,8 @@ export default function LandingFormSubmit() {
       }}
     >
       <Container>
-        <Col padding={'72px 0 24px'} gap={8}>
+        <Header />
+        <Col padding={'16px 0 24px'} gap={8}>
           <Txt font="이서윤체" align="center" size="2.8rem" height={36.4} color="#28292C">
             우리 가게의
           </Txt>
@@ -82,7 +84,11 @@ export default function LandingFormSubmit() {
           />
           {showEmailSuggestion && <EmailSuggestion email={email} onClick={setEmail} />}
         </div>
-        <BottomFixedArea>
+        <BottomFixedArea
+          containerStyle={{
+            padding: '16px',
+          }}
+        >
           <PrimaryButton title={'우리가게 의견 듣기'} onClick={handleCtaClick} disabled={!isEmail(email)} />
         </BottomFixedArea>
       </Container>
