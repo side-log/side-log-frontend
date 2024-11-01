@@ -11,7 +11,7 @@ interface SubmitFormRequest {
 export async function submitForm(data: SubmitFormRequest) {
   const deviceId = await getDeivceId();
 
-  return fetch(`${process.env.API_URL}/api/store`, {
+  return fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/store`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
