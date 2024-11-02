@@ -102,6 +102,10 @@ const EmailSuggestion = ({ email, onClick }: { email: string; onClick: (v: strin
 
   const suggestedDomains = suggestions.filter(v => v.includes(domain) || domain == null);
 
+  if (suggestedDomains.length === 0) {
+    return <></>;
+  }
+
   return (
     <Col
       css={{
