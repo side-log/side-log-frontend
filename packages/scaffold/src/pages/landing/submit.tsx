@@ -1,5 +1,6 @@
 import { css } from '@emotion/react';
 import { LoggingScreen, useQueryParams } from '@yeaaaah/shared';
+import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import { useMemo, useRef, useState } from 'react';
 import Spacing from '@/components/common/Spacing/Spacing';
@@ -28,7 +29,11 @@ export default function LandingFormSubmit() {
         store: { name, type, location, bestMenu, price: parseInt(price), target, mood },
         user: { email },
       });
-      router.push('/landing/share');
+      router.push('/landing/share', {
+        query: {
+          submit: 'COMPLETE',
+        },
+      });
     } catch (e) {
       alert('잠시 후 다시 시도해주세요.');
     }
@@ -127,4 +132,21 @@ const EmailSuggestion = ({ email, onClick }: { email: string; onClick: (v: strin
       })}
     </Col>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+  const { name, type, location, bestMenu, price, target, mood } = query;
+
+  if ([name, type, location, bestMenu, price, target, mood].some(v => v == null)) {
+    return {
+      redirect: {
+        destination: '/landing',
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
 };
