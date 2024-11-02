@@ -12,6 +12,7 @@
     "@emotion/css": "^11.13.4",
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
+    "@toss/utils": "^1.6.1",
     "@yeaaaah/shared": "workspace:^",
     "es-toolkit": "^1.25.2",
     "next": "12.3.4",
