@@ -1,4 +1,5 @@
 import { LoggingScreen } from '@yeaaaah/shared';
+import { GetServerSideProps } from 'next';
 import { ClockIcon } from '@/assets/icons';
 import { BottomFixedArea } from '@/components/common/area/BottomFixedArea';
 import PrimaryButton from '@/components/common/button/PrimaryButton';
@@ -52,3 +53,20 @@ export default function LandingSharePage() {
     </LoggingScreen>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+  const { submit } = query;
+
+  if (submit !== 'COMPLETE') {
+    return {
+      redirect: {
+        destination: '/landing',
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+};

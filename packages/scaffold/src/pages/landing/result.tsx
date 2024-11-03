@@ -1,5 +1,6 @@
 import { css } from '@emotion/react';
 import { LoggingScreen, useQueryParams } from '@yeaaaah/shared';
+import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import { StampIcon } from '@/assets/icons';
 import { BottomFixedArea } from '@/components/common/area/BottomFixedArea';
@@ -110,3 +111,20 @@ export default function LandingFormResult() {
     </LoggingScreen>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+  const { name, type, location, bestMenu, price, target, mood } = query;
+
+  if ([name, type, location, bestMenu, price, target, mood].some(v => v == null)) {
+    return {
+      redirect: {
+        destination: '/landing',
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+};
