@@ -6,7 +6,7 @@ import Txt from '../common/text/Txt';
 import TextField, { TextFieldAttributes } from '../common/textField/TextField';
 import { LandingFormFieldPath, LandingFormValue, useLandingFormContext } from './LandingFormProvider';
 
-interface TextFieldContainerProps extends TextFieldAttributes {
+interface TextFieldContainerProps extends TextFieldAttributes<string | number> {
   name: LandingFormFieldPath;
   leftEmoji?: string;
   rightContent?: string;

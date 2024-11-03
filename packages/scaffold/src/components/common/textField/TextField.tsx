@@ -3,15 +3,17 @@ import React, { forwardRef, useEffect, useRef, useState } from 'react';
 import { useCombinedRefs } from '@/hooks/useCombiedRefs';
 import { getTextWidth } from '@/utils/getTextWidth';
 
-export type TextFieldAttributes = React.InputHTMLAttributes<HTMLInputElement> & {
+export type TextFieldAttributes<V extends string | number> = React.InputHTMLAttributes<HTMLInputElement> & {
   fullSize?: boolean;
   width?: number;
+  format?: (v: V) => V;
 };
 
-const TextField = forwardRef<HTMLInputElement, TextFieldAttributes>(
-  ({ placeholder, onFocusCapture, fullSize = false, value, width, ...props }, forwardedRef) => {
+const TextField = forwardRef<HTMLInputElement, TextFieldAttributes<string | number>>(
+  ({ placeholder, onFocusCapture, fullSize = false, value, width, format, ...props }, forwardedRef) => {
     const [textValue, setTextValue] = useState(value ?? props.defaultValue);
     const [isFocusHandled, setIsFocusHandled] = useState(false);
+    const [displayedValue, setDisplayedValue] = useState(value);
 
     const inputRef = useRef<HTMLInputElement>(null);
     const hiddenInputRef = useRef<HTMLInputElement>(null);
@@ -23,7 +25,8 @@ const TextField = forwardRef<HTMLInputElement, TextFieldAttributes>(
 
     useEffect(() => {
       setTextValue(value);
-    }, [value]);
+      setDisplayedValue(format ? format(value as any) : value); // 초기 format 적용
+    }, [value, format]);
 
     /**
      * @description TextInput 렌더링 이후 placeholder의 길이만큼 TextInput의 width를 초기화합니다
@@ -115,6 +118,15 @@ const TextField = forwardRef<HTMLInputElement, TextFieldAttributes>(
       setIsFocusHandled(false);
     };
 
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const newValue = e.target.value;
+      setTextValue(newValue); // 원본 값을 그대로 저장
+
+      // displayValue는 format을 적용해 표시, 실제 textValue는 변하지 않음
+      setDisplayedValue(format ? format(newValue as any) : newValue);
+      props.onChange?.(e);
+    };
+
     return (
       <>
         {/* iOS Safari 환경에서 입력 버퍼를 비우기 위해 focus를 임시로 옮기는 목적으로 추가 */}
@@ -122,11 +134,8 @@ const TextField = forwardRef<HTMLInputElement, TextFieldAttributes>(
 
         <StyledInput
           {...props}
-          value={textValue}
-          onChange={e => {
-            setTextValue(e.target.value);
-            props.onChange?.(e);
-          }}
+          value={displayedValue}
+          onChange={handleChange}
           ref={combinedRef}
           placeholder={placeholder}
           onFocusCapture={handleFocusCapture}
