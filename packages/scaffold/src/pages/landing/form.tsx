@@ -1,11 +1,17 @@
 import { LoggingImpression, LoggingScreen } from '@yeaaaah/shared';
 import { isNumber } from 'es-toolkit/compat';
 import { useRouter } from 'next/router';
+import { useCallback, useEffect, useState } from 'react';
 import { BottomFixedArea } from '@/components/common/area/BottomFixedArea';
 import PrimaryButton from '@/components/common/button/PrimaryButton';
 import { Container } from '@/components/common/container/Container';
 import { Col } from '@/components/common/flex/Flex';
-import { LandingFormProvider, useLandingFormContext } from '@/components/landing/LandingFormProvider';
+import {
+  LandingFormFieldPath,
+  LandingFormProvider,
+  useLandingFormContext,
+  LandingFormValue,
+} from '@/components/landing/LandingFormProvider';
 import { TextFieldContainer } from '@/components/landing/TextFieldContainer';
 import { useFormFieldVisibility } from '@/hooks/useFormFieldVisibility';
 
@@ -14,7 +20,7 @@ const LandingFormContainer = () => {
     setFocus,
     trigger,
     getValues,
-    formState: { errors, isValid },
+    formState: { errors, isValid, dirtyFields },
   } = useLandingFormContext();
   const { showField, isFieldVisible, getNextField, isAllFieldsVisible, visibleFields } = useFormFieldVisibility([
     'store.type',
@@ -25,9 +31,20 @@ const LandingFormContainer = () => {
     'store.mood',
   ]);
 
-  const router = useRouter();
+  const [focusedFieldName, setFocusedFieldName] = useState<string | null>(null);
 
-  const hasError = errors.store != null;
+  // 현재 포커스된 필드의 이름을 상태로 관리합니다.
+  const handleFocus = (fieldName: string) => {
+    setFocusedFieldName(fieldName);
+  };
+
+  // 현재 포커스된 필드의 유효성 상태 확인
+  const isFocusedFieldValid = focusedFieldName
+    ? dirtyFields.store?.[focusedFieldName as keyof LandingFormValue['store']] &&
+      !errors.store?.[focusedFieldName as keyof LandingFormValue['store']]
+    : false;
+
+  const router = useRouter();
 
   const handleNextField = async () => {
     if (isAllFieldsVisible) {
@@ -45,6 +62,9 @@ const LandingFormContainer = () => {
   };
 
   const handleSubmitField = async (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if ((event.target as HTMLInputElement).value == null || (event.target as HTMLInputElement).value === '') {
+      return;
+    }
     if (event.key === 'Enter' && !event.nativeEvent.isComposing) {
       await handleNextField();
     }
@@ -88,6 +108,7 @@ const LandingFormContainer = () => {
                 placeholder="가게의 분위기"
                 rightContent="한 분위기를 즐겨보세요."
                 leftEmoji="🍻"
+                onFocus={() => handleFocus('mood')}
                 onKeyPress={handleSubmitField}
                 autoFocus={true}
                 rules={{
@@ -99,7 +120,7 @@ const LandingFormContainer = () => {
           {isFieldVisible('store.target') && (
             <LoggingImpression
               params={{
-                impression_area: 'sstore.target',
+                impression_area: 'store.target',
               }}
             >
               <TextFieldContainer
@@ -108,6 +129,7 @@ const LandingFormContainer = () => {
                 rightContent="(과)와 함께,"
                 leftEmoji="👭"
                 onKeyPress={handleSubmitField}
+                onFocus={() => handleFocus('target')}
                 autoFocus={true}
                 rules={{
                   required: true,
@@ -129,6 +151,7 @@ const LandingFormContainer = () => {
                 rightContent="원 정도의 가격대에요."
                 leftEmoji="💴"
                 onKeyPress={handleSubmitField}
+                onFocus={() => handleFocus('price')}
                 autoFocus={true}
                 rules={{
                   required: true,
@@ -151,6 +174,7 @@ const LandingFormContainer = () => {
                 rightContent="(이)가 정말 맛있어요."
                 leftEmoji="🥞"
                 onKeyPress={handleSubmitField}
+                onFocus={() => handleFocus('bestMenu')}
                 autoFocus={true}
                 rules={{
                   required: true,
@@ -170,6 +194,7 @@ const LandingFormContainer = () => {
                 rightContent="에 위치하고 있어요."
                 leftEmoji="📍"
                 onKeyPress={handleSubmitField}
+                onFocus={() => handleFocus('location')}
                 autoFocus={true}
                 rules={{
                   required: true,
@@ -190,6 +215,7 @@ const LandingFormContainer = () => {
                 rightContent="입니다."
                 leftEmoji="🍴"
                 onKeyPress={handleSubmitField}
+                onFocus={() => handleFocus('type')}
                 autoFocus={true}
                 rules={{
                   required: true,
@@ -208,6 +234,7 @@ const LandingFormContainer = () => {
               rightContent="(은)는,"
               leftEmoji="🏠"
               onKeyPress={handleSubmitField}
+              onFocus={() => handleFocus('name')}
               autoFocus={true}
               rules={{
                 required: true,
@@ -220,7 +247,11 @@ const LandingFormContainer = () => {
             padding: '16px',
           }}
         >
-          <PrimaryButton title="다음" disabled={hasError || !isValid} onClick={handleCtaClick} />
+          <PrimaryButton
+            title="다음"
+            disabled={isAllFieldsVisible ? !isValid : !isFocusedFieldValid}
+            onClick={handleCtaClick}
+          />
         </BottomFixedArea>
       </Container>
     </LoggingScreen>
