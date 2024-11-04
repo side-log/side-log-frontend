@@ -14,6 +14,8 @@ import TextField from '@/components/common/textField/TextField';
 import { submitForm } from '@/remotes/landing/submitForm';
 import { isEmail } from '@/utils/isEmail';
 
+const 마케팅수신동의_URL = 'https://nonstop-asparagus-df0.notion.site/1333cf7403e280af8d2efb67191a99a5';
+
 export default function LandingFormSubmit() {
   const router = useRouter();
   const { name, type, location, bestMenu, price, target, mood } = useQueryParams({ required: true });
@@ -89,6 +91,21 @@ export default function LandingFormSubmit() {
           />
           {showEmailSuggestion && <EmailSuggestion email={email} onClick={setEmail} />}
         </div>
+        <Spacing size={12} />
+        <Row justifyContent={'center'}>
+          <Txt color={'#575961'} size="12px" weight="400">
+            의견 전달을 위해{' '}
+            <a
+              href={마케팅수신동의_URL}
+              target="_blank"
+              style={{ textDecorationLine: 'underline', cursor: 'pointer' }}
+              rel="noreferrer"
+            >
+              마케팅 정보 수신동의 약관
+            </a>
+            에 동의하시게 돼요
+          </Txt>
+        </Row>
         <BottomFixedArea
           containerStyle={{
             padding: '16px',
