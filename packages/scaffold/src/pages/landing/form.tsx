@@ -1,5 +1,5 @@
+import { commaizeNumber } from '@toss/utils';
 import { LoggingImpression, LoggingScreen } from '@yeaaaah/shared';
-import { isNumber } from 'es-toolkit/compat';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
 import { BottomFixedArea } from '@/components/common/area/BottomFixedArea';
@@ -145,9 +145,9 @@ const LandingFormContainer = () => {
             >
               <TextFieldContainer
                 name={'store.price'}
-                type={'number'}
                 inputMode={'numeric'}
                 placeholder="가격"
+                format={v => commaizeNumber(String(v).replace(/[^\d]/g, ''))}
                 rightContent="원 정도의 가격대에요."
                 leftEmoji="💴"
                 onKeyPress={handleSubmitField}
@@ -155,8 +155,6 @@ const LandingFormContainer = () => {
                 autoFocus={true}
                 rules={{
                   required: true,
-                  valueAsNumber: true,
-                  setValueAs: isNumber,
                 }}
               />
             </LoggingImpression>

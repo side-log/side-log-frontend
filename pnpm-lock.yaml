@@ -54,6 +54,9 @@ importers:
       '@emotion/styled':
         specifier: ^11.13.0
         version: 11.13.0(@emotion/react@11.13.3)(@types/react@18.3.11)(react@18.3.1)
+      '@toss/utils':
+        specifier: ^1.6.1
+        version: 1.6.1
       '@yeaaaah/shared':
         specifier: workspace:^
         version: link:../shared
@@ -4699,7 +4702,10 @@ snapshots:
 
   '@toss/utility-types@1.2.1': {}
 
-  '@toss/utils@1.6.1':
+  /@toss/utils@1.6.1:
+    resolution: {integrity: sha512-x6m8jLKWtAmCbxTLXbgTzJ5wZyRSUQPLpR/oLJP1ZK9ytXcRf03oA46W/+78kErUkEw/yQz2L+t2xFDHSeZ6IQ==}
+    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
+
     dependencies:
       '@babel/runtime': 7.25.7
       '@toss/utility-types': 1.2.1

@@ -1,5 +1,6 @@
 import { css } from '@emotion/react';
 import { LoggingScreen, useQueryParams } from '@yeaaaah/shared';
+import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import { useMemo, useRef, useState } from 'react';
 import Spacing from '@/components/common/Spacing/Spacing';
@@ -12,6 +13,8 @@ import Txt from '@/components/common/text/Txt';
 import TextField from '@/components/common/textField/TextField';
 import { submitForm } from '@/remotes/landing/submitForm';
 import { isEmail } from '@/utils/isEmail';
+
+const 마케팅수신동의_URL = 'https://nonstop-asparagus-df0.notion.site/1333cf7403e280af8d2efb67191a99a5';
 
 export default function LandingFormSubmit() {
   const router = useRouter();
@@ -28,7 +31,11 @@ export default function LandingFormSubmit() {
         store: { name, type, location, bestMenu, price: parseInt(price), target, mood },
         user: { email },
       });
-      router.push('/landing/share');
+      router.push('/landing/share', {
+        query: {
+          submit: 'COMPLETE',
+        },
+      });
     } catch (e) {
       alert('잠시 후 다시 시도해주세요.');
     }
@@ -84,6 +91,21 @@ export default function LandingFormSubmit() {
           />
           {showEmailSuggestion && <EmailSuggestion email={email} onClick={setEmail} />}
         </div>
+        <Spacing size={12} />
+        <Row justifyContent={'center'}>
+          <Txt color={'#575961'} size="12px" weight="400">
+            의견 전달을 위해{' '}
+            <a
+              href={마케팅수신동의_URL}
+              target="_blank"
+              style={{ textDecorationLine: 'underline', cursor: 'pointer' }}
+              rel="noreferrer"
+            >
+              마케팅 정보 수신동의 약관
+            </a>
+            에 동의하시게 돼요
+          </Txt>
+        </Row>
         <BottomFixedArea
           containerStyle={{
             padding: '16px',
@@ -101,6 +123,10 @@ const EmailSuggestion = ({ email, onClick }: { email: string; onClick: (v: strin
   const [local, domain] = email.split('@');
 
   const suggestedDomains = suggestions.filter(v => v.includes(domain) || domain == null);
+
+  if (suggestedDomains.length === 0) {
+    return <></>;
+  }
 
   return (
     <Col
@@ -127,4 +153,21 @@ const EmailSuggestion = ({ email, onClick }: { email: string; onClick: (v: strin
       })}
     </Col>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+  const { name, type, location, bestMenu, price, target, mood } = query;
+
+  if ([name, type, location, bestMenu, price, target, mood].some(v => v == null)) {
+    return {
+      redirect: {
+        destination: '/landing',
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
 };
