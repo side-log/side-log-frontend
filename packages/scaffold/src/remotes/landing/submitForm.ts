@@ -1,8 +1,15 @@
 import getDeivceId from '@yeaaaah/shared/src/utils/getDeviceId';
-import { LandingFormValue } from '@/components/landing/LandingFormProvider';
 
 interface SubmitFormRequest {
-  store: LandingFormValue['store'];
+  store: {
+    name: string;
+    type: string;
+    location: string;
+    bestMenu: string;
+    price: number;
+    target: string;
+    mood: string;
+  }
   user: {
     email: string;
   };

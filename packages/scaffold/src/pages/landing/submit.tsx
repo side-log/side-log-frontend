@@ -28,7 +28,7 @@ export default function LandingFormSubmit() {
   const handleCtaClick = async () => {
     try {
       await submitForm({
-        store: { name, type, location, bestMenu, price: parseInt(price), target, mood },
+        store: { name, type, location, bestMenu, price: parseInt(price.replace(/\D/g,'')), target, mood },
         user: { email },
       });
       router.push('/landing/share', {

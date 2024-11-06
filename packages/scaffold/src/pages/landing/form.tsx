@@ -1,13 +1,12 @@
 import { commaizeNumber } from '@toss/utils';
 import { LoggingImpression, LoggingScreen } from '@yeaaaah/shared';
 import { useRouter } from 'next/router';
-import { useCallback, useEffect, useState } from 'react';
+import { useState } from 'react';
 import { BottomFixedArea } from '@/components/common/area/BottomFixedArea';
 import PrimaryButton from '@/components/common/button/PrimaryButton';
 import { Container } from '@/components/common/container/Container';
 import { Col } from '@/components/common/flex/Flex';
 import {
-  LandingFormFieldPath,
   LandingFormProvider,
   useLandingFormContext,
   LandingFormValue,
@@ -20,8 +19,11 @@ const LandingFormContainer = () => {
     setFocus,
     trigger,
     getValues,
+    watch,
     formState: { errors, isValid, dirtyFields },
   } = useLandingFormContext();
+  const price = watch('store.price')
+
   const { showField, isFieldVisible, getNextField, isAllFieldsVisible, visibleFields } = useFormFieldVisibility([
     'store.type',
     'store.location',
@@ -30,6 +32,7 @@ const LandingFormContainer = () => {
     'store.target',
     'store.mood',
   ]);
+
 
   const [focusedFieldName, setFocusedFieldName] = useState<string | null>(null);
 
@@ -80,7 +83,10 @@ const LandingFormContainer = () => {
       const { store } = getValues();
       router.push({
         pathname: '/landing/result',
-        query: store,
+        query: {
+          ...store,
+          price: price.replace(/\D/g,'')
+        },
       });
     } else {
       await handleNextField();
@@ -147,12 +153,12 @@ const LandingFormContainer = () => {
                 name={'store.price'}
                 inputMode={'numeric'}
                 placeholder="가격"
-                format={v => commaizeNumber(String(v).replace(/[^\d]/g, ''))}
                 rightContent="원 정도의 가격대에요."
                 leftEmoji="💴"
                 onKeyPress={handleSubmitField}
                 onFocus={() => handleFocus('price')}
                 autoFocus={true}
+                value={commaizeNumber(String(price).replace(/[^\d]/g, ''))}
                 rules={{
                   required: true,
                 }}

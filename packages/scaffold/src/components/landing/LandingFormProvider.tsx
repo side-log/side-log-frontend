@@ -6,7 +6,7 @@ export interface LandingFormValue {
     type: string;
     location: string;
     bestMenu: string;
-    price: number;
+    price: string;
     target: string;
     mood: string;
   };
