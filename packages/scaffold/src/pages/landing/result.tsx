@@ -10,19 +10,11 @@ import { Col, Row } from '@/components/common/flex/Flex';
 import Header from '@/components/common/header/Header';
 import Txt from '@/components/common/text/Txt';
 import { ResultTextContainer } from '@/components/result/ResultTextContainer';
+import { commaizeNumber } from '@toss/utils';
 
 export default function LandingFormResult() {
   const router = useRouter();
   const { name, type, location, bestMenu, price, target, mood } = useQueryParams({ required: true });
-
-  const formatPrice = (price: string) => {
-    return new Intl.NumberFormat('ko-KR', {
-      style: 'decimal',
-      maximumFractionDigits: 0,
-    }).format(parseInt(price));
-  };
-
-  const formattedPrice = typeof price === 'string' ? formatPrice(price) : '0';
 
   const handleConfirmClick = () => {
     router.push({
@@ -69,7 +61,7 @@ export default function LandingFormResult() {
             <ResultTextContainer leftEmoji="🍴" rightContent={`${type}입니다.`} />
             <ResultTextContainer leftEmoji="📍" rightContent={`${location}에 위치하고 있어요.`} />
             <ResultTextContainer leftEmoji="🥞" rightContent={`${bestMenu}(이)가 정말 맛있어요.`} />
-            <ResultTextContainer leftEmoji="💴" rightContent={`${formattedPrice}원 정도의 가격대에요.`} />
+            <ResultTextContainer leftEmoji="💴" rightContent={`${commaizeNumber(price)}원 정도의 가격대에요.`} />
             <ResultTextContainer leftEmoji="👭" rightContent={`${target}(과)와 함께,`} />
             <ResultTextContainer leftEmoji="🍻" rightContent={`${mood}한 분위기를 즐겨보세요.`} />
             <Row justifyContent="flex-end" alignItems="center" gap={15.5}>
