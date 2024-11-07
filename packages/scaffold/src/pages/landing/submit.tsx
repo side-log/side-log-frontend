@@ -31,7 +31,8 @@ export default function LandingFormSubmit() {
         store: { name, type, location, bestMenu, price: parseInt(price.replace(/\D/g,'')), target, mood },
         user: { email },
       });
-      router.push('/landing/share', {
+      router.push({
+        pathname: '/landing/share',
         query: {
           submit: 'COMPLETE',
         },
