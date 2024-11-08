@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import { commaizeNumber } from '@toss/utils';
 import { LoggingScreen, useQueryParams } from '@yeaaaah/shared';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
@@ -10,7 +11,6 @@ import { Col, Row } from '@/components/common/flex/Flex';
 import Header from '@/components/common/header/Header';
 import Txt from '@/components/common/text/Txt';
 import { ResultTextContainer } from '@/components/result/ResultTextContainer';
-import { commaizeNumber } from '@toss/utils';
 
 export default function LandingFormResult() {
   const router = useRouter();
@@ -59,9 +59,9 @@ export default function LandingFormResult() {
             </Txt>
             <ResultTextContainer leftEmoji="🏠" rightContent={`${name}(은)는,`} />
             <ResultTextContainer leftEmoji="🍴" rightContent={`${type}입니다.`} />
-            <ResultTextContainer leftEmoji="📍" rightContent={`${location}에 위치하고 있어요.`} />
+            <ResultTextContainer leftEmoji="📍" rightContent={`${location}에 있어요.`} />
             <ResultTextContainer leftEmoji="🥞" rightContent={`${bestMenu}(이)가 정말 맛있어요.`} />
-            <ResultTextContainer leftEmoji="💴" rightContent={`${commaizeNumber(price)}원 정도의 가격대에요.`} />
+            <ResultTextContainer leftEmoji="💴" rightContent={`${commaizeNumber(price)}원 정도의 가격대예요.`} />
             <ResultTextContainer leftEmoji="👭" rightContent={`${target}(과)와 함께,`} />
             <ResultTextContainer leftEmoji="🍻" rightContent={`${mood}한 분위기를 즐겨보세요.`} />
             <Row justifyContent="flex-end" alignItems="center" gap={15.5}>
