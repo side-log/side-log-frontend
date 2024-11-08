@@ -6,11 +6,7 @@ import { BottomFixedArea } from '@/components/common/area/BottomFixedArea';
 import PrimaryButton from '@/components/common/button/PrimaryButton';
 import { Container } from '@/components/common/container/Container';
 import { Col } from '@/components/common/flex/Flex';
-import {
-  LandingFormProvider,
-  useLandingFormContext,
-  LandingFormValue,
-} from '@/components/landing/LandingFormProvider';
+import { LandingFormProvider, useLandingFormContext, LandingFormValue } from '@/components/landing/LandingFormProvider';
 import { TextFieldContainer } from '@/components/landing/TextFieldContainer';
 import { useFormFieldVisibility } from '@/hooks/useFormFieldVisibility';
 
@@ -22,7 +18,7 @@ const LandingFormContainer = () => {
     watch,
     formState: { errors, isValid, dirtyFields },
   } = useLandingFormContext();
-  const price = watch('store.price')
+  const price = watch('store.price');
 
   const { showField, isFieldVisible, getNextField, isAllFieldsVisible, visibleFields } = useFormFieldVisibility([
     'store.type',
@@ -32,7 +28,6 @@ const LandingFormContainer = () => {
     'store.target',
     'store.mood',
   ]);
-
 
   const [focusedFieldName, setFocusedFieldName] = useState<string | null>(null);
 
@@ -85,7 +80,7 @@ const LandingFormContainer = () => {
         pathname: '/landing/result',
         query: {
           ...store,
-          price: price.replace(/\D/g,'')
+          price: price.replace(/\D/g, ''),
         },
       });
     } else {
@@ -153,7 +148,7 @@ const LandingFormContainer = () => {
                 name={'store.price'}
                 inputMode={'numeric'}
                 placeholder="가격"
-                rightContent="원 정도의 가격대에요."
+                rightContent="원 정도의 가격대예요."
                 leftEmoji="💴"
                 onKeyPress={handleSubmitField}
                 onFocus={() => handleFocus('price')}
@@ -195,7 +190,7 @@ const LandingFormContainer = () => {
               <TextFieldContainer
                 name={'store.location'}
                 placeholder="가게의 위치"
-                rightContent="에 위치하고 있어요."
+                rightContent="에 있어요."
                 leftEmoji="📍"
                 onKeyPress={handleSubmitField}
                 onFocus={() => handleFocus('location')}
