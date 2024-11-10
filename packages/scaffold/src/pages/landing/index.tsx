@@ -76,7 +76,7 @@ const Landing = () => {
               />
               <LabelTag
                 emoji="🌮"
-                content="하루 두번 타코먹는 경종님"
+                content="하루 두번 타코먹는 성진님"
                 rotate="-7.264deg"
                 zIndex={500}
                 margin="8px 12px 0 0"
