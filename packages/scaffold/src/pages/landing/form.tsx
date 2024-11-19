@@ -1,6 +1,5 @@
 import { commaizeNumber } from '@toss/utils';
-import { LoggingImpression, LoggingScreen } from '@yeaaaah/shared';
-import { useRouter } from 'next/router';
+import { LoggingImpression, LoggingScreen, useNavigate } from '@yeaaaah/shared';
 import { useState } from 'react';
 import { BottomFixedArea } from '@/components/common/area/BottomFixedArea';
 import PrimaryButton from '@/components/common/button/PrimaryButton';
@@ -18,6 +17,8 @@ const LandingFormContainer = () => {
     watch,
     formState: { errors, isValid, dirtyFields },
   } = useLandingFormContext();
+
+  const navigate = useNavigate();
   const price = watch('store.price');
 
   const { showField, isFieldVisible, getNextField, isAllFieldsVisible, visibleFields } = useFormFieldVisibility([
@@ -41,8 +42,6 @@ const LandingFormContainer = () => {
     ? dirtyFields.store?.[focusedFieldName as keyof LandingFormValue['store']] &&
       !errors.store?.[focusedFieldName as keyof LandingFormValue['store']]
     : false;
-
-  const router = useRouter();
 
   const handleNextField = async () => {
     if (isAllFieldsVisible) {
@@ -76,12 +75,9 @@ const LandingFormContainer = () => {
 
     if (isAllFieldsVisible) {
       const { store } = getValues();
-      router.push({
-        pathname: '/landing/result',
-        query: {
-          ...store,
-          price: price.replace(/\D/g, ''),
-        },
+      navigate('/landing/result', {
+        ...store,
+        price: price.replace(/\D/g, ''),
       });
     } else {
       await handleNextField();
