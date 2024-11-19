@@ -18,7 +18,7 @@ const LandingFormContainer = () => {
     formState: { errors, isValid, dirtyFields },
   } = useLandingFormContext();
 
-  const navigate = useNavigate();
+  const { navigate } = useNavigate();
   const price = watch('store.price');
 
   const { showField, isFieldVisible, getNextField, isAllFieldsVisible, visibleFields } = useFormFieldVisibility([

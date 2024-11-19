@@ -1,6 +1,5 @@
 import { css } from '@emotion/react';
-import { LoggingScreen } from '@yeaaaah/shared';
-import { useRouter } from 'next/router';
+import { LoggingScreen, useNavigate } from '@yeaaaah/shared';
 import { LogoIcon } from '@/assets/icons';
 import { BottomFixedArea } from '@/components/common/area/BottomFixedArea';
 import PrimaryButton from '@/components/common/button/PrimaryButton';
@@ -10,10 +9,10 @@ import Txt from '@/components/common/text/Txt';
 import { LabelTag } from '@/components/landing/LabelTag';
 
 const Landing = () => {
-  const router = useRouter();
+  const { navigate } = useNavigate();
 
   const handleButtonClick = () => {
-    router.push('/landing/form');
+    navigate('/landing/form');
   };
 
   return (
