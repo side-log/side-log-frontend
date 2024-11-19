@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
 
-export default function useNavigate(url?: string) {
+export function useNavigate(url?: string) {
   const router = useRouter();
 
   const queryParams = useMemo(() => {
