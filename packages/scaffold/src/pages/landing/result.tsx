@@ -1,8 +1,7 @@
 import { css } from '@emotion/react';
 import { commaizeNumber } from '@toss/utils';
-import { LoggingScreen, useQueryParams } from '@yeaaaah/shared';
+import { LoggingScreen, useNavigate, useQueryParams } from '@yeaaaah/shared';
 import { GetServerSideProps } from 'next';
-import { useRouter } from 'next/router';
 import { StampIcon } from '@/assets/icons';
 import { BottomFixedArea } from '@/components/common/area/BottomFixedArea';
 import PrimaryButton from '@/components/common/button/PrimaryButton';
@@ -13,14 +12,11 @@ import Txt from '@/components/common/text/Txt';
 import { ResultTextContainer } from '@/components/result/ResultTextContainer';
 
 export default function LandingFormResult() {
-  const router = useRouter();
+  const { navigate } = useNavigate();
   const { name, type, location, bestMenu, price, target, mood } = useQueryParams({ required: true });
 
   const handleConfirmClick = () => {
-    router.push({
-      pathname: '/landing/submit',
-      query: router.query,
-    });
+    navigate('/landing/submit');
   };
 
   return (

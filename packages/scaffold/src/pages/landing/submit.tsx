@@ -1,7 +1,6 @@
 import { css } from '@emotion/react';
-import { LoggingScreen, useQueryParams } from '@yeaaaah/shared';
+import { LoggingScreen, useNavigate, useQueryParams } from '@yeaaaah/shared';
 import { GetServerSideProps } from 'next';
-import { useRouter } from 'next/router';
 import { useMemo, useRef, useState } from 'react';
 import Spacing from '@/components/common/Spacing/Spacing';
 import { BottomFixedArea } from '@/components/common/area/BottomFixedArea';
@@ -17,7 +16,7 @@ import { isEmail } from '@/utils/isEmail';
 const 마케팅수신동의_URL = 'https://nonstop-asparagus-df0.notion.site/1333cf7403e280af8d2efb67191a99a5';
 
 export default function LandingFormSubmit() {
-  const router = useRouter();
+  const { navigate } = useNavigate();
   const { name, type, location, bestMenu, price, target, mood } = useQueryParams({ required: true });
 
   const [email, setEmail] = useState('');
@@ -28,15 +27,10 @@ export default function LandingFormSubmit() {
   const handleCtaClick = async () => {
     try {
       await submitForm({
-        store: { name, type, location, bestMenu, price: parseInt(price.replace(/\D/g,'')), target, mood },
+        store: { name, type, location, bestMenu, price: parseInt(price.replace(/\D/g, '')), target, mood },
         user: { email },
       });
-      router.push({
-        pathname: '/landing/share',
-        query: {
-          submit: 'COMPLETE',
-        },
-      });
+      navigate('/landing/share', { submit: 'COMPLETE' });
     } catch (e) {
       alert('잠시 후 다시 시도해주세요.');
     }
