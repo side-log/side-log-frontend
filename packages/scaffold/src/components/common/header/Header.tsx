@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import { useRouter } from 'next/router';
+import { useNavigate } from '@yeaaaah/shared';
 import React from 'react';
 import { LeftChevronIcon } from '@/assets/icons';
 
@@ -8,10 +8,10 @@ interface HeaderProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 const Header = (props: HeaderProps) => {
-  const router = useRouter();
+  const { goBack } = useNavigate();
   const {
     handleLeftButton = () => {
-      router.back();
+      goBack();
     },
   } = props;
 
