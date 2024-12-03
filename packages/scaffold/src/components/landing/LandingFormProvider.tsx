@@ -21,4 +21,4 @@ export function useLandingFormContext() {
   return useFormContext<LandingFormValue>();
 }
 
-export type LandingFormFieldPath = FieldPath<LandingFormValue>;
+export type LandingFormFieldPath = Omit<FieldPath<LandingFormValue>, 'store'>;

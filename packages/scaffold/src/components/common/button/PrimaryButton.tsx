@@ -29,7 +29,7 @@ const Button = styled.button<{
   padding: 12px;
   color: #fff;
   cursor: ${({ disabled }) => (disabled ? 'default' : 'pointer')};
-  background-color: ${({ disabled }) => (disabled ? '#FBE5D0' : '#ED801D')};
+  background-color: ${({ disabled }) => (disabled ? 'rgba(54, 41, 34, 0.15)' : '#362922')};
   border-radius: 8px;
 `;
 

@@ -5,7 +5,13 @@ import { BottomFixedArea } from '@/components/common/area/BottomFixedArea';
 import PrimaryButton from '@/components/common/button/PrimaryButton';
 import { Container } from '@/components/common/container/Container';
 import { Col } from '@/components/common/flex/Flex';
-import { LandingFormProvider, useLandingFormContext, LandingFormValue } from '@/components/landing/LandingFormProvider';
+import { FormProgress } from '@/components/landing/FormProgress';
+import {
+  LandingFormProvider,
+  useLandingFormContext,
+  LandingFormValue,
+  LandingFormFieldPath,
+} from '@/components/landing/LandingFormProvider';
 import { TextFieldContainer } from '@/components/landing/TextFieldContainer';
 import { useFormFieldVisibility } from '@/hooks/useFormFieldVisibility';
 
@@ -42,6 +48,8 @@ const LandingFormContainer = () => {
     ? dirtyFields.store?.[focusedFieldName as keyof LandingFormValue['store']] &&
       !errors.store?.[focusedFieldName as keyof LandingFormValue['store']]
     : false;
+
+  const currentStep = visibleFields.indexOf(focusedFieldName as LandingFormFieldPath) + 1;
 
   const handleNextField = async () => {
     if (isAllFieldsVisible) {
@@ -93,150 +101,154 @@ const LandingFormContainer = () => {
       }}
     >
       <Container>
-        <Col gap={20} padding={'57px 16px'}>
-          {isFieldVisible('store.mood') && (
-            <LoggingImpression
-              params={{
-                impression_area: 'store.mood',
-              }}
-            >
-              <TextFieldContainer
-                name={'store.mood'}
-                placeholder="가게의 분위기"
-                rightContent="한 분위기를 즐겨보세요."
-                leftEmoji="🍻"
-                onFocus={() => handleFocus('mood')}
-                onKeyPress={handleSubmitField}
-                autoFocus={true}
-                rules={{
-                  required: true,
+        <Col gap={28} padding={'12px 16px'} alignItems="center">
+          <FormProgress currentStep={1} totalStep={7} />
+          <Col gap={20}>
+            {isFieldVisible('store.mood') && (
+              <LoggingImpression
+                params={{
+                  impression_area: 'store.mood',
                 }}
-              />
-            </LoggingImpression>
-          )}
-          {isFieldVisible('store.target') && (
-            <LoggingImpression
-              params={{
-                impression_area: 'store.target',
-              }}
-            >
-              <TextFieldContainer
-                name={'store.target'}
-                placeholder="함께 방문할 사람들"
-                rightContent="(과)와 함께,"
-                leftEmoji="👭"
-                onKeyPress={handleSubmitField}
-                onFocus={() => handleFocus('target')}
-                autoFocus={true}
-                rules={{
-                  required: true,
+              >
+                <TextFieldContainer
+                  name={'store.mood'}
+                  placeholder="가게의 분위기"
+                  rightContent="한 분위기를 즐겨보세요."
+                  leftEmoji="🍻"
+                  onFocus={() => handleFocus('mood')}
+                  onKeyPress={handleSubmitField}
+                  autoFocus={true}
+                  rules={{
+                    required: true,
+                  }}
+                />
+              </LoggingImpression>
+            )}
+            {isFieldVisible('store.target') && (
+              <LoggingImpression
+                params={{
+                  impression_area: 'store.target',
                 }}
-              />
-            </LoggingImpression>
-          )}
-          {isFieldVisible('store.price') && (
-            <LoggingImpression
-              params={{
-                impression_area: 'store.price',
-              }}
-            >
-              <TextFieldContainer
-                name={'store.price'}
-                inputMode={'numeric'}
-                placeholder="가격"
-                rightContent="원 정도의 가격대예요."
-                leftEmoji="💴"
-                onKeyPress={handleSubmitField}
-                onFocus={() => handleFocus('price')}
-                autoFocus={true}
-                value={commaizeNumber(String(price).replace(/[^\d]/g, ''))}
-                rules={{
-                  required: true,
+              >
+                <TextFieldContainer
+                  name={'store.target'}
+                  placeholder="함께 방문할 사람들"
+                  rightContent="(과)와 함께,"
+                  leftEmoji="👭"
+                  onKeyPress={handleSubmitField}
+                  onFocus={() => handleFocus('target')}
+                  autoFocus={true}
+                  rules={{
+                    required: true,
+                  }}
+                />
+              </LoggingImpression>
+            )}
+            {isFieldVisible('store.price') && (
+              <LoggingImpression
+                params={{
+                  impression_area: 'store.price',
                 }}
-              />
-            </LoggingImpression>
-          )}
+              >
+                <TextFieldContainer
+                  name={'store.price'}
+                  inputMode={'numeric'}
+                  placeholder="가격"
+                  rightContent="원 정도의 가격대예요."
+                  leftEmoji="💴"
+                  onKeyPress={handleSubmitField}
+                  onFocus={() => handleFocus('price')}
+                  autoFocus={true}
+                  value={commaizeNumber(String(price).replace(/[^\d]/g, ''))}
+                  rules={{
+                    required: true,
+                  }}
+                />
+              </LoggingImpression>
+            )}
 
-          {isFieldVisible('store.bestMenu') && (
-            <LoggingImpression
-              params={{
-                impression_area: 'store.bestMenu',
-              }}
-            >
-              <TextFieldContainer
-                name={'store.bestMenu'}
-                placeholder="대표메뉴명"
-                rightContent="(이)가 정말 맛있어요."
-                leftEmoji="🥞"
-                onKeyPress={handleSubmitField}
-                onFocus={() => handleFocus('bestMenu')}
-                autoFocus={true}
-                rules={{
-                  required: true,
+            {isFieldVisible('store.bestMenu') && (
+              <LoggingImpression
+                params={{
+                  impression_area: 'store.bestMenu',
                 }}
-              />
-            </LoggingImpression>
-          )}
-          {isFieldVisible('store.location') && (
+              >
+                <TextFieldContainer
+                  name={'store.bestMenu'}
+                  placeholder="대표메뉴명"
+                  rightContent="(이)가 정말 맛있어요."
+                  leftEmoji="🥞"
+                  onKeyPress={handleSubmitField}
+                  onFocus={() => handleFocus('bestMenu')}
+                  autoFocus={true}
+                  rules={{
+                    required: true,
+                  }}
+                />
+              </LoggingImpression>
+            )}
+            {isFieldVisible('store.location') && (
+              <LoggingImpression
+                params={{
+                  impression_area: 'store.name',
+                }}
+              >
+                <TextFieldContainer
+                  name={'store.location'}
+                  placeholder="가게의 위치"
+                  rightContent="에 있어요."
+                  leftEmoji="📍"
+                  onKeyPress={handleSubmitField}
+                  onFocus={() => handleFocus('location')}
+                  autoFocus={true}
+                  rules={{
+                    required: true,
+                  }}
+                />
+              </LoggingImpression>
+            )}
+
+            {isFieldVisible('store.type') && (
+              <LoggingImpression
+                params={{
+                  impression_area: 'store.type',
+                }}
+              >
+                <TextFieldContainer
+                  name={'store.type'}
+                  placeholder="카페, 일식집 등 가게의 업종"
+                  rightContent="입니다."
+                  leftEmoji="🍴"
+                  onKeyPress={handleSubmitField}
+                  onFocus={() => handleFocus('type')}
+                  autoFocus={true}
+                  rules={{
+                    required: true,
+                  }}
+                />
+              </LoggingImpression>
+            )}
             <LoggingImpression
               params={{
                 impression_area: 'store.name',
               }}
             >
               <TextFieldContainer
-                name={'store.location'}
-                placeholder="가게의 위치"
-                rightContent="에 있어요."
-                leftEmoji="📍"
+                name={'store.name'}
+                placeholder="우리가게 이름"
+                rightContent="(은)는,"
+                leftEmoji="🏠"
                 onKeyPress={handleSubmitField}
-                onFocus={() => handleFocus('location')}
+                onFocus={() => handleFocus('name')}
                 autoFocus={true}
                 rules={{
                   required: true,
                 }}
               />
             </LoggingImpression>
-          )}
-
-          {isFieldVisible('store.type') && (
-            <LoggingImpression
-              params={{
-                impression_area: 'store.type',
-              }}
-            >
-              <TextFieldContainer
-                name={'store.type'}
-                placeholder="카페, 일식집 등 가게의 업종"
-                rightContent="입니다."
-                leftEmoji="🍴"
-                onKeyPress={handleSubmitField}
-                onFocus={() => handleFocus('type')}
-                autoFocus={true}
-                rules={{
-                  required: true,
-                }}
-              />
-            </LoggingImpression>
-          )}
-          <LoggingImpression
-            params={{
-              impression_area: 'store.name',
-            }}
-          >
-            <TextFieldContainer
-              name={'store.name'}
-              placeholder="우리가게 이름"
-              rightContent="(은)는,"
-              leftEmoji="🏠"
-              onKeyPress={handleSubmitField}
-              onFocus={() => handleFocus('name')}
-              autoFocus={true}
-              rules={{
-                required: true,
-              }}
-            />
-          </LoggingImpression>
+          </Col>
         </Col>
+
         <BottomFixedArea
           containerStyle={{
             padding: '16px',
