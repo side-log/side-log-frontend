@@ -1,13 +1,13 @@
 import { useRouter } from 'next/router';
-import { useCallback, useMemo } from 'react';
+import { useCallback } from 'react';
 
-export function useNavigate(url?: string, keepQuery = true) {
+export function useNavigate(keepQuery = true) {
   const router = useRouter();
 
-  const queryParams = useMemo(() => {
-    if (url && typeof window !== 'undefined') {
+  const getQueryParams = useCallback(() => {
+    if (typeof window !== 'undefined') {
       try {
-        const urlObj = new URL(url, window.location.origin);
+        const urlObj = new URL(window.location.href);
         return Object.fromEntries(urlObj.searchParams.entries());
       } catch (error) {
         console.error('URL parsing error:', error);
@@ -15,39 +15,31 @@ export function useNavigate(url?: string, keepQuery = true) {
       }
     }
     return { ...(router.query || {}) };
-  }, [router.query, url]);
+  }, [router.query]);
 
-  const navigate = useCallback(
-    (
-      pathname: string,
-      query?: Record<string, string | string[] | undefined>,
-      options?: Parameters<typeof router.push>[2]
-    ) => {
-      const finalQuery = keepQuery ? { ...queryParams, ...query } : query;
-      return router.push({ pathname, query: finalQuery }, undefined, options);
-    },
-    [router, queryParams, keepQuery]
-  );
+  const navigate = (
+    pathname: string,
+    query?: Record<string, string | string[] | undefined>,
+    options?: Parameters<typeof router.push>[2]
+  ) => {
+    const finalQuery = keepQuery ? { ...getQueryParams(), ...query } : query;
+    return router.push({ pathname, query: finalQuery }, undefined, options);
+  };
 
-  const replace = useCallback(
-    (
-      pathname: string,
-      query?: Record<string, string | string[] | undefined>,
-      options?: Parameters<typeof router.replace>[2]
-    ) => {
-      const finalQuery = keepQuery ? { ...queryParams, ...query } : query;
-      return router.replace({ pathname, query: finalQuery }, undefined, options);
-    },
-    [router, queryParams, keepQuery]
-  );
+  const replace = (
+    pathname: string,
+    query?: Record<string, string | string[] | undefined>,
+    options?: Parameters<typeof router.replace>[2]
+  ) => {
+    const finalQuery = keepQuery ? { ...getQueryParams(), ...query } : query;
+    return router.replace({ pathname, query: finalQuery }, undefined, options);
+  };
 
-  const goBack = useCallback(() => {
+  const goBack = () => {
     router.back();
-  }, [router]);
+  };
 
   return {
-    ...router,
-    queryParams,
     navigate,
     replace,
     goBack,
