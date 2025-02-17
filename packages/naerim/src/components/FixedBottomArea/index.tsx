@@ -16,7 +16,9 @@ export const BottomFixedArea = ({ children, containerStyle, ...rest }: BottomFix
 
   const style = useMemo(() => {
     if (!detectIOS) {
-      return undefined;
+      return {
+        bottom: '0px',
+      };
     }
     return {
       bottom: isKeypadOpen ? `${-viewport.offset}px` : `0px`,
@@ -35,7 +37,7 @@ const fixedAreaContainer = css({
   position: 'fixed',
   left: '50%',
   right: 'auto',
-  bottom: '0',
+  // bottom: '0px',
   width: '100%',
   maxWidth: '840px',
   zIndex: '1000',
