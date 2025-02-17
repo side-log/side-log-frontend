@@ -7,7 +7,6 @@ const textStyles = {
       fontWeight: 500,
       fontSize: '15px',
       lineHeight: '22.5px',
-      letterSpacing: '0%',
     },
   },
   b3: {
@@ -16,7 +15,14 @@ const textStyles = {
       fontWeight: 400,
       fontSize: '15px',
       lineHeight: '22.5px',
-      letterSpacing: '0%',
+    },
+  },
+  b4: {
+    value: {
+      fontFamily: 'Pretendard',
+      fontWeight: 600,
+      fontSize: '14px',
+      lineHeight: '21px',
     },
   },
 } as const;
