@@ -1,5 +1,4 @@
 import { defineConfig } from '@pandacss/dev';
-import { pandaTextStyles } from './panda.text';
 
 export default defineConfig({
   // Whether to use css reset
@@ -130,7 +129,6 @@ export default defineConfig({
           },
         },
       },
-      textStyles: pandaTextStyles,
     },
   },
 
