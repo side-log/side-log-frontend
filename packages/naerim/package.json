@@ -13,8 +13,12 @@
     "@yeaaaah/shared": "workspace:^",
     "motion": "^12.4.3",
     "next": "15.1.6",
+    "notion-client": "^7.1.6",
+    "notion-types": "^7.1.6",
+    "notion-utils": "^7.1.6",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-notion-x": "^7.2.6"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
