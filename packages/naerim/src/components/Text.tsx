@@ -10,41 +10,51 @@ interface TextProps {
 
 export type Typography = keyof typeof typography;
 
-const typography = {
+export const typography = {
+  b1: {
+    fontWeight: '600 !important',
+    fontSize: '15px !important',
+    lineHeight: '22.5px !important',
+  },
   b2: {
-    fontWeight: 500,
-    fontSize: '15px',
-    lineHeight: '22.5px',
+    fontWeight: '500 !important',
+    fontSize: '15px !important',
+    lineHeight: '22.5px !important',
   },
   b3: {
-    fontWeight: 400,
-    fontSize: '15px',
-    lineHeight: '22.5px',
+    fontWeight: '400 !important',
+    fontSize: '15px !important',
+    lineHeight: '22.5px !important',
   },
   b4: {
-    fontWeight: 600,
-    fontSize: '14px',
-    lineHeight: '21px',
+    fontWeight: '600 !important',
+    fontSize: '14px !important',
+    lineHeight: '21px !important',
   },
   b5: {
-    fontWeight: 400,
-    fontSize: '14px',
-    lineHeight: '18.2px',
+    fontWeight: '400 !important',
+    fontSize: '14px !important',
+    lineHeight: '18.2px !important',
   },
   l2: {
-    fontWeight: 400,
-    fontSize: '13px',
-    lineHeight: '18.8px',
+    fontWeight: '400 !important',
+    fontSize: '13px !important',
+    lineHeight: '18.8px !important',
   },
   l3: {
-    fontWeight: 500,
-    fontSize: '12px',
-    lineHeight: '17.4px',
+    fontWeight: '500 !important',
+    fontSize: '12px !important',
+    lineHeight: '17.4px !important',
+  },
+  t1: {
+    fontWeight: '600 !important',
+    fontSize: '20px !important',
+    lineHeight: '28px !important',
   },
   t2: {
-    fontWeight: 600,
-    fontSize: '18px',
-    lineHeight: '25.2px',
+    fontWeight: '600 !important',
+    fontSize: '18px !important',
+    lineHeight: '25.2px !important',
   },
 } as const;
 

@@ -18,7 +18,8 @@
     "notion-utils": "^7.1.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-notion-x": "^7.2.6"
+    "react-lazy-images": "^1.1.0",
+    "react-notion": "^0.10.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

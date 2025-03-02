@@ -20,6 +20,18 @@ const nextConfig: NextConfig = {
     return config;
   },
   reactStrictMode: true,
+  images: {
+    remotePatterns: [
+      {
+        hostname: 'www.notion.so',
+        protocol: 'https',
+      },
+      {
+        hostname: 'file.notion.so',
+        protocol: 'https',
+      },
+    ],
+  },
 };
 
 export default nextConfig;

@@ -1,3 +1,5 @@
+'use client';
+
 import { getOs } from '@yeaaaah/shared';
 import React, { useMemo } from 'react';
 import useViewport from './hooks/useViewport';
@@ -61,5 +63,5 @@ const gradientBackground = css({
   bottom: '0',
   zIndex: '-1',
   pointerEvents: 'none',
-  background: 'linear-gradient(to top, #ffffff 0%, #ffffff 50%, rgba(255, 255, 255, 0) 100%)',
+  background: 'linear-gradient(to top, #000000 0%, #000000 50%, rgba(0, 0, 0, 0) 100%)',
 });

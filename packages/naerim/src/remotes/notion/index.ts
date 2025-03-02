@@ -1,9 +1,21 @@
-import { NotionAPI } from 'notion-client';
+import { BlockMapType } from 'react-notion';
 
-const notion = new NotionAPI({
-  // activeUser: process.env.NOTION_ACTIVE_USER,
-  authToken: process.env.NOTION_TOKEN_V2,
-});
+export const fetchPage = async (pageId: string): Promise<BlockMapType> => {
+  const response = await fetch(`https://notion-api.splitbee.io/v1/page/${pageId}`, {
+    headers: {
+      Authorization: `Bearer ${process.env.NOTION_TOKEN_V2}`,
+    },
+  });
 
-export default notion;
-export const checklistPageId = '1983cf7403e280b29e17c8812ab24431'; // 1983cf7403e280b29e17c8812ab24431
+  return response.json();
+};
+
+export const fetchTable = async (tableId: string) => {
+  const response = await fetch(`https://notion-api.splitbee.io/v1/table/${tableId}`, {
+    headers: {
+      Authorization: `Bearer ${process.env.NOTION_TOKEN_V2}`,
+    },
+  });
+
+  return response.json();
+};

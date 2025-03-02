@@ -2,7 +2,6 @@ import { Gilda_Display } from 'next/font/google';
 import localFont from 'next/font/local';
 import Wrapper from '@/components/Wrapper';
 import './globals.css';
-import 'react-notion-x/src/styles.css';
 
 export const gildaFont = Gilda_Display({
   weight: '400',
