@@ -22,7 +22,7 @@ export default async function ChecklistDetailPage({ params, searchParams }: Chec
   const table = await getChecklistTable();
   const article = table.find(item => item?.step === step && item?.order?.toString() === order);
   const total = table.filter(item => item?.step === step).length;
-  const isLastStep = total === parseInt(step);
+  const isLastStep = total - 1 === parseInt(order);
 
   if (article == null) {
     return <div>존재하지 않는 체크리스트입니다.</div>;
@@ -53,7 +53,7 @@ export default async function ChecklistDetailPage({ params, searchParams }: Chec
           </Text>
         </div>
 
-        <Chip label={`${article.step}/${total}`} color={'content.normal'} typography={'l3'} />
+        <Chip label={`${Number(article.order) + 1}/${total}`} color={'content.normal'} typography={'l3'} />
       </div>
       <Spacing size={16} />
       <div

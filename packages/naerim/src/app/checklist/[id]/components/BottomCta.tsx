@@ -12,7 +12,7 @@ export function ClientBottomButton({ isLastStep, step, order }: { isLastStep: bo
 
   const handleCtaClick = () => {
     if (isLastStep) {
-      redirect(`/checklist/complete?referrer=${referrer}`, RedirectType.push);
+      redirect(`/checklist/complete?step=${step}&referrer=${referrer}`, RedirectType.push);
     } else {
       redirect(`/checklist/${step}?order=${order + 1}&referrer=${referrer}`, RedirectType.push);
     }

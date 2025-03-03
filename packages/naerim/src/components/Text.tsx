@@ -34,7 +34,7 @@ export const typography = {
   b5: {
     fontWeight: '400 !important',
     fontSize: '14px !important',
-    lineHeight: '18.2px !important',
+    lineHeight: '21px !important',
   },
   l2: {
     fontWeight: '400 !important',
@@ -55,6 +55,11 @@ export const typography = {
     fontWeight: '600 !important',
     fontSize: '18px !important',
     lineHeight: '25.2px !important',
+  },
+  t3: {
+    fontWeight: '600 !important',
+    fontSize: '16px !important',
+    lineHeight: '22.4px !important',
   },
 } as const;
 

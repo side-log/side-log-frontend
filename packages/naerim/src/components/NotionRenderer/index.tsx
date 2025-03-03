@@ -2,6 +2,7 @@ import Text from '../Text';
 import { css } from '../../../styled-system/css';
 
 import { NotionRenderer as ReactNotionRenderer, BlockMapType, MapImageUrl, BlockValueType } from 'react-notion';
+import { getIcon } from '../Icon';
 
 interface NotionRendererProps {
   blockMap: BlockMapType;
@@ -29,6 +30,46 @@ export function NotionRenderer({ blockMap, level = 0 }: NotionRendererProps) {
               <Text color={'base.white'} typography={'t1'} className={css({ marginBottom: '16px' })}>
                 {blockValue.properties?.title?.join()}
               </Text>
+            );
+          },
+          sub_sub_header: ({ blockValue }) => {
+            const text = blockValue?.properties?.title?.[0]?.[0];
+
+            if (text == null || text === '') {
+              return null;
+            }
+
+            return (
+              <Text color={'base.white'} typography={'t3'} className={css({ marginBottom: '16px' })}>
+                {text}
+              </Text>
+            );
+          },
+          code: ({ blockValue }) => {
+            const caption = blockValue?.properties?.caption?.[0]?.[0];
+            const text = blockValue?.properties?.title?.[0]?.[0];
+            console.log('🚀 ~ NotionRenderer ~ caption:', caption);
+
+            const Icon = getIcon(caption);
+
+            return (
+              <div
+                className={css({
+                  display: 'flex',
+                  // alignContent: 'center',
+                  gap: '10px',
+                  padding: '14px 16px',
+                  borderRadius: '12px',
+                  backgroundColor: 'background.normal',
+                })}
+              >
+                <div>
+                  <Icon />
+                </div>
+                <Text color={'content.normal'} typography={'b5'} className={css({ whiteSpace: 'pre-wrap' })}>
+                  {text}
+                </Text>
+              </div>
             );
           },
           text: ({ blockValue, level }) => {

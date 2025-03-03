@@ -1,14 +1,24 @@
 import { ButtonHTMLAttributes, PropsWithChildren } from 'react';
 import { cva, cx } from '../../styled-system/css';
 import { SystemStyleObject } from '../../styled-system/types';
-import Text from './Text';
 
 const variant: Record<string, SystemStyleObject> = {
-  primary: {},
+  primary: {
+    padding: '12.5px 0',
+    backgroundColor: 'primary.normal',
+    borderRadius: '8px',
+  },
   secondary: {
-    p: 2,
-    bg: 'base.white',
-    borderRadius: 8,
+    padding: '12.5px 0',
+    backgroundColor: 'base.white',
+    borderRadius: '8px',
+    border: '1px solid #ED801D',
+  },
+  minor: {
+    padding: '12.5px 0',
+    backgroundColor: 'background.normal',
+    borderRadius: '8px',
+    border: '1px solid #FFFFFF1A',
   },
 } as const;
 
@@ -27,8 +37,8 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 export default function Button(props: PropsWithChildren<ButtonProps>) {
   return (
-    <button className={cx(button({ variant: props.variant }))} {...props}>
-      <Text color={''}>{props.children}</Text>
+    <button data-key="logging-click" className={cx(button({ variant: props.variant }))} {...props}>
+      {props.children}
     </button>
   );
 }
