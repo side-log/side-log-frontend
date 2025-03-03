@@ -1,3 +1,5 @@
+'use client';
+
 import { getOs } from '@yeaaaah/shared';
 import React, { useMemo } from 'react';
 import useViewport from './hooks/useViewport';
@@ -16,7 +18,9 @@ export const BottomFixedArea = ({ children, containerStyle, ...rest }: BottomFix
 
   const style = useMemo(() => {
     if (!detectIOS) {
-      return undefined;
+      return {
+        bottom: '0px',
+      };
     }
     return {
       bottom: isKeypadOpen ? `${-viewport.offset}px` : `0px`,
@@ -35,7 +39,7 @@ const fixedAreaContainer = css({
   position: 'fixed',
   left: '50%',
   right: 'auto',
-  bottom: '0',
+  // bottom: '0px',
   width: '100%',
   maxWidth: '840px',
   zIndex: '1000',
@@ -59,5 +63,5 @@ const gradientBackground = css({
   bottom: '0',
   zIndex: '-1',
   pointerEvents: 'none',
-  background: 'linear-gradient(to top, #ffffff 0%, #ffffff 50%, rgba(255, 255, 255, 0) 100%)',
+  background: 'linear-gradient(to top, #000000 0%, #000000 50%, rgba(0, 0, 0, 0) 100%)',
 });

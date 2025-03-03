@@ -6,13 +6,20 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prepare": "panda codegen"
   },
   "dependencies": {
     "@yeaaaah/shared": "workspace:^",
+    "motion": "^12.4.3",
     "next": "15.1.6",
+    "notion-client": "^7.1.6",
+    "notion-types": "^7.1.6",
+    "notion-utils": "^7.1.6",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-lazy-images": "^1.1.0",
+    "react-notion": "^0.10.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

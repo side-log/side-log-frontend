@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import { css } from '../../styled-system/css';
 
@@ -8,7 +9,7 @@ interface PrimaryButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 }
 
 const PrimaryButton = (props: PrimaryButtonProps) => {
-  const { title, onClick, disabled = false, children, ...rest } = props;
+  const { onClick, disabled = false, children, ...rest } = props;
   return (
     <button
       className={style}
