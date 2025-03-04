@@ -11,14 +11,14 @@ const nextConfig: NextConfig = {
       },
     },
   },
-  webpack: config => {
-    config.module.rules.push({
-      test: /\.svg$/,
-      use: ['@svgr/webpack', 'url-loader'],
-    });
+  // webpack: config => {
+  //   config.module.rules.push({
+  //     test: /\.svg$/,
+  //     use: ['@svgr/webpack', 'url-loader'],
+  //   });
 
-    return config;
-  },
+  //   return config;
+  // },
   reactStrictMode: true,
   images: {
     remotePatterns: [
