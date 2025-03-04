@@ -22,7 +22,7 @@ importers:
         version: 9.1.0(eslint@9.13.0)
       eslint-plugin-import:
         specifier: ^2.31.0
-        version: 2.31.0(@typescript-eslint/parser@8.10.0(eslint@9.13.0)(typescript@5.6.3))(eslint-import-resolver-typescript@3.7.0)(eslint@9.13.0)
+        version: 2.31.0(@typescript-eslint/parser@8.10.0(eslint@9.13.0)(typescript@5.6.3))(eslint@9.13.0)
       eslint-plugin-jsx-a11y:
         specifier: ^6.10.0
         version: 6.10.0(eslint@9.13.0)
@@ -75,9 +75,6 @@ importers:
       react-notion:
         specifier: ^0.10.0
         version: 0.10.0(react@19.0.0)
-      url-loader:
-        specifier: ^4.1.1
-        version: 4.1.1(webpack@5.98.0)
     devDependencies:
       '@eslint/eslintrc':
         specifier: ^3
@@ -109,6 +106,9 @@ importers:
       typescript:
         specifier: ^5
         version: 5.6.3
+      url-loader:
+        specifier: ^4.1.1
+        version: 4.1.1(webpack@5.98.0)
 
   packages/scaffold:
     dependencies:
@@ -132,7 +132,7 @@ importers:
         version: 1.25.2
       next:
         specifier: 12.3.4
-        version: 12.3.4(@babel/core@7.25.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 12.3.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       overlay-kit:
         specifier: ^1.4.1
         version: 1.4.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -181,26 +181,26 @@ importers:
         version: 4.5.1
       '@toss/impression-area':
         specifier: ^1.4.2
-        version: 1.4.2(react@18.3.1)
+        version: 1.4.2(react@19.0.0)
       next:
         specifier: 12.3.4
-        version: 12.3.4(@babel/core@7.25.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 12.3.4(@babel/core@7.25.8)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       react:
-        specifier: ^18.3.1
-        version: 18.3.1
+        specifier: ^19.0.0
+        version: 19.0.0
       react-dom:
-        specifier: ^18.3.1
-        version: 18.3.1(react@18.3.1)
+        specifier: ^19.0.0
+        version: 19.0.0(react@19.0.0)
     devDependencies:
       '@eslint/js':
         specifier: ^9.9.0
         version: 9.13.0
       '@types/react':
-        specifier: ^18.3.3
-        version: 18.3.11
+        specifier: ^19
+        version: 19.0.8
       '@types/react-dom':
-        specifier: ^18.3.0
-        version: 18.3.1
+        specifier: ^19
+        version: 19.0.3(@types/react@19.0.8)
       '@vitejs/plugin-react':
         specifier: ^4.3.1
         version: 4.3.2(vite@5.4.9(@types/node@20.16.13)(lightningcss@1.25.1)(terser@5.39.0))
@@ -6306,15 +6306,15 @@ snapshots:
     dependencies:
       tslib: 2.8.0
 
-  '@toss/impression-area@1.4.2(react@18.3.1)':
+  '@toss/impression-area@1.4.2(react@19.0.0)':
     dependencies:
-      '@toss/react': 1.8.1(react@18.3.1)
+      '@toss/react': 1.8.1(react@19.0.0)
       '@toss/utils': 1.6.1
       '@types/react': 18.3.11
       lodash.debounce: 4.0.8
-      react: 18.3.1
+      react: 19.0.0
 
-  '@toss/react@1.8.1(react@18.3.1)':
+  '@toss/react@1.8.1(react@19.0.0)':
     dependencies:
       '@babel/runtime': 7.25.7
       '@toss/storage': 1.4.1
@@ -6322,7 +6322,7 @@ snapshots:
       classnames: 2.5.1
       lodash.debounce: 4.0.8
       lodash.throttle: 4.1.1
-      react: 18.3.1
+      react: 19.0.0
 
   '@toss/storage@1.4.1':
     dependencies:
@@ -7413,7 +7413,7 @@ snapshots:
       eslint: 9.13.0
       eslint-import-resolver-node: 0.3.9
       eslint-import-resolver-typescript: 3.7.0(eslint-plugin-import@2.31.0)(eslint@9.13.0)
-      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@8.10.0(eslint@9.13.0)(typescript@5.6.3))(eslint-import-resolver-typescript@3.7.0)(eslint@9.13.0)
+      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@8.10.0(eslint@9.13.0)(typescript@5.6.3))(eslint@9.13.0)
       eslint-plugin-jsx-a11y: 6.10.0(eslint@9.13.0)
       eslint-plugin-react: 7.37.1(eslint@9.13.0)
       eslint-plugin-react-hooks: 5.1.0(eslint@9.13.0)
@@ -7460,7 +7460,7 @@ snapshots:
       is-glob: 4.0.3
       stable-hash: 0.0.4
     optionalDependencies:
-      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@8.10.0(eslint@9.13.0)(typescript@5.6.3))(eslint-import-resolver-typescript@3.7.0)(eslint@9.13.0)
+      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@8.10.0(eslint@9.13.0)(typescript@5.6.3))(eslint@9.13.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -7475,14 +7475,13 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-module-utils@2.12.0(@typescript-eslint/parser@8.10.0(eslint@9.13.0)(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.7.0)(eslint@9.13.0):
+  eslint-module-utils@2.12.0(@typescript-eslint/parser@8.10.0(eslint@9.13.0)(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint@9.13.0):
     dependencies:
       debug: 3.2.7
     optionalDependencies:
       '@typescript-eslint/parser': 8.10.0(eslint@9.13.0)(typescript@5.6.3)
       eslint: 9.13.0
       eslint-import-resolver-node: 0.3.9
-      eslint-import-resolver-typescript: 3.7.0(eslint-plugin-import@2.31.0)(eslint@9.13.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -7515,7 +7514,7 @@ snapshots:
       - eslint-import-resolver-webpack
       - supports-color
 
-  eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.10.0(eslint@9.13.0)(typescript@5.6.3))(eslint-import-resolver-typescript@3.7.0)(eslint@9.13.0):
+  eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.10.0(eslint@9.13.0)(typescript@5.6.3))(eslint@9.13.0):
     dependencies:
       '@rtsao/scc': 1.1.0
       array-includes: 3.1.8
@@ -7526,7 +7525,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 9.13.0
       eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.12.0(@typescript-eslint/parser@8.10.0(eslint@9.13.0)(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.7.0)(eslint@9.13.0)
+      eslint-module-utils: 2.12.0(@typescript-eslint/parser@8.10.0(eslint@9.13.0)(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint@9.13.0)
       hasown: 2.0.2
       is-core-module: 2.15.1
       is-glob: 4.0.3
@@ -8426,7 +8425,35 @@ snapshots:
     dependencies:
       enhanced-resolve: 5.17.1
 
-  next@12.3.4(@babel/core@7.25.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  next@12.3.4(@babel/core@7.25.8)(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
+    dependencies:
+      '@next/env': 12.3.4
+      '@swc/helpers': 0.4.11
+      caniuse-lite: 1.0.30001669
+      postcss: 8.4.14
+      react: 19.0.0
+      react-dom: 19.0.0(react@19.0.0)
+      styled-jsx: 5.0.7(@babel/core@7.25.8)(react@19.0.0)
+      use-sync-external-store: 1.2.0(react@19.0.0)
+    optionalDependencies:
+      '@next/swc-android-arm-eabi': 12.3.4
+      '@next/swc-android-arm64': 12.3.4
+      '@next/swc-darwin-arm64': 12.3.4
+      '@next/swc-darwin-x64': 12.3.4
+      '@next/swc-freebsd-x64': 12.3.4
+      '@next/swc-linux-arm-gnueabihf': 12.3.4
+      '@next/swc-linux-arm64-gnu': 12.3.4
+      '@next/swc-linux-arm64-musl': 12.3.4
+      '@next/swc-linux-x64-gnu': 12.3.4
+      '@next/swc-linux-x64-musl': 12.3.4
+      '@next/swc-win32-arm64-msvc': 12.3.4
+      '@next/swc-win32-ia32-msvc': 12.3.4
+      '@next/swc-win32-x64-msvc': 12.3.4
+    transitivePeerDependencies:
+      - '@babel/core'
+      - babel-plugin-macros
+
+  next@12.3.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       '@next/env': 12.3.4
       '@swc/helpers': 0.4.11
@@ -8434,7 +8461,7 @@ snapshots:
       postcss: 8.4.14
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
-      styled-jsx: 5.0.7(@babel/core@7.25.8)(react@18.3.1)
+      styled-jsx: 5.0.7(react@18.3.1)
       use-sync-external-store: 1.2.0(react@18.3.1)
     optionalDependencies:
       '@next/swc-android-arm-eabi': 12.3.4
@@ -9084,11 +9111,15 @@ snapshots:
 
   strip-json-comments@3.1.1: {}
 
-  styled-jsx@5.0.7(@babel/core@7.25.8)(react@18.3.1):
+  styled-jsx@5.0.7(@babel/core@7.25.8)(react@19.0.0):
     dependencies:
-      react: 18.3.1
+      react: 19.0.0
     optionalDependencies:
       '@babel/core': 7.25.8
+
+  styled-jsx@5.0.7(react@18.3.1):
+    dependencies:
+      react: 18.3.1
 
   styled-jsx@5.1.6(@babel/core@7.25.8)(react@19.0.0):
     dependencies:
@@ -9320,6 +9351,10 @@ snapshots:
   use-sync-external-store@1.2.0(react@18.3.1):
     dependencies:
       react: 18.3.1
+
+  use-sync-external-store@1.2.0(react@19.0.0):
+    dependencies:
+      react: 19.0.0
 
   use-sync-external-store@1.2.2(react@18.3.1):
     dependencies:

@@ -3,13 +3,14 @@
 import PrimaryButton from '@/components/PrimaryButton';
 import { BottomFixedArea } from '@/components/FixedBottomArea';
 import { css } from '../../../styled-system/css';
-import { ArrowDown, Logo } from '@/components/Icon';
+import { Icon } from '@/components/Icon';
 import Spacing from '@/components/Spacing';
 import { token } from '../../../styled-system/tokens';
+import { Fragment } from 'react';
 
 export default function LandingPage() {
   return (
-    <>
+    <Fragment>
       <div
         className={css({
           flex: '1',
@@ -20,7 +21,7 @@ export default function LandingPage() {
           height: '100%',
         })}
       >
-        <Logo width={146} fill={token('colors.content.strong')} />
+        <Icon.Logo width={146} fill={token('colors.content.strong')} />
         <Spacing size={16} />
         <div
           className={css({
@@ -33,7 +34,7 @@ export default function LandingPage() {
           {'천천히 내리고, 깊이 있게 즐기세요\n내림이 당신의 첫 드립커피와 함께할게요'}
         </div>
         <Spacing size={39} />
-        <ArrowDown />
+        <Icon.ArrowDown />
         <Spacing size={39} />
         <div
           className={css({
@@ -46,7 +47,7 @@ export default function LandingPage() {
           {'복잡할까 걱정할 필요는 없어요\n내림이 이끄는대로 천천히 따라오세요'}
         </div>
         <Spacing size={39} />
-        <ArrowDown />
+        <Icon.ArrowDown />
         <Spacing size={39} />
         <div
           className={css({
@@ -75,6 +76,6 @@ export default function LandingPage() {
           </PrimaryButton>
         </div>
       </BottomFixedArea>
-    </>
+    </Fragment>
   );
 }

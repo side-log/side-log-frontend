@@ -1,11 +1,12 @@
-import { useEffect, useState, useRef, PropsWithChildren } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import useLogger, { ClickParams } from '../../hooks/useLogger';
 
 interface LoggingClickProps {
   params: ClickParams;
+  children: React.ReactNode;
 }
 
-export default function LoggingClick({ params, children }: PropsWithChildren<LoggingClickProps>) {
+export default function LoggingClick({ params, children }: LoggingClickProps) {
   const { logger } = useLogger();
 
   const [schemaId, setSchemaId] = useState<string | null>(null);

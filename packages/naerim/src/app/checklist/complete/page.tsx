@@ -2,7 +2,7 @@ import { BottomFixedArea } from '@/components/FixedBottomArea';
 import Header from '@/components/Header';
 import { css } from '../../../../styled-system/css';
 import Text from '@/components/Text';
-import { Check } from '@/components/Icon';
+import { Icon } from '@/components/Icon';
 import Spacing from '@/components/Spacing';
 import { BottomCta } from './components/BottomCta';
 
@@ -26,7 +26,7 @@ export default async function ChecklistDetailPage({ searchParams }: ChecklistDet
           justifyContent: 'center',
         })}
       >
-        <Check />
+        <Icon.Check />
         <Spacing size={52} />
         <Text typography={'t1'} color={'base.white'}>
           step {step}을 완료했어요

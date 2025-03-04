@@ -1,12 +1,13 @@
-import { PropsWithChildren, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import useLogger, { ImpressionParams } from '../../hooks/useLogger';
-import { ImpressionArea } from '@toss/impression-area';
+import { ImpressionArea } from './ImpressionArea';
 
 interface LoggingImpressionProps {
   params?: ImpressionParams;
+  children: React.ReactNode | Promise<React.ReactNode>;
 }
 
-export default function LoggingImpression({ children, params }: PropsWithChildren<LoggingImpressionProps>) {
+export default function LoggingImpression({ children, params }: LoggingImpressionProps) {
   const { logger } = useLogger();
 
   const [schemaId, setSchemaId] = useState<string | null>(null);
@@ -35,7 +36,7 @@ export default function LoggingImpression({ children, params }: PropsWithChildre
 
   return (
     <ImpressionArea ref={elementRef} onImpressionStart={handleImpression}>
-      {children}
+      {children as React.ReactNode}
     </ImpressionArea>
   );
 }

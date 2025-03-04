@@ -63,9 +63,7 @@ export function NotionRenderer({ blockMap, level = 0 }: NotionRendererProps) {
                   backgroundColor: 'background.normal',
                 })}
               >
-                <div>
-                  <Icon />
-                </div>
+                <div>{Icon != null && <Icon />}</div>
                 <Text color={'content.normal'} typography={'b5'} className={css({ whiteSpace: 'pre-wrap' })}>
                   {text}
                 </Text>

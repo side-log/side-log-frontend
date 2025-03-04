@@ -4,10 +4,11 @@ import Text from '@/components/Text';
 import { css } from '../../../styled-system/css';
 import { gildaFont } from '../layout';
 import StepCard from './components/StepCard';
+import { Fragment } from 'react';
 
 export default function CheckListPage() {
   return (
-    <>
+    <Fragment>
       <Header />
       <Spacing size={24} />
       <section className={css({ px: 4 })}>
@@ -42,6 +43,6 @@ export default function CheckListPage() {
           }}
         />
       </section>
-    </>
+    </Fragment>
   );
 }
