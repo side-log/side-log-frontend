@@ -8,7 +8,7 @@ import Text from '@/components/Text';
 import { convertToNewLineJsx } from '@/utils/convertToNewLineJsx';
 import { css } from '../../../../styled-system/css';
 import Button from '@/components/Button';
-import { redirect, RedirectType } from 'next/navigation';
+import { redirect, RedirectType, useRouter } from 'next/navigation';
 import useReferrer from '@yeaaaah/shared/src/hooks/useReferrer';
 
 interface StepCardProps {
@@ -17,6 +17,7 @@ interface StepCardProps {
 
 export default function StepCard({ step }: StepCardProps) {
   const referrer = useReferrer();
+  const router = useRouter();
 
   return (
     <div
@@ -54,7 +55,7 @@ export default function StepCard({ step }: StepCardProps) {
       <Button
         variant={'secondary'}
         onClick={() => {
-          redirect(`/checklist/${step.id}?order=0&referrer=${referrer}`, RedirectType.push);
+          router.push(`/checklist/${step.id}?order=0&referrer=${referrer}`);
         }}
       >
         확인하기
