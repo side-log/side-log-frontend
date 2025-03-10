@@ -33,7 +33,7 @@ export default async function ChecklistDetailPage({ searchParams }: ChecklistDet
         </Text>
       </div>
       <BottomFixedArea>
-        <BottomCta />
+        <BottomCta step={Number(step)} />
       </BottomFixedArea>
     </>
   );
