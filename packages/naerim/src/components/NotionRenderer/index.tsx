@@ -1,8 +1,46 @@
 import Text from '../Text';
 import { css } from '../../../styled-system/css';
 
-import { NotionRenderer as ReactNotionRenderer, BlockMapType, MapImageUrl, BlockValueType } from 'react-notion';
+import {
+  NotionRenderer as ReactNotionRenderer,
+  BlockMapType,
+  MapImageUrl,
+  BlockValueType,
+  BlockType,
+} from 'react-notion';
 import { getIcon } from '../Icon';
+import Spacing from '../Spacing';
+
+function getNextBlock(blockMap: BlockMapType, blockId: string) {
+  const blockIds = Object.keys(blockMap);
+  const currentIndex = blockIds.indexOf(blockId);
+  const nextBlock =
+    currentIndex >= 0 && currentIndex < blockIds.length - 1 ? blockMap[blockIds[currentIndex + 1]] : null;
+  return nextBlock;
+}
+
+function isBottomGapBlock(block: BlockType | null) {
+  if (block == null) return false;
+
+  const blockValue = block.value;
+  return (
+    blockValue.type === 'code' &&
+    blockValue?.properties?.language?.[0]?.[0] === 'HTML' &&
+    blockValue?.properties?.title?.[0]?.[0] == null
+  );
+}
+
+interface WithBottomGapProps {
+  blockMap: BlockMapType;
+  blockId: string;
+  children: (props: { hasBottomGap: boolean }) => React.ReactNode;
+}
+
+function withBottomGap({ blockMap, blockId, children }: WithBottomGapProps) {
+  const nextBlock = getNextBlock(blockMap, blockId);
+  const hasBottomGap = isBottomGapBlock(nextBlock);
+  return children({ hasBottomGap });
+}
 
 interface NotionRendererProps {
   blockMap: BlockMapType;
@@ -16,7 +54,6 @@ export function NotionRenderer({ blockMap, level = 0 }: NotionRendererProps) {
         '& main.notion': {
           display: 'flex',
           flexDirection: 'column',
-          gap: '16px',
           paddingBottom: '120px',
         },
       })}
@@ -26,11 +63,19 @@ export function NotionRenderer({ blockMap, level = 0 }: NotionRendererProps) {
         level={level}
         customBlockComponents={{
           header: ({ blockValue }) => {
-            return (
-              <Text color={'base.white'} typography={'t1'} className={css({ marginBottom: '16px' })}>
-                {blockValue.properties?.title?.join()}
-              </Text>
-            );
+            return withBottomGap({
+              blockMap,
+              blockId: blockValue.id,
+              children: ({ hasBottomGap }) => (
+                <Text
+                  color={'base.white'}
+                  typography={'t1'}
+                  className={css({ marginBottom: hasBottomGap ? undefined : '16px' })}
+                >
+                  {blockValue.properties?.title?.join()}
+                </Text>
+              ),
+            });
           },
           sub_sub_header: ({ blockValue }) => {
             const text = blockValue?.properties?.title?.[0]?.[0];
@@ -39,36 +84,52 @@ export function NotionRenderer({ blockMap, level = 0 }: NotionRendererProps) {
               return null;
             }
 
-            return (
-              <Text color={'base.white'} typography={'t3'} className={css({ marginBottom: '16px' })}>
-                {text}
-              </Text>
-            );
+            return withBottomGap({
+              blockMap,
+              blockId: blockValue.id,
+              children: ({ hasBottomGap }) => (
+                <Text
+                  color={'base.white'}
+                  typography={'t3'}
+                  className={css({ marginBottom: hasBottomGap ? undefined : '16px' })}
+                >
+                  {text}
+                </Text>
+              ),
+            });
           },
           code: ({ blockValue }) => {
             const caption = blockValue?.properties?.caption?.[0]?.[0];
             const text = blockValue?.properties?.title?.[0]?.[0];
-            console.log('🚀 ~ NotionRenderer ~ caption:', caption);
+            const language = blockValue?.properties?.language?.[0]?.[0];
 
             const Icon = getIcon(caption);
 
-            return (
-              <div
-                className={css({
-                  display: 'flex',
-                  // alignContent: 'center',
-                  gap: '10px',
-                  padding: '14px 16px',
-                  borderRadius: '12px',
-                  backgroundColor: 'background.normal',
-                })}
-              >
-                <div>{Icon != null && <Icon />}</div>
-                <Text color={'content.normal'} typography={'b5'} className={css({ whiteSpace: 'pre-wrap' })}>
-                  {text}
-                </Text>
-              </div>
-            );
+            if (language === 'HTML' && text == null && caption == null) {
+              return <Spacing size={32} />;
+            }
+
+            return withBottomGap({
+              blockMap,
+              blockId: blockValue.id,
+              children: ({ hasBottomGap }) => (
+                <div
+                  className={css({
+                    display: 'flex',
+                    gap: '10px',
+                    padding: '14px 16px',
+                    borderRadius: '12px',
+                    backgroundColor: 'background.normal',
+                    marginBottom: hasBottomGap ? undefined : '16px',
+                  })}
+                >
+                  <div>{Icon != null && <Icon />}</div>
+                  <Text color={'content.normal'} typography={'b5'} className={css({ whiteSpace: 'pre-wrap' })}>
+                    {text}
+                  </Text>
+                </div>
+              ),
+            });
           },
           text: ({ blockValue, level }) => {
             const text = blockValue?.properties?.title?.[0]?.[0];
@@ -78,18 +139,22 @@ export function NotionRenderer({ blockMap, level = 0 }: NotionRendererProps) {
               return null;
             }
 
-            return (
-              <Text
-                color={isBold ? 'base.white' : 'content.normal'}
-                typography={isBold ? 'b1' : 'b3'}
-                className={css({
-                  whiteSpace: 'pre-wrap',
-                  marginBottom: level === 1 ? '16px' : undefined,
-                })}
-              >
-                {text}
-              </Text>
-            );
+            return withBottomGap({
+              blockMap,
+              blockId: blockValue.id,
+              children: ({ hasBottomGap }) => (
+                <Text
+                  color={isBold ? 'base.white' : 'content.normal'}
+                  typography={isBold ? 'b1' : 'b3'}
+                  className={css({
+                    whiteSpace: 'pre-wrap',
+                    marginBottom: level === 1 ? (hasBottomGap ? undefined : '16px') : undefined,
+                  })}
+                >
+                  {text}
+                </Text>
+              ),
+            });
           },
           image: ({ blockValue }) => {
             const src = defaultMapImageUrl(blockValue?.properties?.source?.[0]?.[0], {
@@ -97,17 +162,22 @@ export function NotionRenderer({ blockMap, level = 0 }: NotionRendererProps) {
               value: blockValue as BlockValueType,
             });
 
-            return (
-              <div
-                style={{
-                  position: 'relative',
-                  width: '68px',
-                  height: '68px',
-                }}
-              >
-                <img alt={'notion image'} src={src} />
-              </div>
-            );
+            return withBottomGap({
+              blockMap,
+              blockId: blockValue.id,
+              children: ({ hasBottomGap }) => (
+                <div
+                  style={{
+                    position: 'relative',
+                    width: '68px',
+                    height: '68px',
+                    marginBottom: hasBottomGap ? undefined : '16px',
+                  }}
+                >
+                  <img alt={'notion image'} src={src} />
+                </div>
+              ),
+            });
           },
           column: ({ blockValue, blockMap }) => {
             return (
@@ -129,34 +199,38 @@ export function NotionRenderer({ blockMap, level = 0 }: NotionRendererProps) {
             );
           },
           column_list: ({ blockValue, blockMap }) => {
-            return (
-              <div
-                className={css({
-                  padding: '16px',
-                  borderRadius: '12px',
-                  backgroundColor: 'background.normal',
-                  display: 'flex',
-                  justifyContent: 'flex-start',
-                  alignItems: 'flex-start',
-                  marginBottom: '12px',
-                  gap: '16px',
-                })}
-              >
-                {blockValue?.content?.map(id => {
-                  if (!blockMap[id]) return null;
-                  return (
-                    <NotionRenderer
-                      key={id}
-                      level={level + 1}
-                      blockMap={{
-                        [id]: blockMap[id],
-                        ...blockMap,
-                      }}
-                    />
-                  );
-                })}
-              </div>
-            );
+            return withBottomGap({
+              blockMap,
+              blockId: blockValue.id,
+              children: ({ hasBottomGap }) => (
+                <div
+                  className={css({
+                    padding: '16px',
+                    borderRadius: '12px',
+                    backgroundColor: 'background.normal',
+                    display: 'flex',
+                    justifyContent: 'flex-start',
+                    alignItems: 'flex-start',
+                    marginBottom: hasBottomGap ? undefined : '12px',
+                    gap: '16px',
+                  })}
+                >
+                  {blockValue?.content?.map(id => {
+                    if (!blockMap[id]) return null;
+                    return (
+                      <NotionRenderer
+                        key={id}
+                        level={level + 1}
+                        blockMap={{
+                          [id]: blockMap[id],
+                          ...blockMap,
+                        }}
+                      />
+                    );
+                  })}
+                </div>
+              ),
+            });
           },
         }}
       />
