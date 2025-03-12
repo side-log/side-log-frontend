@@ -27,6 +27,7 @@ export default function StepCard({ step }: StepCardProps) {
         borderRadius: 12,
         border: '1px solid',
         borderColor: 'base.white/10',
+        mb: 4,
       })}
     >
       <Label typography={'l3'}>Step {step.id}</Label>
