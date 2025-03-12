@@ -5,6 +5,7 @@ import { css } from '../../../styled-system/css';
 import { gildaFont } from '../layout';
 import StepCard from './components/StepCard';
 import { Fragment } from 'react';
+import { steps } from '@/constants/step';
 
 export default function CheckListPage() {
   return (
@@ -34,15 +35,11 @@ export default function CheckListPage() {
       </section>
       <Spacing size={24} />
       <section className={css({ px: 4 })}>
-        <StepCard
-          step={{
-            id: '1',
-            title: '드립커피란 뭘까요?',
-            description: '커피를 내리기 전에\n드립커피에 대해 먼저 알아봐요',
-            image: 'https://placehold.co/600x400',
-          }}
-        />
+        {steps.map(step => (
+          <StepCard key={step.id} step={step} />
+        ))}
       </section>
+      <Spacing size={80} />
     </Fragment>
   );
 }
