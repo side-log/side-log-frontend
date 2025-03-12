@@ -1,6 +1,5 @@
 'use client';
 
-/* eslint-disable @next/next/no-img-element */
 import Label from '@/components/Label';
 import { Step } from '../models/step';
 import Spacing from '@/components/Spacing';
@@ -15,7 +14,7 @@ interface StepCardProps {
   step: Step;
 }
 
-export default function StepCard({ step }: StepCardProps) {
+export function StepCard({ step }: StepCardProps) {
   const referrer = useReferrer();
   const router = useRouter();
 

@@ -9,6 +9,7 @@ import Button from '@/components/Button';
 import { useRouter } from 'next/navigation';
 import useReferrer from '@yeaaaah/shared/src/hooks/useReferrer';
 import { withReferrer } from '@/utils/withReferrer';
+
 export default function EquipmentPage() {
   const referrer = useReferrer();
   const router = useRouter();

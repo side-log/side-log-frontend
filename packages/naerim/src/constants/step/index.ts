@@ -1,4 +1,6 @@
-export const steps = [
+import { Step } from '@/app/checklist/models/step';
+
+export const steps: Step[] = [
   {
     id: '1',
     title: '드립커피란 뭘까요?',
@@ -23,4 +25,4 @@ export const steps = [
     description: '이제 마지막 단계만 남았어요.\n함께 드립커피를 내려볼까요?',
     image: '/images/step_4.png',
   },
-] as const;
+];

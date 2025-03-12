@@ -18,9 +18,7 @@ import { SystemStyleObject } from '../../../styled-system/types';
 function getNextBlock(blockMap: BlockMapType, blockId: string) {
   const blockIds = Object.keys(blockMap);
   const currentIndex = blockIds.indexOf(blockId);
-  const nextBlock =
-    currentIndex >= 0 && currentIndex < blockIds.length - 1 ? blockMap[blockIds[currentIndex + 1]] : null;
-  return nextBlock;
+  return currentIndex >= 0 && currentIndex < blockIds.length - 1 ? blockMap[blockIds[currentIndex + 1]] : null;
 }
 
 function isBottomGapBlock(block: BlockType | null) {
@@ -68,7 +66,7 @@ function TextRenderer({
         const isLink = types?.find(type => type[0] === 'a') != null;
         const link = types?.find(type => type[0] === 'a')?.[1] ?? '';
 
-        const isBold = types?.find(type => type[0] === 'b') != null;
+        // const isBold = types?.find(type => type[0] === 'b') != null;
 
         if (isLink) {
           return (
@@ -170,8 +168,8 @@ export function NotionRenderer({ blockMap, level = 0 }: NotionRendererProps) {
             });
           },
           text: ({ blockValue }) => {
-            const isCode = blockValue?.properties?.title?.some?.((item: any) =>
-              item[1]?.some?.((type: any) => type[0] === 'c')
+            const isCode = blockValue?.properties?.title?.some?.((item: string[][][]) =>
+              item[1]?.some?.((type: string[]) => type[0] === 'c')
             );
 
             return withBottomGap({
@@ -253,8 +251,8 @@ export function NotionRenderer({ blockMap, level = 0 }: NotionRendererProps) {
             return withBottomGap({
               blockMap,
               blockId: blockValue.id,
-              children: ({ hasBottomGap }) => (
-                <div style={{}}>
+              children: ({}) => (
+                <div>
                   <img
                     alt={'notion image'}
                     src={src}
@@ -339,7 +337,7 @@ export function NotionRenderer({ blockMap, level = 0 }: NotionRendererProps) {
               return withBottomGap({
                 blockMap,
                 blockId: blockValue.id,
-                children: ({ hasBottomGap }) => (
+                children: ({}) => (
                   <div
                     className={css({
                       display: 'grid',
@@ -371,7 +369,7 @@ export function NotionRenderer({ blockMap, level = 0 }: NotionRendererProps) {
             return withBottomGap({
               blockMap,
               blockId: blockValue.id,
-              children: ({ hasBottomGap }) => (
+              children: ({}) => (
                 <li
                   className={css({
                     '&::marker': {
@@ -389,7 +387,7 @@ export function NotionRenderer({ blockMap, level = 0 }: NotionRendererProps) {
             return withBottomGap({
               blockMap,
               blockId: blockValue.id,
-              children: ({ hasBottomGap }) => (
+              children: ({}) => (
                 <div
                   className={css({
                     padding: '16px 16px 4px 16px',
@@ -414,28 +412,11 @@ export function NotionRenderer({ blockMap, level = 0 }: NotionRendererProps) {
               ),
             });
           },
-          // numbered_list: ({ blockValue }) => {
-          //   return withBottomGap({
-          //     blockMap,
-          //     blockId: blockValue.id,
-          //     children: ({ hasBottomGap }) => (
-          //       <div
-          //         className={css({
-          //           padding: '16px',
-          //           borderRadius: '8px',
-          //           backgroundColor: 'background.normal',
-          //         })}
-          //       >
-          //         numbered_list
-          //       </div>
-          //     ),
-          //   });
-          // },
           divider: ({ blockValue }) => {
             return withBottomGap({
               blockMap,
               blockId: blockValue.id,
-              children: ({ hasBottomGap }) => (
+              children: ({}) => (
                 <div
                   className={css({
                     width: '100%',

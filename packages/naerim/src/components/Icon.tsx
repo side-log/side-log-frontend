@@ -7,7 +7,7 @@ import Error from '@/../public/svg/error.svg';
 import { css } from '../../styled-system/css';
 import Text from './Text';
 
-export const Icon = { Tip, ArrowDown, Logo, Check, Error };
+export const Icon: Record<string, React.FC<React.SVGProps<SVGSVGElement>>> = { Tip, ArrowDown, Logo, Check, Error };
 
 function NumberIcon({ number }: { number: number }) {
   return (
@@ -32,7 +32,9 @@ function NumberIcon({ number }: { number: number }) {
 
 export function getIcon(name: string) {
   if (!isNaN(Number(name))) {
-    return () => <NumberIcon number={Number(name)} />;
+    const IconComponent = () => <NumberIcon number={Number(name)} />;
+    IconComponent.displayName = `NumberIcon_${name}`;
+    return IconComponent;
   }
 
   switch (name) {
