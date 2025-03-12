@@ -7,6 +7,7 @@ interface ChecklistTable {
   order?: number;
   step?: string;
   Name?: string;
+  equipment?: string;
   status: string;
   Title: string;
 }

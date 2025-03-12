@@ -7,11 +7,11 @@ import Spacing from '@/components/Spacing';
 import { BottomCta } from './components/BottomCta';
 
 interface ChecklistDetailPageProps {
-  searchParams: Promise<{ step: string }>;
+  searchParams: Promise<{ step: string; isLastStep: boolean }>;
 }
 
 export default async function ChecklistDetailPage({ searchParams }: ChecklistDetailPageProps) {
-  const { step } = await searchParams;
+  const { step, isLastStep } = await searchParams;
 
   return (
     <>
@@ -33,7 +33,7 @@ export default async function ChecklistDetailPage({ searchParams }: ChecklistDet
         </Text>
       </div>
       <BottomFixedArea>
-        <BottomCta step={Number(step)} />
+        <BottomCta step={Number(step)} isLastStep={isLastStep} />
       </BottomFixedArea>
     </>
   );

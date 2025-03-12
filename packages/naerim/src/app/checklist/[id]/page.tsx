@@ -21,8 +21,15 @@ export default async function ChecklistDetailPage({ params, searchParams }: Chec
 
   const table = await getChecklistTable();
   const article = table.find(item => item?.step === step && item?.order?.toString() === order);
-  const total = table.filter(item => item?.step === step).length;
-  const isLastStep = total === parseInt(order);
+
+  const totalStep = table.reduce((max, item) => {
+    const step = Number(item?.step ?? 0);
+    return step > max ? step : max;
+  }, 0);
+  const totalOrder = table.filter(item => item?.step === step).length;
+
+  const isLastOrder = totalOrder === parseInt(order);
+  const isLastStep = totalStep === parseInt(step);
 
   if (article == null) {
     return <div>존재하지 않는 체크리스트입니다.</div>;
@@ -53,7 +60,7 @@ export default async function ChecklistDetailPage({ params, searchParams }: Chec
           </Text>
         </div>
 
-        <Chip label={`${Number(article.order)}/${total}`} color={'content.normal'} typography={'l3'} />
+        <Chip label={`${Number(article.order)}/${totalOrder}`} color={'content.normal'} typography={'l3'} />
       </div>
       <Spacing size={16} />
       <div
@@ -64,7 +71,12 @@ export default async function ChecklistDetailPage({ params, searchParams }: Chec
         <NotionRenderer blockMap={page} />
       </div>
       <BottomFixedArea>
-        <ClientBottomButton isLastStep={isLastStep} step={Number(article.step)} order={Number(order)} />
+        <ClientBottomButton
+          isLastOrder={isLastOrder}
+          isLastStep={isLastStep}
+          step={Number(article.step)}
+          order={Number(order)}
+        />
       </BottomFixedArea>
     </>
   );
