@@ -97,7 +97,6 @@ export function NotionRenderer({ blockMap, level = 0 }: NotionRendererProps) {
         '& main.notion': {
           display: 'flex',
           flexDirection: 'column',
-          paddingBottom: '120px',
         },
       })}
     >
@@ -387,7 +386,6 @@ export function NotionRenderer({ blockMap, level = 0 }: NotionRendererProps) {
             });
           },
           callout: ({ blockValue }) => {
-            console.log('🚀 ~ NotionRenderer ~ blockValue:', blockValue);
             return withBottomGap({
               blockMap,
               blockId: blockValue.id,

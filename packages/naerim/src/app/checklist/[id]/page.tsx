@@ -9,6 +9,7 @@ import { BottomFixedArea } from '@/components/FixedBottomArea';
 import Header from '@/components/Header';
 import { css } from '../../../../styled-system/css';
 import { ClientBottomButton } from './components/BottomCta';
+import { Equipments } from './components/Equipments';
 
 interface ChecklistDetailPageProps {
   params: Promise<{ id: string }>;
@@ -69,6 +70,8 @@ export default async function ChecklistDetailPage({ params, searchParams }: Chec
         })}
       >
         <NotionRenderer blockMap={page} />
+        {article.equipment != null && <Equipments equipments={article.equipment} />}
+        <Spacing size={120} />
       </div>
       <BottomFixedArea>
         <ClientBottomButton
