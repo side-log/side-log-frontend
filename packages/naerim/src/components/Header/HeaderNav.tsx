@@ -10,8 +10,8 @@ export default function HeaderNav() {
 
   const menus = [
     { title: '체크리스트', href: '/checklist' },
-    { title: '장비탐색', href: '/not-found' },
-    { title: '나의장비', href: '/not-found' },
+    { title: '장비탐색', href: '/equipment' },
+    // { title: '나의장비', href: '/not-found' },
   ];
 
   return (

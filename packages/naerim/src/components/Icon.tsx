@@ -3,10 +3,11 @@ import ArrowDown from '@/../public/svg/arrow-down.svg';
 import Logo from '@/../public/svg/logo.svg';
 import Check from '@/../public/svg/check.svg';
 import Question from '@/../public/svg/question.svg';
+import Error from '@/../public/svg/error.svg';
 import { css } from '../../styled-system/css';
 import Text from './Text';
 
-export const Icon = { Tip, ArrowDown, Logo, Check };
+export const Icon = { Tip, ArrowDown, Logo, Check, Error };
 
 function NumberIcon({ number }: { number: number }) {
   return (

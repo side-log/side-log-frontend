@@ -8,11 +8,11 @@ import { commaizeNumber } from '@/utils/commaizeNumber';
 import { getIcon } from '@/components/Icon';
 import { BottomCta } from './components/BottomCta';
 
-interface ChecklistDetailPageProps {
+interface EquipmentDetailPageProps {
   params: Promise<{ id: string }>;
 }
 
-export default async function ChecklistDetailPage({ params }: ChecklistDetailPageProps) {
+export default async function EquipmentDetailPage({ params }: EquipmentDetailPageProps) {
   const { id } = await params;
 
   const equipment = equipments.find(equipment => equipment.id === id);

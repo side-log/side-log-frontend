@@ -12,7 +12,7 @@ const variant: Record<string, SystemStyleObject> = {
     padding: '12.5px 0',
     backgroundColor: 'base.white',
     borderRadius: '8px',
-    border: '1px solid #ED801D',
+    // border: '1px solid #ED801D',
   },
   minor: {
     padding: '12.5px 0',
