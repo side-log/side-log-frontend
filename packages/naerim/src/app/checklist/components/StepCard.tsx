@@ -8,7 +8,7 @@ import Text from '@/components/Text';
 import { convertToNewLineJsx } from '@/utils/convertToNewLineJsx';
 import { css } from '../../../../styled-system/css';
 import Button from '@/components/Button';
-import { redirect, RedirectType, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import useReferrer from '@yeaaaah/shared/src/hooks/useReferrer';
 
 interface StepCardProps {

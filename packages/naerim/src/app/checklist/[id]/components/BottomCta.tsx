@@ -22,7 +22,7 @@ export function ClientBottomButton({
 
   const handleCtaClick = () => {
     if (isLastOrder) {
-      router.push(`/checklist/complete?step=${step}&isLastStep=true&referrer=${referrer}`);
+      router.push(`/checklist/complete?step=${step}&isLastStep=${isLastStep}&referrer=${referrer}`);
     } else {
       router.push(`/checklist/${step}?order=${order + 1}&referrer=${referrer}`);
     }

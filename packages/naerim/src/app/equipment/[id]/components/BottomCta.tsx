@@ -4,7 +4,6 @@ import PrimaryButton from '@/components/PrimaryButton';
 import { useRouter } from 'next/navigation';
 
 import { css } from '../../../../../styled-system/css';
-import useReferrer from '@yeaaaah/shared/src/hooks/useReferrer';
 
 export function BottomCta({ link }: { link: string }) {
   const router = useRouter();
