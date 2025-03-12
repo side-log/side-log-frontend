@@ -55,7 +55,7 @@ export default function StepCard({ step }: StepCardProps) {
       <Button
         variant={'secondary'}
         onClick={() => {
-          router.push(`/checklist/${step.id}?order=0&referrer=${referrer}`);
+          router.push(`/checklist/${step.id}?order=1&referrer=${referrer}`);
         }}
       >
         확인하기
