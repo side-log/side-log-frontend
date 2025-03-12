@@ -5,5 +5,5 @@ interface SpacingProps {
 }
 
 export default function Spacing({ size }: SpacingProps) {
-  return <div style={{ height: `${size}px` }} />;
+  return <span style={{ display: 'block', height: `${size}px` }} />;
 }

@@ -36,6 +36,11 @@ export const typography = {
     fontSize: '14px !important',
     lineHeight: '21px !important',
   },
+  l1: {
+    fontWeight: '500 !important',
+    fontSize: '13px !important',
+    lineHeight: '18.85px !important',
+  },
   l2: {
     fontWeight: '400 !important',
     fontSize: '13px !important',
@@ -74,17 +79,17 @@ export const text = cva({
 
 export default function Text({ color, typography, className, children }: PropsWithChildren<TextProps>) {
   return (
-    <div
+    <span
       className={cx(
         css({
           color,
-          whiteSpace: 'nowrap',
+          whiteSpace: 'break-spaces',
         }),
         text({ typography }),
         className
       )}
     >
       {children}
-    </div>
+    </span>
   );
 }
