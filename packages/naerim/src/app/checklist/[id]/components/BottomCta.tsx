@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { css } from '../../../../../styled-system/css';
 import useReferrer from '@/hooks/useReferrer';
 import { Suspense } from 'react';
+import Link from 'next/link';
 
 interface ClientBottomButtonProps {
   isLastOrder: boolean;
@@ -15,19 +16,18 @@ interface ClientBottomButtonProps {
 
 function ClientBottomButtonContent({ isLastOrder, isLastStep, step, order }: ClientBottomButtonProps) {
   const referrer = useReferrer();
-  const router = useRouter();
-
-  const handleCtaClick = () => {
-    if (isLastOrder) {
-      router.push(`/checklist/complete?step=${step}&isLastStep=${isLastStep}&referrer=${referrer}`);
-    } else {
-      router.push(`/checklist/${step}?order=${order + 1}&referrer=${referrer}`);
-    }
-  };
 
   return (
     <div className={css({ padding: '0 20px 40px', backgroundColor: '#000000' })}>
-      <PrimaryButton onClick={handleCtaClick}>{isLastOrder ? '완료' : '다음'}</PrimaryButton>
+      <Link
+        href={
+          isLastOrder
+            ? `/checklist/complete?step=${step}&isLastStep=${isLastStep}&referrer=${referrer}`
+            : `/checklist/${step}?order=${order + 1}&referrer=${referrer}`
+        }
+      >
+        <PrimaryButton>{isLastOrder ? '완료' : '다음'}</PrimaryButton>
+      </Link>
     </div>
   );
 }

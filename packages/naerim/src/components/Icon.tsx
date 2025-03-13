@@ -1,14 +1,14 @@
-import TipIcon from '@/../public/svg/tip.svg';
-import QuestionIcon from '@/../public/svg/question.svg';
 import { css } from '../../styled-system/css';
 import Text from './Text';
 
-export { default as Tip } from '@/../public/svg/tip.svg';
-export { default as ArrowDown } from '@/../public/svg/arrow-down.svg';
-export { default as Logo } from '@/../public/svg/logo.svg';
+import TipIcon from '@/../public/svg/tip.svg';
+import QuestionIcon from '@/../public/svg/question.svg';
+
 export { default as Check } from '@/../public/svg/check.svg';
 export { default as Question } from '@/../public/svg/question.svg';
 export { default as ErrorIcon } from '@/../public/svg/error.svg';
+export { default as ArrowDownIcon } from '@/../public/svg/arrow-down.svg';
+export { default as LogoIcon } from '@/../public/svg/logo.svg';
 
 function NumberIcon({ number }: { number: number }) {
   return (

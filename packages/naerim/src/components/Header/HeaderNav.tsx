@@ -4,8 +4,11 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { css } from '../../../styled-system/css';
 import Text from '../Text';
+import useReferrer from '@/hooks/useReferrer';
+import { withReferrer } from '@/utils/withReferrer';
 
 export default function HeaderNav() {
+  const referrer = useReferrer();
   const pathname = usePathname();
 
   const menus = [
@@ -17,10 +20,10 @@ export default function HeaderNav() {
   return (
     <ul className={css({ display: 'flex' })}>
       {menus.map(menu => {
-        const isActive = pathname === menu.href;
+        const isActive = pathname.includes(menu.href);
         return (
           <li key={menu.title} className={css({ px: 2.5, py: 4 })}>
-            <Link href={menu.href}>
+            <Link href={withReferrer(menu.href, { referrer })}>
               <Text color={isActive ? 'content.strong' : 'content.subtle'} typography={isActive ? 'b4' : 'b5'}>
                 {menu.title}
               </Text>

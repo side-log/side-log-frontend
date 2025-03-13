@@ -7,9 +7,9 @@ import Text from '@/components/Text';
 import { convertToNewLineJsx } from '@/utils/convertToNewLineJsx';
 import { css } from '../../../../styled-system/css';
 import Button from '@/components/Button';
-import { useRouter } from 'next/navigation';
 import useReferrer from '@/hooks/useReferrer';
 import { Suspense } from 'react';
+import Link from 'next/link';
 
 interface StepCardProps {
   step: Step;
@@ -17,7 +17,6 @@ interface StepCardProps {
 
 function StepCardContent({ step }: StepCardProps) {
   const referrer = useReferrer();
-  const router = useRouter();
 
   return (
     <div
@@ -53,14 +52,9 @@ function StepCardContent({ step }: StepCardProps) {
         />
       </div>
       <Spacing size={12} />
-      <Button
-        variant={'secondary'}
-        onClick={() => {
-          router.push(`/checklist/${step.id}?order=1&referrer=${referrer}`);
-        }}
-      >
-        확인하기
-      </Button>
+      <Link href={`/checklist/${step.id}?order=1&referrer=${referrer}`}>
+        <Button variant={'secondary'}>확인하기</Button>
+      </Link>
     </div>
   );
 }

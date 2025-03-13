@@ -1,12 +1,12 @@
 'use client';
 
-import PrimaryButton from '@/components/PrimaryButton';
-import { BottomFixedArea } from '@/components/FixedBottomArea';
 import { css } from '../../../styled-system/css';
 import { token } from '../../../styled-system/tokens';
-import { ArrowDown, Logo } from '@/components/Icon';
+import { LogoIcon, ArrowDownIcon } from '@/components/Icon';
+
 import Spacing from '@/components/Spacing';
 import { Suspense } from 'react';
+import { BottomCta } from './components/BottomCta';
 
 export default function LandingPage() {
   return (
@@ -21,7 +21,7 @@ export default function LandingPage() {
           height: '100%',
         })}
       >
-        <Logo width={146} fill={token('colors.content.strong')} />
+        <LogoIcon width={146} fill={token('colors.content.strong')} />
         <Spacing size={16} />
         <div
           className={css({
@@ -36,7 +36,7 @@ export default function LandingPage() {
           내림이 당신의 첫 드립커피와 함께할게요
         </div>
         <Spacing size={39} />
-        <ArrowDown />
+        <ArrowDownIcon />
         <Spacing size={39} />
         <div
           className={css({
@@ -51,7 +51,7 @@ export default function LandingPage() {
           내림이 이끄는대로 천천히 따라오세요
         </div>
         <Spacing size={39} />
-        <ArrowDown />
+        <ArrowDownIcon />
         <Spacing size={39} />
         <div
           className={css({
@@ -67,21 +67,7 @@ export default function LandingPage() {
         </div>
         <Spacing size={100} />
       </div>
-
-      <BottomFixedArea>
-        <div className={css({ padding: '0 20px 40px', backgroundColor: '#000000' })}>
-          <PrimaryButton>
-            <div
-              className={css({
-                color: 'base.white',
-                textStyle: 'b2',
-              })}
-            >
-              함께 천천히 커피 내리기
-            </div>
-          </PrimaryButton>
-        </div>
-      </BottomFixedArea>
+      <BottomCta />
     </Suspense>
   );
 }

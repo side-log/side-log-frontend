@@ -3,21 +3,11 @@
 import Text from '@/components/Text';
 import { css } from '../../../../../styled-system/css';
 import Button from '@/components/Button';
-import { useRouter } from 'next/navigation';
-import { withReferrer } from '@/utils/withReferrer';
 import useReferrer from '@yeaaaah/shared/src/hooks/useReferrer';
+import Link from 'next/link';
 
 export function BottomCta({ step, isLastStep }: { step: number; isLastStep: boolean }) {
-  const router = useRouter();
   const referrer = useReferrer();
-
-  const handleNextStep = () => {
-    router.push(withReferrer(`/checklist/${step + 1}?order=1`, { referrer }));
-  };
-
-  const handleGoHome = () => {
-    router.push(withReferrer('/checklist', { referrer }));
-  };
 
   if (isLastStep) {
     return (
@@ -29,11 +19,13 @@ export function BottomCta({ step, isLastStep }: { step: number; isLastStep: bool
           padding: '0 16px 40px',
         })}
       >
-        <Button variant={'primary'} onClick={handleGoHome}>
-          <Text typography={'b2'} color={'base.white'}>
-            홈화면으로 이동
-          </Text>
-        </Button>
+        <Link href={`/checklist?referrer=${referrer}`}>
+          <Button variant={'primary'}>
+            <Text typography={'b2'} color={'base.white'}>
+              홈화면으로 이동
+            </Text>
+          </Button>
+        </Link>
       </div>
     );
   }
@@ -47,16 +39,20 @@ export function BottomCta({ step, isLastStep }: { step: number; isLastStep: bool
         padding: '0 16px 40px',
       })}
     >
-      <Button variant={'primary'} onClick={handleNextStep}>
-        <Text typography={'b2'} color={'base.white'}>
-          다음 스텝으로 이동
-        </Text>
-      </Button>
-      <Button variant={'minor'} onClick={handleGoHome}>
-        <Text typography={'b2'} color={'base.white'}>
-          체크리스트 홈으로 이동
-        </Text>
-      </Button>
+      <Link href={`/checklist/${step + 1}?order=1&referrer=${referrer}`}>
+        <Button variant={'primary'}>
+          <Text typography={'b2'} color={'base.white'}>
+            다음 스텝으로 이동
+          </Text>
+        </Button>
+      </Link>
+      <Link href={`/checklist?referrer=${referrer}`}>
+        <Button variant={'minor'}>
+          <Text typography={'b2'} color={'base.white'}>
+            체크리스트 홈으로 이동
+          </Text>
+        </Button>
+      </Link>
     </div>
   );
 }

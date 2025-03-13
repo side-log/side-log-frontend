@@ -160,14 +160,18 @@ export function NotionRenderer({ blockMap, level = 0 }: NotionRendererProps) {
                   })}
                 >
                   <div>{Icon != null && <Icon />}</div>
-                  <Text color={'content.normal'} typography={'b5'} className={css({ whiteSpace: 'pre-wrap' })}>
+                  <Text
+                    color={'content.normal'}
+                    typography={'b5'}
+                    className={css({ whiteSpace: 'pre-wrap', alignSelf: 'center' })}
+                  >
                     {text}
                   </Text>
                 </div>
               ),
             });
           },
-          text: ({ blockValue }) => {
+          text: ({ blockValue, level }) => {
             const isCode = blockValue?.properties?.title?.some?.((item: string[][][]) =>
               item[1]?.some?.((type: string[]) => type[0] === 'c')
             );
@@ -188,7 +192,7 @@ export function NotionRenderer({ blockMap, level = 0 }: NotionRendererProps) {
                           margin: '16px 0px',
                         }
                       : {
-                          marginBottom: hasBottomGap ? undefined : '12px',
+                          marginBottom: hasBottomGap ? undefined : level <= 1 ? '12px' : 0,
                         }
                   )}
                 >
@@ -267,6 +271,8 @@ export function NotionRenderer({ blockMap, level = 0 }: NotionRendererProps) {
                             objectFit: 'cover',
                             aspectRatio: '1/1',
                             borderRadius: '8px',
+                            minWidth: '72px',
+                            minHeight: '72px',
                           }
                     }
                   />
@@ -312,7 +318,7 @@ export function NotionRenderer({ blockMap, level = 0 }: NotionRendererProps) {
                       marginBottom: hasBottomGap ? undefined : '12px',
                       display: 'grid',
                       gridTemplateColumns: '1fr 3.33fr',
-                      gap: '12px',
+                      gap: '16px',
                     })}
                   >
                     {blockValue?.content?.map(id => {
