@@ -3,7 +3,6 @@
 import { equipments } from '@/constants/equipment';
 import { commaizeNumber } from '@/utils/commaizeNumber';
 import Link from 'next/link';
-import { withReferrer } from '@/utils/withReferrer';
 import useReferrer from '@yeaaaah/shared/src/hooks/useReferrer';
 import { css } from '../../../../../styled-system/css';
 import Spacing from '@/components/Spacing';
@@ -19,7 +18,7 @@ export function Equipment({ id }: { id: string }) {
 
   return (
     <Link
-      href={withReferrer(`/equipment/${id}`, { referrer })}
+      href={`/equipment/${id}?referrer=${referrer}`}
       className={css({
         display: 'flex',
         flexDirection: 'column',

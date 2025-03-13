@@ -7,7 +7,6 @@ import Text from '@/components/Text';
 import Spacing from '@/components/Spacing';
 import Button from '@/components/Button';
 import { useRouter } from 'next/navigation';
-import { withReferrer } from '@/utils/withReferrer';
 import useReferrer from '@/hooks/useReferrer';
 import { Suspense } from 'react';
 
@@ -48,8 +47,9 @@ export default function EquipmentPage() {
 function ChecklistButton() {
   const router = useRouter();
   const referrer = useReferrer();
+
   return (
-    <Button variant={'secondary'} onClick={() => router.push(withReferrer('/checklist', { referrer }))}>
+    <Button variant={'secondary'} onClick={() => router.push(`/checklist?referrer=${referrer}`)}>
       체크리스트 바로가기
     </Button>
   );

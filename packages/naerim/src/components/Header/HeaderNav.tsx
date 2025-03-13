@@ -5,7 +5,6 @@ import { usePathname } from 'next/navigation';
 import { css } from '../../../styled-system/css';
 import Text from '../Text';
 import useReferrer from '@/hooks/useReferrer';
-import { withReferrer } from '@/utils/withReferrer';
 
 export default function HeaderNav() {
   const referrer = useReferrer();
@@ -23,7 +22,7 @@ export default function HeaderNav() {
         const isActive = pathname.includes(menu.href);
         return (
           <li key={menu.title} className={css({ px: 2.5, py: 4 })}>
-            <Link href={withReferrer(menu.href, { referrer })}>
+            <Link href={`${menu.href}?referrer=${referrer}`}>
               <Text color={isActive ? 'content.strong' : 'content.subtle'} typography={isActive ? 'b4' : 'b5'}>
                 {menu.title}
               </Text>
