@@ -1,14 +1,8 @@
-import { Gilda_Display } from 'next/font/google';
 import localFont from 'next/font/local';
 import Wrapper from '@/components/Wrapper';
 import './globals.css';
 import type { Metadata } from 'next';
 import { css } from '../../styled-system/css';
-
-export const gildaFont = Gilda_Display({
-  weight: '400',
-  subsets: ['latin'],
-});
 
 const pretendardFont = localFont({
   src: '../../public/fonts/PretendardVariable.woff2',

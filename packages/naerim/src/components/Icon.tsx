@@ -1,13 +1,14 @@
-import Tip from '@/../public/svg/tip.svg';
-import ArrowDown from '@/../public/svg/arrow-down.svg';
-import Logo from '@/../public/svg/logo.svg';
-import Check from '@/../public/svg/check.svg';
-import Question from '@/../public/svg/question.svg';
-import Error from '@/../public/svg/error.svg';
+import TipIcon from '@/../public/svg/tip.svg';
+import QuestionIcon from '@/../public/svg/question.svg';
 import { css } from '../../styled-system/css';
 import Text from './Text';
 
-export const Icon: Record<string, React.FC<React.SVGProps<SVGSVGElement>>> = { Tip, ArrowDown, Logo, Check, Error };
+export { default as Tip } from '@/../public/svg/tip.svg';
+export { default as ArrowDown } from '@/../public/svg/arrow-down.svg';
+export { default as Logo } from '@/../public/svg/logo.svg';
+export { default as Check } from '@/../public/svg/check.svg';
+export { default as Question } from '@/../public/svg/question.svg';
+export { default as ErrorIcon } from '@/../public/svg/error.svg';
 
 function NumberIcon({ number }: { number: number }) {
   return (
@@ -39,9 +40,9 @@ export function getIcon(name: string) {
 
   switch (name) {
     case 'tip':
-      return Tip;
+      return (props: React.SVGProps<SVGSVGElement>) => <TipIcon {...props} />;
     case 'question':
-      return Question;
+      return (props: React.SVGProps<SVGSVGElement>) => <QuestionIcon {...props} />;
     default:
       return null;
   }

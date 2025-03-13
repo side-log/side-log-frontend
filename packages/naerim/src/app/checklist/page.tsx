@@ -2,12 +2,17 @@ import Header from '@/components/Header';
 import Spacing from '@/components/Spacing';
 import Text from '@/components/Text';
 import { StepCard } from './components/StepCard';
-import { css } from '../../../styled-system/css';
-import { gildaFont } from '../layout';
 import { steps } from '@/constants/step';
-import { Step } from './models/step';
+import { Gilda_Display } from 'next/font/google';
+import type { Step } from './models/step';
+import { css } from '../../../styled-system/css';
 
-export default function CheckListPage() {
+const gildaFont = Gilda_Display({
+  weight: '400',
+  subsets: ['latin'],
+});
+
+export default async function CheckListPage() {
   const stepList: Step[] = steps;
 
   return (

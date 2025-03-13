@@ -1,24 +1,15 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  experimental: {
-    turbo: {
-      rules: {
-        '*.svg': {
-          loaders: ['@svgr/webpack'],
-          as: '*.js',
-        },
-      },
-    },
-  },
-  // webpack: config => {
-  //   config.module.rules.push({
-  //     test: /\.svg$/,
-  //     use: ['@svgr/webpack', 'url-loader'],
-  //   });
+  webpack(config) {
+    // SVG 설정
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: ['@svgr/webpack'],
+    });
 
-  //   return config;
-  // },
+    return config;
+  },
   reactStrictMode: true,
   images: {
     remotePatterns: [

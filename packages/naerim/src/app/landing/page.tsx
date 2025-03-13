@@ -4,12 +4,13 @@ import PrimaryButton from '@/components/PrimaryButton';
 import { BottomFixedArea } from '@/components/FixedBottomArea';
 import { css } from '../../../styled-system/css';
 import { token } from '../../../styled-system/tokens';
-import { Icon } from '@/components/Icon';
+import { ArrowDown, Logo } from '@/components/Icon';
 import Spacing from '@/components/Spacing';
+import { Suspense } from 'react';
 
 export default function LandingPage() {
   return (
-    <>
+    <Suspense fallback={<div>Loading...</div>}>
       <div
         className={css({
           flex: '1',
@@ -20,7 +21,7 @@ export default function LandingPage() {
           height: '100%',
         })}
       >
-        <Icon.Logo width={146} fill={token('colors.content.strong')} />
+        <Logo width={146} fill={token('colors.content.strong')} />
         <Spacing size={16} />
         <div
           className={css({
@@ -35,7 +36,7 @@ export default function LandingPage() {
           내림이 당신의 첫 드립커피와 함께할게요
         </div>
         <Spacing size={39} />
-        <Icon.ArrowDown />
+        <ArrowDown />
         <Spacing size={39} />
         <div
           className={css({
@@ -50,7 +51,7 @@ export default function LandingPage() {
           내림이 이끄는대로 천천히 따라오세요
         </div>
         <Spacing size={39} />
-        <Icon.ArrowDown />
+        <ArrowDown />
         <Spacing size={39} />
         <div
           className={css({
@@ -81,6 +82,6 @@ export default function LandingPage() {
           </PrimaryButton>
         </div>
       </BottomFixedArea>
-    </>
+    </Suspense>
   );
 }

@@ -1,19 +1,17 @@
 'use client';
 
-import { Icon } from '@/components/Icon';
+import { ErrorIcon } from '@/components/Icon';
 import Header from '@/components/Header';
 import { css } from '../../../styled-system/css';
 import Text from '@/components/Text';
 import Spacing from '@/components/Spacing';
 import Button from '@/components/Button';
 import { useRouter } from 'next/navigation';
-import useReferrer from '@yeaaaah/shared/src/hooks/useReferrer';
 import { withReferrer } from '@/utils/withReferrer';
+import useReferrer from '@/hooks/useReferrer';
+import { Suspense } from 'react';
 
 export default function EquipmentPage() {
-  const referrer = useReferrer();
-  const router = useRouter();
-
   return (
     <>
       <Header />
@@ -26,7 +24,7 @@ export default function EquipmentPage() {
           height: '80vh',
         })}
       >
-        <Icon.Error />
+        <ErrorIcon />
         <Text typography={'t1'} color={'content.strong'}>
           오픈 준비중인 기능이에요
         </Text>
@@ -38,11 +36,21 @@ export default function EquipmentPage() {
         </Text>
         <Spacing size={24} />
         <div className={css({ width: 240 })}>
-          <Button variant={'secondary'} onClick={() => router.push(withReferrer('/checklist', { referrer }))}>
-            체크리스트 바로가기
-          </Button>
+          <Suspense fallback={<div>Loading...</div>}>
+            <ChecklistButton />
+          </Suspense>
         </div>
       </div>
     </>
+  );
+}
+
+function ChecklistButton() {
+  const router = useRouter();
+  const referrer = useReferrer();
+  return (
+    <Button variant={'secondary'} onClick={() => router.push(withReferrer('/checklist', { referrer }))}>
+      체크리스트 바로가기
+    </Button>
   );
 }

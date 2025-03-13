@@ -8,13 +8,14 @@ import { convertToNewLineJsx } from '@/utils/convertToNewLineJsx';
 import { css } from '../../../../styled-system/css';
 import Button from '@/components/Button';
 import { useRouter } from 'next/navigation';
-import useReferrer from '@yeaaaah/shared/src/hooks/useReferrer';
+import useReferrer from '@/hooks/useReferrer';
+import { Suspense } from 'react';
 
 interface StepCardProps {
   step: Step;
 }
 
-export function StepCard({ step }: StepCardProps) {
+function StepCardContent({ step }: StepCardProps) {
   const referrer = useReferrer();
   const router = useRouter();
 
@@ -61,5 +62,13 @@ export function StepCard({ step }: StepCardProps) {
         확인하기
       </Button>
     </div>
+  );
+}
+
+export function StepCard(props: StepCardProps) {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <StepCardContent {...props} />
+    </Suspense>
   );
 }
