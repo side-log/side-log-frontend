@@ -30,9 +30,11 @@ export function Equipment({ id }: { id: string }) {
         className={css({ width: '132px', height: '132px', borderRadius: '8px' })}
       />
       <Spacing size={8} />
-      <Text typography={'b4'} color={'content.strong'}>
-        {equipment.name}
-      </Text>
+      <h1>
+        <Text typography={'b4'} color={'content.strong'}>
+          {equipment.name}
+        </Text>
+      </h1>
       <Spacing size={4} />
       <Text typography={'b1'} color={'content.strong'}>
         {commaizeNumber(equipment.price)}원
