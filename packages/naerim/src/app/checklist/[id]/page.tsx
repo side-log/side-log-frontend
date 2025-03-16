@@ -13,12 +13,12 @@ import { Equipments } from './components/Equipments';
 
 interface ChecklistDetailPageProps {
   params: Promise<{ id: string }>;
-  searchParams: Promise<{ order: string }>;
+  searchParams: Promise<{ order?: string }>;
 }
 
 export default async function ChecklistDetailPage({ params, searchParams }: ChecklistDetailPageProps) {
   const { id: step } = await params;
-  const { order } = await searchParams;
+  const { order = '1' } = await searchParams;
 
   const table = await getChecklistTable();
   const article = table.find(item => item?.step === step && item?.order?.toString() === order);
