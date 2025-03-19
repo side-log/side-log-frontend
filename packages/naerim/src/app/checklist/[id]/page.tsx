@@ -10,6 +10,7 @@ import Header from '@/components/Header';
 import { css } from '../../../../styled-system/css';
 import { ClientBottomButton } from './components/BottomCta';
 import { Equipments } from './components/Equipments';
+import { ClientLoggingScreen } from '@/components/ClientLoggingScreen';
 
 interface ChecklistDetailPageProps {
   params: Promise<{ id: string }>;
@@ -39,7 +40,14 @@ export default async function ChecklistDetailPage({ params, searchParams }: Chec
   const page = await fetchPage(article.id);
 
   return (
-    <>
+    <ClientLoggingScreen
+      id={100002}
+      params={{
+        screen_name: 'checklist_detail',
+        step: article.step,
+        order: article.order,
+      }}
+    >
       <Header />
       <div
         className={css({
@@ -81,6 +89,6 @@ export default async function ChecklistDetailPage({ params, searchParams }: Chec
           order={Number(order)}
         />
       </BottomFixedArea>
-    </>
+    </ClientLoggingScreen>
   );
 }

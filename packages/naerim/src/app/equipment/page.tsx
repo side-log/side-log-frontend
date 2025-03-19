@@ -1,5 +1,3 @@
-'use client';
-
 import { ErrorIcon } from '@/components/Icon';
 import Header from '@/components/Header';
 import { css } from '../../../styled-system/css';
@@ -9,10 +7,16 @@ import Button from '@/components/Button';
 import { useRouter } from 'next/navigation';
 import useReferrer from '@/hooks/useReferrer';
 import { Suspense } from 'react';
+import { ClientLoggingScreen } from '@/components/ClientLoggingScreen';
 
 export default function EquipmentPage() {
   return (
-    <>
+    <ClientLoggingScreen
+      id={100003}
+      params={{
+        screen_name: 'equipment',
+      }}
+    >
       <Header />
       <div
         className={css({
@@ -40,7 +44,7 @@ export default function EquipmentPage() {
           </Suspense>
         </div>
       </div>
-    </>
+    </ClientLoggingScreen>
   );
 }
 

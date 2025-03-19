@@ -7,6 +7,7 @@ import Spacing from '@/components/Spacing';
 import { commaizeNumber } from '@/utils/commaizeNumber';
 import { getIcon } from '@/components/Icon';
 import { BottomCta } from './components/BottomCta';
+import { ClientLoggingScreen } from '@/components/ClientLoggingScreen';
 
 interface EquipmentDetailPageProps {
   params: Promise<{ id: string }>;
@@ -22,7 +23,14 @@ export default async function EquipmentDetailPage({ params }: EquipmentDetailPag
   }
 
   return (
-    <>
+    <ClientLoggingScreen
+      id={100004}
+      params={{
+        screen_name: 'equipment_detail',
+        equipment_id: equipment.id,
+        equipment_name: equipment.name,
+      }}
+    >
       <Header />
       <img
         src={equipment.image}
@@ -120,6 +128,6 @@ export default async function EquipmentDetailPage({ params }: EquipmentDetailPag
       <BottomFixedArea>
         <BottomCta link={equipment.link} />
       </BottomFixedArea>
-    </>
+    </ClientLoggingScreen>
   );
 }

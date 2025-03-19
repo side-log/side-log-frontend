@@ -54,6 +54,7 @@ export default function useLogger() {
     screen: (id: number, params: ScreenParams) => log(id, { logType: 'screen', params }),
     impression: (id: number, params: Record<string, unknown>) => log(id, { logType: 'impression', params }),
     click: (id: number, params: ClickParams) => log(id, { logType: 'click', params }),
+    event: (id: number, params: Record<string, unknown>) => log(id, { logType: 'event', params }),
   };
 
   return { logger };

@@ -6,6 +6,7 @@ import { steps } from '@/constants/step';
 import { Gilda_Display } from 'next/font/google';
 import type { Step } from './models/step';
 import { css } from '../../../styled-system/css';
+import { ClientLoggingScreen } from '@/components/ClientLoggingScreen';
 
 const gildaFont = Gilda_Display({
   weight: '400',
@@ -16,7 +17,12 @@ export default async function CheckListPage() {
   const stepList: Step[] = steps;
 
   return (
-    <>
+    <ClientLoggingScreen
+      id={100001}
+      params={{
+        screen_name: 'checklist',
+      }}
+    >
       <Header />
       <Spacing size={24} />
       <section className={css({ px: 4 })}>
@@ -47,6 +53,6 @@ export default async function CheckListPage() {
         ))}
       </section>
       <Spacing size={80} />
-    </>
+    </ClientLoggingScreen>
   );
 }

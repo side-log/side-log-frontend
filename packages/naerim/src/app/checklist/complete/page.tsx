@@ -5,6 +5,7 @@ import Text from '@/components/Text';
 import { Check } from '@/components/Icon';
 import Spacing from '@/components/Spacing';
 import { BottomCta } from './components/BottomCta';
+import { ClientLoggingScreen } from '@/components/ClientLoggingScreen';
 
 interface ChecklistDetailPageProps {
   searchParams: Promise<{ step: string; isLastStep: string }>;
@@ -14,7 +15,14 @@ export default async function ChecklistDetailPage({ searchParams }: ChecklistDet
   const { step, isLastStep } = await searchParams;
 
   return (
-    <>
+    <ClientLoggingScreen
+      id={100005}
+      params={{
+        screen_name: 'checklist_complete',
+        step,
+        isLastStep,
+      }}
+    >
       <Header />
       <div
         className={css({
@@ -35,6 +43,6 @@ export default async function ChecklistDetailPage({ searchParams }: ChecklistDet
       <BottomFixedArea>
         <BottomCta step={Number(step)} isLastStep={isLastStep === 'true'} />
       </BottomFixedArea>
-    </>
+    </ClientLoggingScreen>
   );
 }

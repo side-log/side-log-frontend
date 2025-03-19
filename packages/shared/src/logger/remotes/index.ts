@@ -19,7 +19,11 @@ export interface ImpressionLoggingParams extends CommonLoggingParams {
   log_type: 'impression';
 }
 
-export type LoggingParams = ScreenLoggingParams | ClickLoggingParams | ImpressionLoggingParams;
+export interface EventLoggingParams extends CommonLoggingParams {
+  log_type: 'event';
+}
+
+export type LoggingParams = ScreenLoggingParams | ClickLoggingParams | ImpressionLoggingParams | EventLoggingParams;
 
 export function fetchLog(id: number, params: LoggingParams) {
   const API_URL = process.env.NEXT_PUBLIC_VITE_SHARED_API_URL;
