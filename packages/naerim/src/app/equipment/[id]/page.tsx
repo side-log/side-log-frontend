@@ -15,8 +15,9 @@ interface EquipmentDetailPageProps {
   params: Promise<{ id: string }>;
 }
 
-export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
-  const equipment = equipments.find(equipment => equipment.id === params.id);
+export async function generateMetadata({ params }: EquipmentDetailPageProps): Promise<Metadata> {
+  const { id } = await params;
+  const equipment = equipments.find(equipment => equipment.id === id);
 
   if (!equipment) {
     return metadataGenerator({

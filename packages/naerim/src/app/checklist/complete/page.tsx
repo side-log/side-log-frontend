@@ -14,14 +14,8 @@ interface ChecklistDetailPageProps {
   searchParams: Promise<{ step: string; isLastStep: string }>;
 }
 
-export async function generateMetadata({
-  params,
-  searchParams,
-}: {
-  params: { id: string };
-  searchParams: { step: string };
-}): Promise<Metadata> {
-  const step = searchParams.step;
+export async function generateMetadata({ searchParams }: ChecklistDetailPageProps): Promise<Metadata> {
+  const { step } = await searchParams;
   const order = '1';
 
   const table = await getChecklistTable();

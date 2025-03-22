@@ -14,20 +14,14 @@ import { ClientLoggingScreen } from '@/components/ClientLoggingScreen';
 import { metadataGenerator } from '@/utils/metadata';
 import { Metadata } from 'next';
 
-interface ChecklistDetailPageProps {
+interface PageProps {
   params: Promise<{ id: string }>;
   searchParams: Promise<{ order?: string }>;
 }
 
-export async function generateMetadata({
-  params,
-  searchParams,
-}: {
-  params: { id: string };
-  searchParams: { order?: string };
-}): Promise<Metadata> {
-  const step = params.id;
-  const order = searchParams.order || '1';
+export async function generateMetadata({ params, searchParams }: PageProps): Promise<Metadata> {
+  const { id: step } = await params;
+  const { order = '1' } = await searchParams;
 
   const table = await getChecklistTable();
   const article = table.find(item => item?.step === step && item?.order?.toString() === order);
@@ -44,7 +38,7 @@ export async function generateMetadata({
   });
 }
 
-export default async function ChecklistDetailPage({ params, searchParams }: ChecklistDetailPageProps) {
+export default async function ChecklistDetailPage({ params, searchParams }: PageProps) {
   const { id: step } = await params;
   const { order = '1' } = await searchParams;
 
