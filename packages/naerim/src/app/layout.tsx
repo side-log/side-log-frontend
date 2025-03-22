@@ -16,6 +16,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="theme-color" content="#000" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="#000" />
+        <meta name="google-site-verification" content="MJHnYoqXP2wfyv8F6PMCcjfJ4mzQcf2iPm40C7Rxmxk" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
       <body
