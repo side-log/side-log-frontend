@@ -7,6 +7,12 @@ import { Gilda_Display } from 'next/font/google';
 import type { Step } from './models/step';
 import { css } from '../../../styled-system/css';
 import { ClientLoggingScreen } from '@/components/ClientLoggingScreen';
+import { metadataGenerator } from '@/utils/metadata';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = metadataGenerator({
+  title: '드립 한 잔을 위한 체크리스트 | 내림 nearim',
+});
 
 const gildaFont = Gilda_Display({
   weight: '400',

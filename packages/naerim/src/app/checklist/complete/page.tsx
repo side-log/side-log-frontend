@@ -6,9 +6,37 @@ import { Check } from '@/components/Icon';
 import Spacing from '@/components/Spacing';
 import { BottomCta } from './components/BottomCta';
 import { ClientLoggingScreen } from '@/components/ClientLoggingScreen';
+import { metadataGenerator } from '@/utils/metadata';
+import { Metadata } from 'next';
+import { getChecklistTable } from '@/remotes/notion/checklist';
 
 interface ChecklistDetailPageProps {
   searchParams: Promise<{ step: string; isLastStep: string }>;
+}
+
+export async function generateMetadata({
+  params,
+  searchParams,
+}: {
+  params: { id: string };
+  searchParams: { step: string };
+}): Promise<Metadata> {
+  const step = searchParams.step;
+  const order = '1';
+
+  const table = await getChecklistTable();
+  const article = table.find(item => item?.step === step && item?.order?.toString() === order);
+
+  if (!article) {
+    return metadataGenerator({
+      title: '존재하지 않는 체크리스트',
+      description: '요청하신 체크리스트를 찾을 수 없습니다.',
+    });
+  }
+
+  return metadataGenerator({
+    title: `${article.Name} | 내림 nearim`,
+  });
 }
 
 export default async function ChecklistDetailPage({ searchParams }: ChecklistDetailPageProps) {

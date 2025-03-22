@@ -8,9 +8,27 @@ import { commaizeNumber } from '@/utils/commaizeNumber';
 import { getIcon } from '@/components/Icon';
 import { BottomCta } from './components/BottomCta';
 import { ClientLoggingScreen } from '@/components/ClientLoggingScreen';
+import { metadataGenerator } from '@/utils/metadata';
+import { Metadata } from 'next';
 
 interface EquipmentDetailPageProps {
   params: Promise<{ id: string }>;
+}
+
+export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
+  const equipment = equipments.find(equipment => equipment.id === params.id);
+
+  if (!equipment) {
+    return metadataGenerator({
+      title: '존재하지 않는 장비',
+      description: '요청하신 장비를 찾을 수 없습니다.',
+    });
+  }
+
+  return metadataGenerator({
+    title: `${equipment.name} | 내림 nearim`,
+    image: equipment.image,
+  });
 }
 
 export default async function EquipmentDetailPage({ params }: EquipmentDetailPageProps) {

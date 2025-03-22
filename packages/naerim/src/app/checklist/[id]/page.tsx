@@ -11,10 +11,37 @@ import { css } from '../../../../styled-system/css';
 import { ClientBottomButton } from './components/BottomCta';
 import { Equipments } from './components/Equipments';
 import { ClientLoggingScreen } from '@/components/ClientLoggingScreen';
+import { metadataGenerator } from '@/utils/metadata';
+import { Metadata } from 'next';
 
 interface ChecklistDetailPageProps {
   params: Promise<{ id: string }>;
   searchParams: Promise<{ order?: string }>;
+}
+
+export async function generateMetadata({
+  params,
+  searchParams,
+}: {
+  params: { id: string };
+  searchParams: { order?: string };
+}): Promise<Metadata> {
+  const step = params.id;
+  const order = searchParams.order || '1';
+
+  const table = await getChecklistTable();
+  const article = table.find(item => item?.step === step && item?.order?.toString() === order);
+
+  if (!article) {
+    return metadataGenerator({
+      title: '존재하지 않는 체크리스트',
+      description: '요청하신 체크리스트를 찾을 수 없습니다.',
+    });
+  }
+
+  return metadataGenerator({
+    title: `${article.Name} | 내림 nearim`,
+  });
 }
 
 export default async function ChecklistDetailPage({ params, searchParams }: ChecklistDetailPageProps) {

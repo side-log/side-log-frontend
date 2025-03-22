@@ -7,7 +7,6 @@ import { LogoIcon, ArrowDownIcon } from '@/components/Icon';
 import Spacing from '@/components/Spacing';
 import { Suspense } from 'react';
 import { BottomCta } from './components/BottomCta';
-import { LoggingScreen } from '@yeaaaah/shared';
 import { ClientLoggingScreen } from '@/components/ClientLoggingScreen';
 
 export default function LandingPage() {
