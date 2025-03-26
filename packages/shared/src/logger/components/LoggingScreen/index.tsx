@@ -5,9 +5,10 @@ import useLogger, { ScreenParams } from '../../hooks/useLogger';
 interface Props {
   id: number;
   params: ScreenParams;
+  className?: string;
 }
 
-const LoggingScreen = ({ id, params, children }: PropsWithChildren<Props>) => {
+const LoggingScreen = ({ id, params, children, className }: PropsWithChildren<Props>) => {
   const { logger } = useLogger();
 
   useEffectOnce(() => {
@@ -48,7 +49,7 @@ const LoggingScreen = ({ id, params, children }: PropsWithChildren<Props>) => {
   );
 
   return (
-    <div data-schema-id={id} onClick={handleClick}>
+    <div data-schema-id={id} onClick={handleClick} className={className}>
       {children}
     </div>
   );

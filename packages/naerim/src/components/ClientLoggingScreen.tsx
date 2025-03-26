@@ -8,9 +8,10 @@ interface Props {
   id: number;
   params: ScreenParams;
   children: React.ReactNode;
+  className?: string;
 }
 
-const ClientLoggingScreen = React.memo(({ id, params, children }: Props) => {
+const ClientLoggingScreen = React.memo(({ id, params, children, className }: Props) => {
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -22,7 +23,7 @@ const ClientLoggingScreen = React.memo(({ id, params, children }: Props) => {
   }
 
   return (
-    <LoggingScreen id={id} params={params}>
+    <LoggingScreen id={id} params={params} className={className}>
       {children}
     </LoggingScreen>
   );

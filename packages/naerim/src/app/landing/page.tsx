@@ -16,6 +16,9 @@ export default function LandingPage() {
       params={{
         screen_name: 'landing',
       }}
+      className={css({
+        height: '100%',
+      })}
     >
       <Suspense fallback={<div>Loading...</div>}>
         <div
@@ -25,7 +28,7 @@ export default function LandingPage() {
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            height: '100%',
+            height: '100vh',
           })}
         >
           <LogoIcon width={146} fill={token('colors.content.strong')} />
